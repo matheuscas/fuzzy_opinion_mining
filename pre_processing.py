@@ -20,8 +20,9 @@ def stopwords_removal(tokenized_string, method=None):
 def punctuation_removal(raw_text):
 	return __manual_punctuation_removal(raw_text)
 
-def pos_tagger():
-	pass
+def pos_tagger(tokenized_string, method=None):
+	if not method:
+		return nltk.pos_tag(tokenized_string)
 
 #punctuation_removal functions
 def __manual_punctuation_removal(raw_text):

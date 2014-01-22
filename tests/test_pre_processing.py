@@ -36,3 +36,11 @@ def test_stopwords_removal_nltk():
 	for t in tokens_no_stopwords:
 		assert t.lower() not in pp.NLTK_STOPWORDS
 
+def test_pos_tagger_nltk():
+	no_punctuation_text = pp.punctuation_removal(document_sample_text)
+	tokens = pp.tokenizer(document_sample_text)
+	tokens_no_stopwords = pp.stopwords_removal(tokens, method='nltk')
+	tokens_tagged = pp.pos_tagger(tokens_no_stopwords)
+
+	for t in tokens_tagged:
+		assert len(t) == 2 and t[1]
