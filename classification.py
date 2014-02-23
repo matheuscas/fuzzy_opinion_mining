@@ -48,6 +48,12 @@ class Classification(object):
 				tuples.append(weight)
 		return tuples
 
+class OhanaBrendan(Classification):
+	"""docstring for OhanaBrendan"""
+
+	def __init__(self):
+		super(OhanaBrendan, self).__init__()
+
 	def term_counting(self):
 		"""'SentiWordNet scores were calculated as positive and negative terms were
 		found on each document, and used to determine sentiment orientation by
@@ -88,3 +94,17 @@ class Classification(object):
 			tuples = self.__transformation(elements)
 			d.predicted_polarity = max(tuples, key=lambda x:abs(x[0]))[0]
 			num_of_documents = num_of_documents + 1
+
+class Custom(Classification):
+	"""Custom classification methods to this research"""
+
+	def __init__(self):
+		super(Custom, self).__init__()
+
+	def custom_classification_1(self):
+		"""This classification method merges the term_counting concept from OhanaBrendan,
+		but introducing the study with bigrams, trigrams and the rule-based system from
+		A Sentimental Analysis of Movie Reviews Involving Fuzzy Rule- Based
+		"""
+
+		pass
