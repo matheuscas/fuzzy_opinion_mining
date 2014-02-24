@@ -11,48 +11,47 @@ class Classification(object):
 									'VBZ':'VERB',
 									'VBP':'VERB'}
 
-	def __init__(self, list_of_documents, extract=None):
+	def __init__(self, list_of_documents):
 		self.list_of_documents = list_of_documents
-		self.extract = extract
 
-	def __extract_pos_tagged_element(self, list_of_tuples, tag):
-		"""extract espefics elements based on pos tag.
-		list of tuples = list of (text_element, tag)"""
-
-		return [t for t in list_of_tuples if t[1] == tag]
-
-	def __pre_processing(self, document, extract=None):
-		"""
-		pre process a document with elements to extrac in extract list
-		e.g.: extract = ['JJ', 'RB']
-		"""
-
-		no_punctuation = pp.punctuation_removal(document.raw_text)
-		tokenized = pp.tokenizer(no_punctuation)
-		no_stopwords = pp.stopwords_removal(tokenized)
-		pos_tagged = pp.pos_tagger(no_stopwords)
-		elements = []
-		if self.extract == None:
-			elements = self.__extract_pos_tagged_element(pos_tagged, "JJ")
-		else:
-			for e in self.extract:
-				elements = elements + self.__extract_pos_tagged_element(pos_tagged, e)
-		elements = set(elements)
-		return elements
-
-	def __transformation(self, elements):
+	def _sentiwordnet_scores(self, elements):
 		tuples = []
 		for e in elements:
-			weight = trans.word_polarity(e[0], Classification.NLTK_TAG_TO_SENTIWORDNET_TAG[e[1]])
-			if weight:
-				tuples.append(weight)
+			word = e[0].split('/')[0]
+			tag = e[0].split('/')[1]
+			if len(word) > 0:
+				weight = trans.word_polarity(word, Classification.NLTK_TAG_TO_SENTIWORDNET_TAG[tag])
+				if weight:
+					tuples.append(weight)
 		return tuples
 
 class OhanaBrendan(Classification):
 	"""docstring for OhanaBrendan"""
 
-	def __init__(self):
-		super(OhanaBrendan, self).__init__()
+	def _extract_pos_tagged_element(self, doc, tag):
+
+		elements = []
+		for t in doc.unigrams:
+			unigram = t[0].split('/')
+			if len(unigram) > 1 and unigram[1] == tag:
+				elements.append(t)
+		return elements
+		# return [t for t in doc.unigrams if t[0].split('/')[1] == tag]
+
+	def _select_documents(self, document, rule=None):
+		"""
+		pre process a document with elements to extrac in rule list
+		e.g.: rule = ['JJ', 'RB']
+		"""
+
+		elements = []
+		if self.rule == None:
+			elements = self._extract_pos_tagged_element(document, "JJ")
+		else:
+			for e in self.rule:
+				elements = elements + self._extract_pos_tagged_element(document, e)
+		elements = set(elements)
+		return elements
 
 	def term_counting(self):
 		"""'SentiWordNet scores were calculated as positive and negative terms were
@@ -89,11 +88,12 @@ class OhanaBrendan(Classification):
 		num_of_documents = 1
 		total_documents = len(self.list_of_documents)
 		for d in self.list_of_documents:
-			print str(num_of_documents) + '/' + str(total_documents)
-			elements = self.__pre_processing(d)
-			tuples = self.__transformation(elements)
+			print str(num_of_documents) + '/' + str(total_documents) + '-' + d.name
+			elements = self._select_documents(d)
+			tuples = self._sentiwordnet_scores(elements)
 			d.predicted_polarity = max(tuples, key=lambda x:abs(x[0]))[0]
 			num_of_documents = num_of_documents + 1
+
 
 class Custom(Classification):
 	"""Custom classification methods to this research"""
