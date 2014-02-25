@@ -19,14 +19,14 @@ def test_stopwords_removal_stanford():
 
 	tokens_no_stopwords = pp.stopwords_removal(document_sample_text)
 
-	for t in tokens_no_stopwords:
+	for t in tokens_no_stopwords.split():
 		assert t.lower() not in pp.STANFORD_STOPWORDS
 
 def test_stopwords_removal_nltk():
 
 	tokens_no_stopwords = pp.stopwords_removal(document_sample_text, method='nltk')
 
-	for t in tokens_no_stopwords:
+	for t in tokens_no_stopwords.split():
 		assert t.lower() not in pp.NLTK_STOPWORDS
 
 def test_pos_tagger_nltk():

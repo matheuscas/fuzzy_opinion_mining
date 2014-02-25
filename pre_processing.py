@@ -25,12 +25,10 @@ def stopwords_removal(text, method=None):
 	If method is 'nltk', the nltk lib does the stopwords removal.
 	"""
 
-	tokenized_string = tokenizer(text)
-
 	if not method:
-		return __manual_stopwords_removal(tokenized_string)
+		return __manual_stopwords_removal(text)
 	elif method == "nltk":
-		return __nltk_stopwords_removal(tokenized_string)
+		return __nltk_stopwords_removal(text)
 
 def pos_tagger(tokenized_string, ngrams=None):
 	"""This function does the Part of Speech tagging, using nltk lib"""
@@ -41,6 +39,7 @@ def pos_tagger_pattern(raw_text, ngrams=UNIGRAMS, continuous=False):
 	"""This function does the Part of Speech tagging, using pattern lib.
 	It does not need the text to be tokenized first"""
 
+	raw_text = stopwords_removal(raw_text)
 	tagged = pattern.en.parse(raw_text, chunks=False)
 	return pattern.en.ngrams(tagged, n=ngrams, continuous=continuous)
 
@@ -66,13 +65,15 @@ def __manual_tokenizer(string_text):
 	return no_punctuation.split()
 
 #stopwords_removal functions
-def __manual_stopwords_removal(tokenized_string):
+def __manual_stopwords_removal(text):
 
-	tokenized_string_no_stopwords = [w for w in tokenized_string if w.lower() not in STANFORD_STOPWORDS]
-	return tokenized_string_no_stopwords
+	text = __manual_punctuation_removal(text)
+	text_no_stopwords = ' '.join([w for w in text.split() if w.lower() not in STANFORD_STOPWORDS])
+	return text_no_stopwords
 
-def __nltk_stopwords_removal(tokenized_string):
+def __nltk_stopwords_removal(text):
 	"""credits for http://nltk.org/book/ch02.html"""
 
-	content = [w for w in tokenized_string if w.lower() not in NLTK_STOPWORDS]
-	return content
+	text = __manual_punctuation_removal(text)
+	text_no_stopwords = ' '.join([w for w in text.split() if w.lower() not in NLTK_STOPWORDS])
+	return text_no_stopwords
