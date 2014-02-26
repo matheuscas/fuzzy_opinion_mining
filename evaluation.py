@@ -1,7 +1,7 @@
 import domain
 import decimal
 
-def precision(qtd_true_positives, list_of_true_negative_documents):
+def precision(qtd_true_positives, list_of_true_negative_documents, ref=0):
 	"""TP / (TP + FP)
 	TP - True Positive
 	FP - False Positive - a document is negative but classified as positive
@@ -9,13 +9,13 @@ def precision(qtd_true_positives, list_of_true_negative_documents):
 
 	fp = 0
 	for d in list_of_true_negative_documents:
-		if d.predicted_polarity > 0:
+		if d.predicted_polarity > ref:
 			fp = fp + 1
 	qtd_true_positives = decimal.Decimal(qtd_true_positives)
 	fp = decimal.Decimal(fp)
 	return (qtd_true_positives / (qtd_true_positives + fp))
 
-def recall(qtd_true_positives, list_of_true_positive_documents):
+def recall(qtd_true_positives, list_of_true_positive_documents, ref=0):
 	"""
 	TP / (TP + FN)
 	TP - True Positive
@@ -24,13 +24,13 @@ def recall(qtd_true_positives, list_of_true_positive_documents):
 
 	fn = 0
 	for d in list_of_true_positive_documents:
-		if d.predicted_polarity < 0:
+		if d.predicted_polarity < ref:
 			fn = fn + 1
 	qtd_true_positives = decimal.Decimal(qtd_true_positives)
 	fn = decimal.Decimal(fn)
 	return (qtd_true_positives / (qtd_true_positives + fn))
 
-def accuracy(qtd_true_positives, qtd_true_negatives, all_documents):
+def accuracy(qtd_true_positives, qtd_true_negatives, all_documents, ref=0	):
 	"""
 	(TP + TN) / (TP + TN + FP + FN)
 	TP - True positives
@@ -41,9 +41,9 @@ def accuracy(qtd_true_positives, qtd_true_negatives, all_documents):
 
 	fp = fn = 0
 	for d in all_documents:
-		if d.polarity == domain.Document.POSITIVE and d.predicted_polarity < 0:
+		if d.polarity == domain.Document.POSITIVE and d.predicted_polarity < ref:
 			fn = fn + 1
-		elif d.polarity == domain.Document.NEGATIVE	and d.predicted_polarity > 0:
+		elif d.polarity == domain.Document.NEGATIVE	and d.predicted_polarity > ref:
 			fp = fp + 1
 
 	fp = decimal.Decimal(fp)
