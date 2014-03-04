@@ -78,16 +78,16 @@ def pattern_pos_tag_and_remove_sw(raw_text, ngrams=UNIGRAMS, continuous=False, s
 
 	return pattern.en.ngrams(tagged_text, n=ngrams, continuous=continuous)
 
-def extract_ngrams(doc, stopwords=True):
+def extract_ngrams(doc, stopwords=True, rm_sw_first=True):
 
-	# doc.unigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, stopwords=stopwords)
-	# doc.bigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
-	# doc.trigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
-
-	doc.unigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, stopwords=stopwords)
-	doc.bigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
-	doc.trigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
-
+	if rm_sw_first:
+		doc.unigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, stopwords=stopwords)
+		doc.bigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
+		doc.trigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
+	else:
+		doc.unigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, stopwords=stopwords)
+		doc.bigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
+		doc.trigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
 
 """PRIVATE FUNCTIONS"""
 
