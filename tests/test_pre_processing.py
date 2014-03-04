@@ -18,9 +18,10 @@ def test_tokenizer():
 def test_stopwords_removal_stanford():
 
 	tokens_no_stopwords = pp.stopwords_removal(document_sample_text)
+	stopwords = pp.__build_stopwords_list()
 
 	for t in tokens_no_stopwords.split():
-		assert t.lower() not in pp.STANFORD_STOPWORDS
+		assert t.lower() not in stopwords
 
 def test_stopwords_removal_nltk():
 
