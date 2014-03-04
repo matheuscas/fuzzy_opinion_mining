@@ -6,9 +6,7 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 
 import pre_processing as pp
 
-document_sample_text = """three lengthy court cases are portrayed with spielberg's
-							trademark panache - - flashy beginning , lots of facial close-ups ,
-							big music , and dramatic imagery."""
+document_sample_text = """three lengthy court cases are portrayed with spielberg's trademark panache - - flashy beginning , lots of facial close-ups , big music , and dramatic imagery."""
 document_sample_text_tokens = 21 #without punctuation
 
 def test_stopwords_removal_stanford():

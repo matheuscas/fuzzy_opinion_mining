@@ -5,7 +5,7 @@ METHOD: Term Counting - SentiWordNet scores were calculated as positive and nega
 
 The absolute values of the terms were used to make comparations among the values. A document, for instance, that have the following vector of SentiWordNet scores is a negative document: [0.5, 0.125, -0.2, 0.625, -0.825]
 
-#ADJECTIVES - STOPWORDS
+#ADJECTIVES - REMOVING STOPWORDS
 Precision
 64.02048655569782330345710627 %
 Recall
@@ -13,7 +13,7 @@ Recall
 Accuracy
 70.39774727208729320661738824 %
 
-#ADJECTIVES - NO STOPWORDS
+#ADJECTIVES - NOT REMOVING STOPWORDS
 Precision
 63.85696040868454661558109834 %
 Recall

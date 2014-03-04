@@ -44,20 +44,50 @@ def pos_tagger(tokenized_string, ngrams=None):
 
 	return nltk.pos_tag(tokenized_string)
 
-def pos_tagger_pattern(raw_text, ngrams=UNIGRAMS, continuous=False, stopwords=True):
-	"""This function does the Part of Speech tagging, using pattern lib.
-	It does not need the text to be tokenized first"""
+def remove_sw_and_pattern_pos_tag(raw_text, ngrams=UNIGRAMS, continuous=False, stopwords=True):
+	"""This function removes stopwords first and then tags the text.
+
+	raw_text - string text from a document
+	ngrams - what kind of ngram, such as UNIGRAMS, BIGRAMS or TRIGRAMS, will extracted. UNIGRAMS by default
+	continuous - is pattern parameter that tells to the lib to respect or not punctuation. False by default.
+	stopwords - define is stopwords will be removed or not. True by default
+
+	return a list of tuples
+	"""
 
 	if stopwords:
 		raw_text = stopwords_removal(raw_text)
 	tagged = pattern.en.parse(raw_text, chunks=False)
 	return pattern.en.ngrams(tagged, n=ngrams, continuous=continuous)
 
+def pattern_pos_tag_and_remove_sw(raw_text, ngrams=UNIGRAMS, continuous=False, stopwords=True):
+	"""This function does the same operations as remove_sw_and_pattern_pos_tag, except in order
+	of stopwords extraction. In this function this is done after the text taggin."""
+
+	tagged_text = pattern.en.parse(raw_text, chunks=False)
+	if stopwords:
+		#remove punctuation from tagged text
+		penn_tags = ['CC','CD','DT','EX','FW','IN','JJ','JJR','JJS','LS','MD','NN','NNS','NNP',
+					'NNPS','PDT','POS','PRP','PRP$','RB','RBR','RBS','RP','SYM','TO','UH',
+					'VB','VBD','VBG','VBN','VBP','VBZ','WDT','WP','WP$','WRB']
+		tagged_text_parts = tagged_text.split(' ')
+		valid_parts = [part for part in tagged_text_parts if part.split('/')[1] in penn_tags]
+		#remove stopwords
+		words = dict(STOPWORDS).keys()
+		tagged_text = ' '.join([part for part in valid_parts if part.split('/')[0] not in words])
+
+	return pattern.en.ngrams(tagged_text, n=ngrams, continuous=continuous)
+
 def extract_ngrams(doc, stopwords=True):
 
-	doc.unigrams = pos_tagger_pattern(doc.raw_text, stopwords=stopwords)
-	doc.bigrams = pos_tagger_pattern(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
-	doc.trigrams = pos_tagger_pattern(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
+	# doc.unigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, stopwords=stopwords)
+	# doc.bigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
+	# doc.trigrams = remove_sw_and_pattern_pos_tag(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
+
+	doc.unigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, stopwords=stopwords)
+	doc.bigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, ngrams=BIGRAMS, stopwords=stopwords)
+	doc.trigrams = pattern_pos_tag_and_remove_sw(doc.raw_text, ngrams=TRIGRAMS, stopwords=stopwords)
+
 
 """PRIVATE FUNCTIONS"""
 
