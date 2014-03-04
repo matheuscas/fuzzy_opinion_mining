@@ -28,13 +28,6 @@ UNIGRAMS = 1
 BIGRAMS = 2
 TRIGRAMS = 3
 
-def tokenizer(raw_text):
-	"""Split a raw_text into a list of words
-	Returns a string list of words without punctuation
-	"""
-
-	return __manual_tokenizer(raw_text)
-
 def stopwords_removal(text, method=None):
 	"""Remove stopwords from text using the choosed method
 	If method is None, the STANFORD_STOPWORDS are used to remove them.
@@ -74,12 +67,6 @@ def __manual_punctuation_removal(raw_text):
 
 	table = string.maketrans("","")
 	return raw_text.translate(table, string.punctuation)
-
-#tokenizer functions
-def __manual_tokenizer(string_text):
-
-	no_punctuation = __manual_punctuation_removal(string_text)
-	return no_punctuation.split()
 
 #stopwords_removal functions
 def __manual_stopwords_removal(text):

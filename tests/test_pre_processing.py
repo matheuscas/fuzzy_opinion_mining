@@ -11,14 +11,10 @@ document_sample_text = """three lengthy court cases are portrayed with spielberg
 							big music , and dramatic imagery."""
 document_sample_text_tokens = 21 #without punctuation
 
-def test_tokenizer():
-	tokens = pp.tokenizer(document_sample_text)
-	assert len(tokens) == document_sample_text_tokens
-
 def test_stopwords_removal_stanford():
 
 	tokens_no_stopwords = pp.stopwords_removal(document_sample_text)
-	stopwords = pp.__build_stopwords_list()
+	stopwords = pp.STOPWORDS
 
 	for t in tokens_no_stopwords.split():
 		assert t.lower() not in stopwords
