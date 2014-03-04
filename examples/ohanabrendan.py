@@ -1,16 +1,20 @@
 import os
-import domain
-import classification
-import pre_processing as pp
-import evaluation as eval
 import decimal
 import sys
 import argparse
 
+sys.path.insert(1, os.path.join(sys.path[0], '..'))
+
+import domain
+import classification
+import pre_processing as pp
+import evaluation as eval
+
 parser = argparse.ArgumentParser()
 parser.add_argument("qDocs", action="store", help="number of documents to be analyzes and classified", type=int)
-parser.add_argument('-tags', action='append', default=['JJ'],help='Tags to be analyzed. RB for adverbs; \
-	VB, VBZ and VPB for verbs. JJ for adjectives is already default')
+parser.add_argument("-sw","--stopwords", help="stopwords are stripped off",action="store_true")
+parser.add_argument('-t', '--tags', nargs='+', type=str,
+	help="To choose elements to be used, pass a list of them. JJ for adjectives;RB for adverbs;VB/VBZ/VBP for verbs")
 
 args = parser.parse_args()
 
@@ -21,7 +25,6 @@ args = parser.parse_args()
 
 clear = lambda: os.system('clear')
 
-print args.tags
 print "____________________PRE-PROCESSING STAGE____________________"
 print "creating documents"
 path = os.path.abspath(os.curdir) + '/corpora/cs_cornell_edu/txt_sentoken/'
@@ -34,13 +37,13 @@ num_of_documents = args.qDocs
 for p_doc in list(enumerate(corpora.positives[:num_of_documents])):
 	print "extracting ngrams from positive documents"
 	print p_doc[0]
-	pp.extract_ngrams(p_doc[1])
+	pp.extract_ngrams(p_doc[1], stopwords=args.stopwords)
 	clear()
 
 for n_doc in list(enumerate(corpora.negatives[:num_of_documents])):
 	print "extracting ngrams from negative documents"
 	print n_doc[0]
-	pp.extract_ngrams(n_doc[1])
+	pp.extract_ngrams(n_doc[1], stopwords=args.stopwords)
 	clear()
 
 print "____________________CLASSIFICATION STAGE____________________"
@@ -50,7 +53,8 @@ classifier.rule = args.tags
 classifier.term_counting()
 
 print "____________________EVALUATION STAGE____________________"
-
+print args
+print
 print "Precision"
 print str(eval.precision(len(corpora.positives[:num_of_documents]), corpora.negatives[:num_of_documents]) * decimal.Decimal(100)) + ' %'
 print "Recall"
