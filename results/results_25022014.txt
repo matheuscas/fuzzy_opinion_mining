@@ -1,0 +1,42 @@
+---> "Sentiment Classification of Reviews Using SentiWordNet"
+Ohana, Bruno; Tierney, Brendan
+
+METHOD: Term Counting - SentiWordNet scores were calculated as positive and negative terms were found on each document, and used to determine sentiment orientation by assigning the document to the class with the highest score.
+
+The absolute values of the terms were used to make comparations among the values. A document, for instance, that have the following vector of SentiWordNet scores is a negative document: [0.5, 0.125, -0.2, 0.625, -0.825]
+
+#ADJECTIVES - STOPWORDS
+Precision
+64.02048655569782330345710627 %
+Recall
+78.18608287724784988272087568 %
+Accuracy
+70.39774727208729320661738824 %
+
+#ADJECTIVES - NO STOPWORDS
+Precision
+63.85696040868454661558109834 %
+Recall
+78.12500 %
+Accuracy
+70.27406886858749121574139143 %
+
+---> "A Sentimental Analysis of Movie Reviews Involving Fuzzy Rule-Based"
+
+METHOD: "Term Counting" Rule-Based - 3 of 4 cases in this paper was used, because the fourth wasn't used because I couldn't understand him, as the Final Sentiment Score (I couldn't understand the referenced annotations in documents).So I used the "Term Counting" from another paper, to study haw if bigrams and trigrams would have a better performance. 
+
+# WITH STOPWORDS
+Precision
+62.93266205160478288231592196 %
+Recall
+85.83690987124463519313304721 %
+Accuracy
+72.62164124909222948438634713 %
+
+# WITHOUT STOPWORDS
+Precision
+64.80881399870382372002592353 %
+Recall
+85.47008547008547008547008547 %
+Accuracy
+73.71913011426465167711021010 %
