@@ -140,10 +140,11 @@ class Pimpalkar(Classification):
 			bigram_2 = bigram[1]
 			word_tag_1 = bigram_1.split('/')
 			word_tag_2 = bigram_2.split('/')
-			if (word_tag_1[1] == self.ADVERB and word_tag_1[0].lower() in self.ADVERBS) and word_tag_2[1] == self.ADJECTIVE:
-				case_1.append(bigram)
-			elif (word_tag_1[0].lower() in self.NEGATIONS) and (word_tag_2[1] == self.ADJECTIVE or word_tag_2[1] in self.VERBS):
-				case_2.append(bigram)
+			if len(word_tag_1) > 1 and len(word_tag_2) > 1:
+				if (word_tag_1[1] == self.ADVERB and word_tag_1[0].lower() in self.ADVERBS) and word_tag_2[1] == self.ADJECTIVE:
+					case_1.append(bigram)
+				elif (word_tag_1[0].lower() in self.NEGATIONS) and (word_tag_2[1] == self.ADJECTIVE or word_tag_2[1] in self.VERBS):
+					case_2.append(bigram)
 
 		for trigram in doc.trigrams:
 			trigram_1 = trigram[0]
@@ -152,8 +153,9 @@ class Pimpalkar(Classification):
 			word_tag_1 = trigram_1.split('/')
 			word_tag_2 = trigram_2.split('/')
 			word_tag_3 = trigram_3.split('/')
-			if word_tag_1[0] in self.NEGATIONS and word_tag_2[0] in self.ADVERBS and word_tag_3[1] == self.ADJECTIVE:
-				case_3.append(trigram)
+			if len(word_tag_1) > 1 and len(word_tag_2) > 1 and len(word_tag_3) > 1:
+				if word_tag_1[0] in self.NEGATIONS and word_tag_2[0] in self.ADVERBS and word_tag_3[1] == self.ADJECTIVE:
+					case_3.append(trigram)
 
 		scores = []
 		for bigram in case_1:
