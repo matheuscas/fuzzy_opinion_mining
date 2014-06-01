@@ -1,0 +1,13 @@
+hardly;4
+scarcely;4
+barely;4
+little;4
+pretty;4
+not;4
+horribly;4
+pathetically;4
+deceptively;4
+sadly;4
+woefully;4
+poorly;4
+madly;4

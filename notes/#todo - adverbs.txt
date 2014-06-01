@@ -1,0 +1,799 @@
+#todo - adverbs
+----------------------------------> Non-grading adverbs [1] <-----------------
+
+absolutely (in [3] is a maximizer)
+utterly (in [3] is a maximizer)
+completely (in [3] is a maximizer)
+totally
+nearly (in [3] is a approximator)
+virtually
+essentially (sentiwordnet says that this adverb is 0.5 positive)
+mainly
+almost (in [3] is a approximator)
+only
+also
+far
+particularly
+equally
+always
+often
+especially
+mostly
+probably
+sometimes
+now
+remotely
+potentially
+once
+thoroughly
+usually
+increasingly
+largely
+emotionally
+down
+perhaps
+merely
+already
+ever
+generally
+consistently
+exactly
+mentally
+then
+occasionally
+strangely
+ultimately
+unintentionally
+deliciously
+oddly (it's here by the same criteria used to classify strangely - same synset)
+inherently
+purely
+supposedly
+vaguely
+politically
+somehow
+wholly (it's here by the same criteria used to classify totally and completely - same synset)
+appropriately
+blatantly
+exceptionally
+however
+technically
+immediately
+necessarily
+sexually
+suitably
+terminally
+uniformly
+away
+back
+constantly
+initially
+kinda
+longer
+perpetually
+previously
+shockingly
+undeniably
+finally
+frequently
+strictly
+unexpectedly
+genetically
+psychologically
+typically
+unusually
+astonishingly
+darkly
+distinctly
+endlessly
+maybe
+physically
+strikingly
+unbearably
+wickedly (although, sentwordnet says is a negative adverb)
+admittedly
+here
+instantly
+intensely
+intentionally
+maddeningly
+morally
+normally
+possibly
+progressively
+similarly
+socially
+absurdly
+arguably
+eventually
+gloriously
+heavily
+hysterically
+incessantly
+nonetheless
+noticeably
+practically
+relentlessly
+supremely
+therefore
+together
+abundantly
+achingly
+artistically
+needlessly
+notoriously
+predictably
+rarely
+riotously
+singularly
+south
+tragically
+acutely
+astoundingly
+automatically
+commercially
+convincingly
+critically
+culturally
+desperately
+disastrously
+financially
+forth
+frankly
+frighteningly
+later
+mainly
+mercifully
+notably
+oftentimes
+overtly
+predominantly
+presumably
+primarily
+profoundly
+quickly
+recently
+resolutely
+somewhere
+sporadically
+suddenly
+thus
+universally
+accurately
+actively
+allegedly
+alternately
+blandly
+breathtakingly
+cheerfully
+chillingly
+completly
+continuously
+creatively
+criminally
+defiantly
+deliberately
+yon
+disarmingly
+drastically
+earlier
+forward
+heretofore
+historically
+humanly
+inevitably
+interestingly
+legally
+likewise
+mindnumbingly
+molly
+monumentally
+mysteriously
+namely
+numbingly
+obnoxiously
+oppressively
+originally
+outstandingly
+phenomenally
+playfully
+purposefully
+reportedly
+scientifically
+stupefyingly
+sufficiently
+sweetly
+technologically
+traditionally
+transparently
+unabashedly
+understandably
+unfortunately
+uniquely
+weirdly
+admittingly
+aesthetically
+alone
+apart
+appallingly
+artificially
+atmospherically
+awkwardly
+bizarrely
+blindingly
+boyishly
+brightly
+catatonically
+characteristically
+conceptually
+consciously
+conspicuously
+currently
+depressingly
+disasterously
+distinctively
+distractingly
+environmentally
+ethnically
+exclusively
+excrutiatingly
+explicitly
+fast
+fatally
+ferociously
+fiercely
+giggly
+goofily
+gratuitously
+guiltily
+halfway
+happily
+hauntingly
+honestly
+hopefully
+horrendously
+instead
+insultingly
+intermittently
+intriguingly
+invariably
+ironically
+lovably
+meanwhile
+naturally
+nauseatingly
+notwithstanding
+north
+noticably
+nowhere
+offensively
+outwardly
+paralyzingly
+powerfully
+precisely
+predominately
+racially
+resoundingly
+rousingly
+self-consciously
+simultaneously
+sinfully
+solely
+specifically
+spontaneously
+stereotypically
+strategically
+strongly
+structurally
+successfully
+terrifyingly
+thematically
+touchingly
+trashily
+unfathomably
+unremittingly
+viciously
+ably
+again
+aggravatingly
+agonisingly
+alternatively
+amateurishly
+anatomically
+anymore
+ardently
+askew
+assuredly
+audaciously
+aurally
+authentically
+bafflingly
+beguilingly
+believably
+benignly
+bewilderingly
+biblically
+blackly
+blindly
+bobbly
+breezily
+bumblingly
+campily
+carefully
+casually
+certifiably
+cheekily
+cheesily
+chiefly
+chipperly
+chronically
+cleverly
+clinically
+clumsily
+colorfully
+comedically
+commendably
+comparatively
+consequently
+continually
+conveniently
+conventionally
+courageously
+creepily
+dauntingly
+deadeningly
+decently
+decidely
+decisively
+defeaningly
+definately
+delicately
+devastingly
+dishearteningly
+distressingly
+effervescently
+effortlessly
+electrically
+embarrsingly
+adorably
+energetically
+else
+enticingly
+enviromentally
+ethereally
+ethically
+exhilaratingly
+exorbitantly
+exotically
+expectedly
+expressionistically
+exuberantly (same synset of riotously)
+famously
+fearlessly
+fearsomely
+feebly
+fiscally
+flamboyantly
+flexibly
+foolishly
+formally
+formerly
+frantically
+freshly
+furiously
+gently
+giddily
+globally
+gloomily
+godly
+gradually
+gratingly
+groundbreakingly
+harrowingly
+hormonally
+horrifically
+horrifyingly
+howlingly
+icily
+identically
+ideologically
+imaginatively
+impartially
+improbably
+inanely
+incomprehensibly
+incredulously
+indelibly
+independently
+indubitably
+inelegantly
+inexcusably
+inexplicably
+inhumanly
+innocently
+innocuously
+innovatively
+insidiously
+insipidly
+internally
+joyously
+liberally
+lifelessly
+locally
+logically
+lovingly
+magically
+majorly
+markedly
+medically
+mightily (same synset of powerfuly)
+minorly
+minutely
+miraculously
+modestly
+momumentally
+moralistically
+mordantly
+musically
+mutually
+mystically
+narcissistically
+nationally
+nightmarishly
+nobly
+nominally
+obssessively
+occassionally
+officially
+ominously
+orgasmically
+overbearingly
+painstakingly
+passingly
+passionately
+pathologically
+patiently
+personally
+philosophically
+pointlessly
+polymorphously
+positively
+preferably
+prematurely
+pretentiously
+pricelessly
+properly
+psycholically
+purposely
+puttingly
+quietly
+repulsively
+richly
+rightfully
+romantically
+roughly
+routinely
+scathingly
+seldom
+shamelessly
+sheerly
+shortly
+sloppily
+slowly
+smashingly
+smirkingly
+someplace
+sometime
+soon
+soothingly
+spinetinglingly
+steadily
+stirringly
+stoically
+stonily
+strenuously
+stupidly
+stylishly
+stylistically
+suggestively
+supernaturally
+suspiciously
+sustainably
+symbolically
+systematically
+tellingly
+temperamentally
+thoughtfully
+thrillingly
+thunderously
+tightly
+trendily
+unambiguously
+unanimously
+unapologetically
+unashamedly
+uncannily
+uncomfortably
+uncompromisingly
+unconsciously
+unconventionally
+unendurably
+unerringly
+unforgivably
+unhappily
+unmitigatedly
+unpleasantly
+unselfconsciously
+unsettlingly
+unspeakably
+upwardly
+vapidly
+viscously
+vocally
+
+----------------------------------> Intensifiers <-----------------------------
+
+*Strong* (emphasizer)
+really
+very
+definitely
+so (in [3] is a intensifier, but less than a emphasizer)
+greatly (in [3] is a intensifier, but less than a emphasizer)
+most (in [3] is a intensifier, but less than a emphasizer)
+extremely
+too (synonym of very in negative sentences [3])
+actually
+certainly
+clearly
+indeed
+obviously
+plainly
+surely
+frankly
+honestly
+literally
+simply
+just
+perfectly
+strongly
+highly (it's here by the same criteria used to classify extremely - same synset)
+wonderfully
+seemingly
+truly
+genuinely (it's here by the same criteria used to classify truly - same synset)
+downright
+wildly (although sentiword says this is a objective adverb, the description says otherwise: "to an extreme or greatly exaggerated degree")
+exceedingly (sentiwordnet says that this is an negative adverb. However is in the same synset of extremely. So I put this word here)
+curiously
+comically
+excessively (sentiwordnet says that this is an negative adverb. However I desagreed)
+outrageously (sentiwordnet says that this adverb is pure objective, but in one of its synset has the following description: to an extravagant or immoderate degree)
+undoubtedly
+doubly
+superbly
+terrifically
+impressively
+amusingly
+awesomely
+magnificently
+marvelously
+stupendously (althoug objective in sentiwordnet, I put here because its description: to a stupendous degree)
+peculiarly (same synset of curiously)
+screamingly (sentiwordnet says that this adverb is pure objective, but in one of its synset has the following description: to an extreme degree)
+splendidly (same synset of magnificently)
+surely (same synset of certainly) 
+unseasonably (sentiwordnet says that this is an negative adverb. However I desagreed)
+extraordinarily
+insanely
+
+*Medium* (booster)
+altogether
+entirely
+fully (synonym of completely. Is he a non-gradable adverb or a intensifier?)
+throughly
+badly
+deeply (in [3a] is a emphaziser)
+heartily
+much
+violently
+more
+easily
+openly
+quitely
+readily
+otherwise
+terribly
+visually
+incredibly
+awfully
+decidedly
+basically
+obviously
+immensely
+delightfully
+hilariously
+apparently
+unbelievably
+brutally
+intellectually
+hopelessly
+hugely (sentiwordnet says that this is an negative adverb. However I desagreed)
+dreadfully (same synset of awfully)
+refreshingly
+stunningly
+brilliantly
+gleefully
+nicely
+patently
+vastly (same synset of immensely)
+dramatically
+enormously (sentiwordnet says that this is an negative adverb. However I desagreed)
+significantly
+startlingly
+beautifully
+blissfully
+charmingly
+eerily
+eminently
+enjoyably
+fundamentally (same synset of basically. However, in the same synset there is the essentially word)
+hideously
+unnecessarily
+fabulously
+fantastically (idem fabulously)
+gruesomely
+spectacularly
+tremendously (idem hugely)
+uproariously (same synset of hilariously)
+widely (sentiwordnet says that this adverb is objective. However, the description says: to a great degree. So I put it in here)
+aggressively
+deliriously
+disturbingly
+effectively
+gravely
+irritatingly
+obscenely (althoug sentiwordnet says that it is an objective adverb)
+radiantly
+severely (same synset of badly)
+uncharacteristically
+unrelentingly
+abysmally
+admirably
+agonizingly (despite of low and negative degree, I put it in here)
+bitingly (despite of negative degree, I put it in here)
+bitterly (same synset of bitingly)
+breathlessly
+broadly (and largely???)
+dazzlingly
+devastatingly
+frightfully (same synset of awfully)
+glaringly
+miserably
+monstrously
+ostensibly
+overwhelmingly
+radically
+rollickingly
+ruggedly
+starkly
+wondrously
+agreeably
+amply
+attractively (same synset of beautifully)
+blazingly
+captivatingly
+demonstrably
+disconcertingly
+dismally
+drearily (same synset of dismally)
+elegantly
+entertainingly
+evidently (same synset of obviously)
+formidably
+meticulously
+pleasantly (same synset of enjoyably)
+pleasingly
+satisfyingly
+staggeringly (same synset of enormously)
+torturously (same synset of agonizingly)
+twice
+unquestionably
+
+*Weak* 
+surprisingly
+well
+remarkably
+ridiculously
+laughably
+infinitely
+amazingly (it's here by the same criteria used to classify surprisingly - same synset)
+considerably
+marginally
+ludicrously
+subtly
+uncommonly
+adequately
+innately
+preposterously (same synset of laughably)
+substantially (same synset of considerably)
+superficially
+whimsically
+abnormally
+delectably
+discouragingly
+realistically
+reflexively
+repetitively
+unmistakably (same synset of remarkably)
+unreasonably
+
+----------------------------------> Softening (downtoners) <-------------------
+
+*Strong* (minimizers)
+hardly
+scarcely
+barely
+little
+pretty
+not 
+horribly
+pathetically
+deceptively
+sadly
+woefully (same synset of sadly)
+poorly
+madly (same synset of insanely)
+
+*Medium* (diminishers)
+quite (in [3] is a downtoners)
+rather (in [3] is a downtoners)
+partly
+somewhat
+mildly
+moderately
+partially
+seriously
+embarrassingly
+annoyingly
+disappointingly (sentiwordnet says that this adverb is positive. However, I desagreed)
+darned (sentiwordnet says that this adverb can be negative and positive in the same degree. I decided put it in here)
+bleakly
+grossly
+perversely
+boringly
+detrimentally
+diabolically
+earnestly (same synset of seriously)
+fiendishly (same synset of diabolically)
+grotesquely (sentiwordnet says that this adverb is positive. However, I desagreed)
+
+*Weak* (compromisers and approximators)
+kind
+slightly (in [3] is a diminishers)
+comparatively
+enough
+relatively
+fairly (em [3], fairly is and emphasizer, but in [2] has a lower degree than very)
+even (is negative on sentiwordnet when combined with a adjective)
+still (it's here by the same criteria used to classify even - same synset)
+yet (it's here by the same criteria used to classify even and still - same synset)
+never
+overly
+painfully
+excruciatingly
+reasonably
+impossibly
+disgustingly
+interminably
+cruelly
+revoltingly
+sickeningly
+weakly
+
+----------------------------------> References
+[1] http://www.englishclub.com/grammar/adjectives-non-gradable.htm   
+[2] http://englishmistakeswelcome.com/intensifiers.htm
+[3] https://docs.google.com/file/d/0B68t7_mU-Qe9b0J1WE5hSlViZE0/edit
+[3a] https://docs.google.com/file/d/0B68t7_mU-Qe9b0J1WE5hSlViZE0/edit
+[4] http://sentiwordnet.isti.cnr.it/index.php
+   
