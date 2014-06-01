@@ -1,4 +1,4 @@
 fuzzy_opinion_mining
 ====================
 
-Estudar, avaliar e desenvolver sistemas automáticos de mineração de opiniões baseados em Lógica Nebulosa;
+Propor e avaliar o desempenho de um sistema de mineração de opiniões baseado na lógica fuzzy
