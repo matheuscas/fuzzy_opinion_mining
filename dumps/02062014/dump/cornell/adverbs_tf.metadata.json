@@ -1,0 +1,1 @@
+{ "indexes" : [ { "v" : 1, "key" : { "_id" : 1 }, "ns" : "cornell.adverbs_tf", "name" : "_id_" } ] }
