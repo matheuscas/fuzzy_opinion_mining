@@ -176,6 +176,20 @@ class BaseModel(object):
 			collection.insert({'word':adverb,'factor':factor})
 		f.close()
 
+	def pre_process_ngrams(self):
+		"""This method calls the other methods for each type of ngram. It is a shorcut instead of call
+			the other one by one.
+		"""
+
+		print 'Pre processing adjectives...This can take awhile, depending on corpora size. Cofee, maybe?'
+		self.pre_process_adjectives()
+		print 'Pre processing noun...A snack, perhaps?'
+		self.pre_process_nouns()
+		print 'Pre processing adverbs...Go read a book or something else, what do you think?'
+		self.pre_process_adverbs()
+		print 'Pre processing adv/adj bigram...Boy, this last one is big!'
+		self.pre_process_adv_adj_bigrams()
+
 class TripAdvisorModel(BaseModel):
 	"""docstring for TripAdvisorModel"""
 
@@ -183,11 +197,29 @@ class TripAdvisorModel(BaseModel):
 		BaseModel.__init__(self, database_name)
 
 	def read_corpora_source(self):
-		source = os.path.abspath(os.curdir) + '/corpora/trip_advisor/TripAdvisor_5255.txt'
-		source_file = open(source,'r')
+
+		source_5255 = os.path.abspath(os.curdir) + '/corpora/trip_advisor/TripAdvisor_5255.txt'
+		source_10508 = os.path.abspath(os.curdir) + '/corpora/trip_advisor/TripAdvisor_10508.txt'
+		source_file_5255 = open(source_5255,'r')
+		source_file_10508 = open(source_10508,'r')
+
 		list_of_dict_units = []
 
-		for line in source_file.readlines():
+		for line in source_file_5255.readlines():
+			parts = line.split()
+			name = parts[0]
+			degree = parts[len(parts) - 1]
+
+			cons = parts[len(parts) - 2]
+			cons = cons.decode('Windows-1252').encode('utf-8')
+
+			pros = parts[len(parts) - 3]
+			pros = pros.decode('Windows-1252').encode('utf-8')
+
+			text = string.join(parts[1:len(parts)-3])
+			list_of_dict_units.append({'name':name,'text':text,'degree':degree,'pros':pros,'cons':cons})
+
+		for line in source_file_10508.readlines():
 			parts = line.split()
 			name = parts[0]
 			degree = parts[len(parts) - 1]
