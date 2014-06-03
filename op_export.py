@@ -16,42 +16,60 @@ class BaseExport(object):
 	def export_files(self):
 		pass
 
-	def calculates_adjectives_polarities(self, ndoc, unique=True):
-		"""This method calculates all adjectives polarities based on the following arguments
+	# def calculates_adjectives_polarities(self, ndoc, unique=True):
+	# 	"""This method calculates all adjectives polarities based on the following arguments
+
+	# 	Keyword arguments:
+	# 	ndoc -- given document
+	# 	unique -- False for all adjectives list.
+	# 			  True for only those adjectives that are not in bigrams (or trigrams) list. (default: True)
+	# 	"""
+	# 	adjectives = ndoc['adjectives']
+	# 	adjs_adv_adj_bigram = ndoc['adjs_adv_adj_bigram']
+	# 	for e in adjs_adv_adj_bigram:
+	# 		if e in adjectives:
+	# 			adjectives.remove(e)
+
+	# 	adjectives_polarities = []
+	# 	for adjective in adjectives:
+	# 		polarity = transformation.word_polarity(adjective)
+	# 		if polarity and polarity[0] != 0.0:
+	# 			adjectives_polarities.append(polarity[0])
+
+	# 	return adjectives_polarities
+
+	# def default_calculates_adv_adj_bigrams_polarities(self, ndoc):
+	# 	"""This method calculates all bigrams polarities based on the following arguments
+
+	# 	Keyword arguments:
+	# 	ndoc -- given document
+	# 	"""
+
+	# 	adv_adj_bigrams_polarities = []
+	# 	for bigram in ndoc['adv_adj_bigrams']:
+	# 		bigram_polarity = transformation.default_adv_adj_bigram_polarity(bigram)
+	# 		if bigram_polarity:
+	# 			adv_adj_bigrams_polarities.append(bigram_polarity)
+
+	# 	return adv_adj_bigrams_polarities
+
+	def get_adjectives(self, ndoc, filtered=True):
+		"""This method return from document all the adjectives based on the following parameters:
 
 		Keyword arguments:
-		ndoc -- given document
-		unique -- False for all adjectives list.
-				  True for only those adjectives that are not in bigrams (or trigrams) list. (default: True)
+		ndoc -- document from model
+		filtered -- Returns only adjectives that are not in ADV / ADJ bigrams (default: True)
 		"""
+
 		adjectives = ndoc['adjectives']
 		adjs_adv_adj_bigram = ndoc['adjs_adv_adj_bigram']
-		for e in adjs_adv_adj_bigram:
-			if e in adjectives:
-				adjectives.remove(e)
 
-		adjectives_polarities = []
-		for adjective in adjectives:
-			polarity = transformation.word_polarity(adjective)
-			if polarity and polarity[0] != 0.0:
-				adjectives_polarities.append(polarity[0])
+		if filtered:
+			for e in adjs_adv_adj_bigram:
+				if e in adjectives:
+					adjectives.remove(e)
 
-		return adjectives_polarities
-
-	def default_calculates_adv_adj_bigrams_polarities(self, ndoc):
-		"""This method calculates all bigrams polarities based on the following arguments
-
-		Keyword arguments:
-		ndoc -- given document
-		"""
-
-		adv_adj_bigrams_polarities = []
-		for bigram in ndoc['adv_adj_bigrams']:
-			bigram_polarity = transformation.default_adv_adj_bigram_polarity(bigram)
-			if bigram_polarity:
-				adv_adj_bigrams_polarities.append(bigram_polarity)
-
-		return adv_adj_bigrams_polarities
+		return adjectives
 
 class TripAdvisorExport(BaseExport):
 	"""Class responsible for create and export files with ngrams polarities from its model"""
@@ -67,15 +85,22 @@ class TripAdvisorExport(BaseExport):
 		positive_matrix_max_size = 0.0
 
 		for ndoc in self.model.documents.find():
+
 			if float(ndoc['degree']) <= 2:
-				ndoc_polarities = self.calculates_adjectives_polarities(ndoc) + \
-										self.default_calculates_adv_adj_bigrams_polarities(ndoc)
+
+				adjectives = self.get_adjectives(ndoc)
+
+				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
+										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
 				negative_matrix.append(ndoc_polarities)
 			elif float(ndoc['degree']) >= 4:
-				ndoc_polarities = self.calculates_adjectives_polarities(ndoc) + \
-										self.default_calculates_adv_adj_bigrams_polarities(ndoc)
+
+				adjectives = self.get_adjectives(ndoc)
+
+				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
+										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
 				positive_matrix.append(ndoc_polarities)
@@ -115,15 +140,18 @@ class CornellMoviesExport(BaseExport):
 		positive_matrix_max_size = 0.0
 
 		for ndoc in self.model.documents.find():
+
+			adjectives = self.get_adjectives(ndoc)
+
 			if ndoc['polarity'] == 0:
-				ndoc_polarities = self.calculates_adjectives_polarities(ndoc) + \
-										self.default_calculates_adv_adj_bigrams_polarities(ndoc)
+				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
+										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
 				negative_matrix.append(ndoc_polarities)
 			elif ndoc['polarity'] == 1:
-				ndoc_polarities = self.calculates_adjectives_polarities(ndoc) + \
-										self.default_calculates_adv_adj_bigrams_polarities(ndoc)
+				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
+										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
 				positive_matrix.append(ndoc_polarities)
