@@ -4,11 +4,10 @@ import abc
 import string
 import util
 from textblob import TextBlob, Word, Blobber
-from textblob.wordnet import ADV, ADJ, NOUN, VERB
+from textblob.taggers import NLTKTagger
+from textblob.taggers import PatternTagger
 from textblob_aptagger import PerceptronTagger
-from bson.son import SON
-from bson.code import Code
-from pattern.search import search
+from textblob.wordnet import ADV, ADJ, NOUN, VERB
 
 class BaseModel(object):
 	"""docstring for BaseModel class that represents and generic corpora in mongodb"""
@@ -92,10 +91,20 @@ class BaseModel(object):
 
 		return bigram in self.ADVERB_ADJECTIVE_BIGRAMS
 
-	def pre_process_adverbs(self):
-		"""This method extracts all adverbs from each document in the documents collection"""
+	def pre_process_adverbs(self, tagger="PerceptronTagger"):
+		"""This method extracts all adverbs from each document in the documents collection
+
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+                      PerceptronTagger (default) and PatternTagger
+		"""
 
 		pt = Blobber(pos_tagger=PerceptronTagger())
+		if tagger == "PatternTagger":
+			pt = Blobber(pos_tagger=PatternTagger())
+		else:
+			print "PerceptronTagger will be used"	
+		
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			advs = []
@@ -105,10 +114,21 @@ class BaseModel(object):
 					advs.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adverbs':advs}})
 
-	def pre_process_nouns(self):
-		"""This method extracts all nouns from each document in the documents collection"""
+	def pre_process_nouns(self, tagger="PerceptronTagger"):
+		"""This method extracts all nouns from each document in the documents collection
+
+
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+                      PerceptronTagger (default) and PatternTagger
+		"""
 
 		pt = Blobber(pos_tagger=PerceptronTagger())
+		if tagger == "PatternTagger":
+			pt = Blobber(pos_tagger=PatternTagger())
+		else:
+			print "PerceptronTagger will be used"	
+
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			nouns = []
@@ -118,10 +138,20 @@ class BaseModel(object):
 					nouns.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'nouns':nouns}})
 
-	def pre_process_adjectives(self):
-		"""This method extracts all adjectives from each document in the documents collection"""
+	def pre_process_adjectives(self, tagger="PerceptronTagger"):
+		"""This method extracts all adjectives from each document in the documents collection
+
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+                      PerceptronTagger (default) and PatternTagger
+		"""
 
 		pt = Blobber(pos_tagger=PerceptronTagger())
+		if tagger == "PatternTagger":
+			pt = Blobber(pos_tagger=PatternTagger())
+		else:
+			print "PerceptronTagger will be used"	
+
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			adjectives = []
@@ -131,10 +161,20 @@ class BaseModel(object):
 					adjectives.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adjectives':adjectives}})
 
-	def pre_process_adv_adj_bigrams(self):
-		"""This method extracts all adv_adj_bigrams from each document in the documents collection"""
+	def pre_process_adv_adj_bigrams(self, tagger="PerceptronTagger"):
+		"""This method extracts all adv_adj_bigrams from each document in the documents collection
+
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+                      PerceptronTagger (default) and PatternTagger
+		"""
 
 		pt = Blobber(pos_tagger=PerceptronTagger())
+		if tagger == "PatternTagger":
+			pt = Blobber(pos_tagger=PatternTagger())
+		else:
+			print "PerceptronTagger will be used"	
+
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])
 			valid_bigrams = []
@@ -176,19 +216,23 @@ class BaseModel(object):
 			collection.insert({'word':adverb,'factor':factor})
 		f.close()
 
-	def pre_process_ngrams(self):
+	def pre_process_ngrams(self, tagger="PerceptronTagger"):
 		"""This method calls the other methods for each type of ngram. It is a shorcut instead of call
 			the other one by one.
+
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+                      PerceptronTagger (default) and PatternTagger
 		"""
 
 		print 'Pre processing adjectives...This can take awhile, depending on corpora size. Cofee, maybe?'
-		self.pre_process_adjectives()
+		self.pre_process_adjectives(tagger)
 		print 'Pre processing noun...A snack, perhaps?'
-		self.pre_process_nouns()
+		self.pre_process_nouns(tagger)
 		print 'Pre processing adverbs...Go read a book or something else, what do you think?'
-		self.pre_process_adverbs()
+		self.pre_process_adverbs(tagger)
 		print 'Pre processing adv/adj bigram...Boy, this last one is big!'
-		self.pre_process_adv_adj_bigrams()
+		self.pre_process_adv_adj_bigrams(tagger)
 
 class TripAdvisorModel(BaseModel):
 	"""docstring for TripAdvisorModel"""
