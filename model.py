@@ -91,6 +91,14 @@ class BaseModel(object):
 
 		return bigram in self.ADVERB_ADJECTIVE_BIGRAMS
 
+	def tags(self, blob):
+		parsed_text = blob.parse().split()
+		tags = []
+		for elem in parsed_text[0]:
+			tags.append((elem[0],elem[1]))
+
+		return tags
+
 	def pre_process_adverbs(self, tagger="PerceptronTagger"):
 		"""This method extracts all adverbs from each document in the documents collection
 
@@ -103,12 +111,12 @@ class BaseModel(object):
 		if tagger == "PatternTagger":
 			pt = Blobber(pos_tagger=PatternTagger())
 		else:
-			print "PerceptronTagger will be used"	
-		
+			print "PerceptronTagger will be used"
+
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			advs = []
-			for word, tag in blob.tags:
+			for word, tag in self.tags(blob):
 				is_adv = len(Word(word).get_synsets(pos=ADV)) > 0
 				if tag in self.PENN_ADVERBS_TAGS and is_adv:
 					advs.append(word)
@@ -127,12 +135,12 @@ class BaseModel(object):
 		if tagger == "PatternTagger":
 			pt = Blobber(pos_tagger=PatternTagger())
 		else:
-			print "PerceptronTagger will be used"	
+			print "PerceptronTagger will be used"
 
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			nouns = []
-			for word, tag in blob.tags:
+			for word, tag in self.tags(blob):
 				is_noun = len(Word(word).get_synsets(pos=NOUN)) > 0
 				if tag in self.PENN_NOUNS_TAGS and is_noun:
 					nouns.append(word)
@@ -150,12 +158,12 @@ class BaseModel(object):
 		if tagger == "PatternTagger":
 			pt = Blobber(pos_tagger=PatternTagger())
 		else:
-			print "PerceptronTagger will be used"	
+			print "PerceptronTagger will be used"
 
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			adjectives = []
-			for word, tag in blob.tags:
+			for word, tag in self.tags(blob):
 				is_adjective = len(Word(word).get_synsets(pos=ADJ)) > 0
 				if tag in self.PENN_ADJECTIVES_TAGS and is_adjective:
 					adjectives.append(word)
@@ -173,7 +181,7 @@ class BaseModel(object):
 		if tagger == "PatternTagger":
 			pt = Blobber(pos_tagger=PatternTagger())
 		else:
-			print "PerceptronTagger will be used"	
+			print "PerceptronTagger will be used"
 
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])
