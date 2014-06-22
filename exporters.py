@@ -1,6 +1,8 @@
 import model2
 import abc
 import transformation
+import shutil
+import os
 
 class BaseExport(object):
 	"""This class holds the main functions concerned about
@@ -11,47 +13,12 @@ class BaseExport(object):
 	def __init__(self, baseModel):
 		super(BaseExport, self).__init__()
 		self.model = baseModel
+		self.origin_folder = ""
+		self.dest_folder = ""
 
 	@abc.abstractmethod
 	def export_files(self):
 		pass
-
-	# def calculates_adjectives_polarities(self, ndoc, unique=True):
-	# 	"""This method calculates all adjectives polarities based on the following arguments
-
-	# 	Keyword arguments:
-	# 	ndoc -- given document
-	# 	unique -- False for all adjectives list.
-	# 			  True for only those adjectives that are not in bigrams (or trigrams) list. (default: True)
-	# 	"""
-	# 	adjectives = ndoc['adjectives']
-	# 	adjs_adv_adj_bigram = ndoc['adjs_adv_adj_bigram']
-	# 	for e in adjs_adv_adj_bigram:
-	# 		if e in adjectives:
-	# 			adjectives.remove(e)
-
-	# 	adjectives_polarities = []
-	# 	for adjective in adjectives:
-	# 		polarity = transformation.word_polarity(adjective)
-	# 		if polarity and polarity[0] != 0.0:
-	# 			adjectives_polarities.append(polarity[0])
-
-	# 	return adjectives_polarities
-
-	# def default_calculates_adv_adj_bigrams_polarities(self, ndoc):
-	# 	"""This method calculates all bigrams polarities based on the following arguments
-
-	# 	Keyword arguments:
-	# 	ndoc -- given document
-	# 	"""
-
-	# 	adv_adj_bigrams_polarities = []
-	# 	for bigram in ndoc['adv_adj_bigrams']:
-	# 		bigram_polarity = transformation.default_adv_adj_bigram_polarity(bigram)
-	# 		if bigram_polarity:
-	# 			adv_adj_bigrams_polarities.append(bigram_polarity)
-
-	# 	return adv_adj_bigrams_polarities
 
 	def get_adjectives(self, ndoc, filtered=True):
 		"""This method return from document all the adjectives based on the following parameters:
@@ -71,11 +38,25 @@ class BaseExport(object):
 
 		return adjectives
 
+	def copy_files(self):
+		try:
+			files_names = os.listdir(self.origin_folder)
+		except Exception, e:
+			raise e
+
+		for fn in files_names:
+			if fn.find('txt') != -1:
+				fn_name = self.origin_folder + '/' + fn
+				shutil.copy2(fn_name, self.dest_folder)
+
+
 class TripAdvisorExport(BaseExport):
 	"""Class responsible for create and export files with ngrams polarities from its model"""
 
 	def __init__(self, trip_advisor_model):
 		BaseExport.__init__(self, trip_advisor_model)
+		self.origin_folder = "files_to_export/TripAdvisor/"
+		self.dest_folder = "/Users/matheuscas/Dropbox/UFBA/Mestrado/Pesquisa/matlab/polarities_files/TripAdvisor"
 
 	def export_files(self):
 
@@ -144,7 +125,7 @@ class TripAdvisorExport(BaseExport):
 			neg_index_file.write('\n')
 
 		pos_index_file.close()
-		neg_index_file.close()		
+		neg_index_file.close()
 
 class CornellMoviesExport(BaseExport):
 	"""docstring for CornellMoviesExport"""
@@ -216,7 +197,3 @@ class CornellMoviesExport(BaseExport):
 
 		pos_index_file.close()
 		neg_index_file.close()
-
-
-
-
