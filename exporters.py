@@ -76,6 +76,9 @@ class TripAdvisorExport(BaseExport):
 
 				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
 										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
+
+				ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
+
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
 				negative_matrix_polarities.append(ndoc_polarities)
@@ -87,6 +90,9 @@ class TripAdvisorExport(BaseExport):
 
 				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
 										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
+
+				ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])										
+
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
 				positive_matrix_polarities.append(ndoc_polarities)
