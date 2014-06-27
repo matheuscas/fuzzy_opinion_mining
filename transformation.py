@@ -1,6 +1,7 @@
 import math
 from pattern.en import wordnet
 from pattern.en import NOUN, VERB, ADJECTIVE, ADVERB
+from textblob import Word
 
 ATTENUATORS_ADVERBS = open('groups_of_adverbs/medium_attenuator_adv.txt','r').readlines()
 ATTENUATORS_ADVERBS = ATTENUATORS_ADVERBS + open('groups_of_adverbs/strong_attenuator_adv.txt','r').readlines()
@@ -49,7 +50,7 @@ def invert_polarity(polarity, type=None):
 
 	return -1.0 * polarity
 
-def default_adv_adj_bigram_polarity(bigram):
+def default_adv_xxx_bigram_polarity(bigram):
 	"""Calculates the bigram polarity based on a empirical factor from each adverb group
 		and SENTIWORDNET word polarity
 	"""
@@ -57,21 +58,26 @@ def default_adv_adj_bigram_polarity(bigram):
 	adverb = bigram[0].split('/')[0]
 	adverb_tag = bigram[0].split('/')[1]
 
-	adjective = bigram[1].split('/')[0]
-	adjective_tag = bigram[1].split('/')[1]
+	ngram_2 = bigram[1].split('/')[0]
+	ngram_2_tag = bigram[1].split('/')[1]
 
-	adjective_polarity = word_polarity(adjective)
+	ngram_2_polarity = word_polarity(ngram_2)
+	#TODO Refactor - this list is repeated
+	# If is a verb, tries again in lemmatized form
+	if ngram_2_tag in ['MD','VB','VBZ','VBP','VBD','VBN','VBG']:
+		w = Word(ngram_2)
+		ngram_2_polarity = word_polarity(w.lemmatize("v"))
 
-	#if the adjective does not have polarity, so stops the method
-	if adjective_polarity == None:
+	#if the ngram_2 does not have polarity, so stops the method
+	if ngram_2_polarity == None:
 		return None
 
 	if is_negation(adverb):
-		return invert_polarity(adjective_polarity[0])
+		return invert_polarity(ngram_2_polarity[0])
 
 	bigram_polarity = 0.0
 	type = 1 #non-grading again
-	adjective_polarity = float(adjective_polarity[0])
+	ngram_2_polarity = float(ngram_2_polarity[0])
 
 	factor = 1.0 #assumes that is non_grading by default
 	for att_adv in ATTENUATORS_ADVERBS:
@@ -92,21 +98,21 @@ def default_adv_adj_bigram_polarity(bigram):
 				break
 
 	if type == 3:
-		if adjective_polarity < 0:
-			#print 'adverb + adjective_polarity: ' + str(- math.pow(abs(adjective_polarity), 1.0 / factor))
-			return (- math.pow(abs(adjective_polarity), 1.0 / factor))
+		if ngram_2_polarity < 0:
+			#print 'adverb + ngram_2_polarity: ' + str(- math.pow(abs(ngram_2_polarity), 1.0 / factor))
+			return (- math.pow(abs(ngram_2_polarity), 1.0 / factor))
 		else:
-			#print 'adverb + adjective_polarity: ' + str(math.pow(adjective_polarity, 1.0 / factor))
-			return (math.pow(adjective_polarity, 1.0 / factor))
+			#print 'adverb + ngram_2_polarity: ' + str(math.pow(ngram_2_polarity, 1.0 / factor))
+			return (math.pow(ngram_2_polarity, 1.0 / factor))
 	elif type == 2:
-		if adjective_polarity < 0:
-			#print 'adverb + adjective_polarity: ' + str(- math.pow(abs(adjective_polarity), factor))
-			return (- math.pow(abs(adjective_polarity), factor))
+		if ngram_2_polarity < 0:
+			#print 'adverb + ngram_2_polarity: ' + str(- math.pow(abs(ngram_2_polarity), factor))
+			return (- math.pow(abs(ngram_2_polarity), factor))
 		else:
-			#print 'adverb + adjective_polarity: ' + str(math.pow(adjective_polarity,factor))
-			return (math.pow(adjective_polarity,factor))
+			#print 'adverb + ngram_2_polarity: ' + str(math.pow(ngram_2_polarity,factor))
+			return (math.pow(ngram_2_polarity,factor))
 	elif type == 1:
-		return adjective_polarity
+		return ngram_2_polarity
 
 def adjectives_polarities(list_of_adjectives):
 	"""This method calculates all adjectives polarities based on the following arguments
@@ -132,7 +138,7 @@ def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams):
 
 	adv_adj_bigrams_polarities = []
 	for bigram in list_of_adv_adj_bigrams:
-		bigram_polarity = default_adv_adj_bigram_polarity(bigram)
+		bigram_polarity = default_adv_xxx_bigram_polarity(bigram)
 		if bigram_polarity:
 			adv_adj_bigrams_polarities.append(bigram_polarity)
 
