@@ -30,6 +30,11 @@ class BaseModel(object):
 											"RBS/JJ","RBS/JJR", "RBS/JJS",
 											"RP/JJ","RP/JJR", "RP/JJS"]
 
+		self.ADVERB_VERB_BIGRAMS = ['RB/MD','RB/VB','RB/VBZ','RB/VBP','RB/VBD','RB/VBN','RB/VBG',
+									'RBR/MD','RBR/VB','RBR/VBZ','RBR/VBP','RBR/VBD','RBR/VBN','RBR/VBG',
+									'RBS/MD','RBS/VB','RBS/VBZ','RBS/VBP','RBS/VBD','RBS/VBN','RBS/VBG',
+									'RP/MD','RP/VB','RP/VBZ','RP/VBP','RP/VBD','RP/VBN','RP/VBG']
+
 
 	@abc.abstractmethod
 	def read_corpora_source(self):
@@ -190,7 +195,7 @@ class BaseModel(object):
 				sentence = pt(s.dict['raw'])
 				sentence = pt(sentence.parse())
 				bigrams = sentence.ngrams(n=2)
-				valid_bigrams = valid_bigrams + util.get_adv_adj_bigrams(bigrams, self.ADVERB_ADJECTIVE_BIGRAMS)
+				valid_bigrams = valid_bigrams + util.get_bigrams(bigrams, self.ADVERB_ADJECTIVE_BIGRAMS)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adv_adj_bigrams':valid_bigrams}})
 
 	def parse_elements_adv_adj_bigrams(self):
@@ -210,6 +215,30 @@ class BaseModel(object):
 
 			self.documents.update({'name':ndoc['name']},{'$set':{'advs_adv_adj_bigram':advs_adv_adj_bigram}})
 			self.documents.update({'name':ndoc['name']},{'$set':{'adjs_adv_adj_bigram':adjs_adv_adj_bigram}})
+
+	def pre_process_adv_verb_bigram(self,tagger="PerceptronTagger"):
+		"""
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+					PerceptronTagger (default) and PatternTagger
+
+		"""
+
+		pt = Blobber(pos_tagger=PerceptronTagger())
+		if tagger == "PatternTagger":
+			pt = Blobber(pos_tagger=PatternTagger())
+		else:
+			print "PerceptronTagger will be used"
+
+		for ndoc in self.documents.find():
+			blob = TextBlob(ndoc['text'])
+			valid_bigrams = []
+			for s in blob.sentences:
+				sentence = pt(s.dict['raw'])
+				sentence = pt(sentence.parse())
+				bigrams = sentence.ngrams(n=2)
+				valid_bigrams = valid_bigrams + util.get_bigrams(bigrams, self.ADVERB_VERB_BIGRAMS)
+			self.documents.update({'name':ndoc['name']},{'$set':{'adv_verb_bigrams':valid_bigrams}})
 
 	def create_or_update_collection_from_file(self,file_name, collection_name):
 		""" File must have only a pair of values per line, separated by ; """
@@ -339,5 +368,3 @@ class CornellMoviesModel(BaseModel):
 		#inserts documents into collection
 		for d in docs:
 			self.documents.insert(d)
-
-
