@@ -1,4 +1,4 @@
-def get_adv_adj_bigrams(bigrams_list, bigrams_reference):
+def get_bigrams(bigrams_list, bigrams_reference):
 	"""Given a list of bigrams, this method return only those that are adv_adj_bigrams.
 
 	Keyword arguments:
