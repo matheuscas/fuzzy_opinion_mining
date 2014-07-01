@@ -21,21 +21,6 @@ class BaseModel(object):
 		self.database = self.client[database_name]
 		self.documents = self.database.documents
 
-		self.PENN_ADVERBS_TAGS = ['RB', 'RBR', 'RBS', 'RP']
-		self.PENN_ADJECTIVES_TAGS = ['JJ','JJR','JJS']
-		self.PENN_NOUNS_TAGS = ['NN','NNS','NNP','NNPS']
-		self.PENN_VERBS_TAGS = ['MD','VB','VBZ','VBP','VBD','VBN','VBG']
-		self.ADVERB_ADJECTIVE_BIGRAMS = ["RB/JJ","RB/JJR", "RB/JJS",
-											"RBR/JJ","RBR/JJR", "RBR/JJS",
-											"RBS/JJ","RBS/JJR", "RBS/JJS",
-											"RP/JJ","RP/JJR", "RP/JJS"]
-
-		self.ADVERB_VERB_BIGRAMS = ['RB/MD','RB/VB','RB/VBZ','RB/VBP','RB/VBD','RB/VBN','RB/VBG',
-									'RBR/MD','RBR/VB','RBR/VBZ','RBR/VBP','RBR/VBD','RBR/VBN','RBR/VBG',
-									'RBS/MD','RBS/VB','RBS/VBZ','RBS/VBP','RBS/VBD','RBS/VBN','RBS/VBG',
-									'RP/MD','RP/VB','RP/VBZ','RP/VBP','RP/VBD','RP/VBN','RP/VBG']
-
-
 	@abc.abstractmethod
 	def read_corpora_source(self):
 		"""This method should be implemented by each subclass that defines the way of reading each corpora.
@@ -57,7 +42,7 @@ class BaseModel(object):
 		word_tag -- Penn tag from word in ngram
 		"""
 
-		return word_tag in self.PENN_ADVERBS_TAGS
+		return word_tag in util.PENN_ADVERBS_TAGS
 
 	def is_adjective(self, word_tag):
 		"""Checks if the passed tag is an adjective tag.
@@ -66,7 +51,7 @@ class BaseModel(object):
 		word_tag -- Penn tag from word in ngram
 		"""
 
-		return word_tag in self.PENN_ADJECTIVES_TAGS
+		return word_tag in util.PENN_ADJECTIVES_TAGS
 
 	def is_noun(self, word_tag):
 		"""Checks if the passed tag is an noun tag.
@@ -75,7 +60,7 @@ class BaseModel(object):
 		word_tag -- Penn tag from word in ngram
 		"""
 
-		return word_tag in self.PENN_NOUNS_TAGS
+		return word_tag in util.PENN_NOUNS_TAGS
 
 	def is_verb(self, word_tag):
 		"""Checks if the passed tag is an verb tag.
@@ -84,7 +69,7 @@ class BaseModel(object):
 		word_tag -- Penn tag from word in ngram
 		"""
 
-		return word_tag in self.PENN_VERBS_TAGS
+		return word_tag in util.PENN_VERBS_TAGS
 
 	def is_adverb_adjective_bigram(self, bigram, type="ADV_ADJ"):
 		"""Checks if the passed bigram is an adverb_adjective bigram.
@@ -94,7 +79,7 @@ class BaseModel(object):
 		type -- passes the type of bigram to be validated
 		"""
 
-		return bigram in self.ADVERB_ADJECTIVE_BIGRAMS
+		return bigram in util.ADVERB_ADJECTIVE_BIGRAMS
 
 	def tags(self, blob):
 		parsed_text = blob.parse().split()
@@ -103,6 +88,14 @@ class BaseModel(object):
 			tags.append((elem[0],elem[1]))
 
 		return tags
+
+	def get_tagger(self, tagger="PerceptronTagger"):
+
+		pt = Blobber(pos_tagger=PerceptronTagger())
+		if tagger == "PatternTagger":
+			pt = Blobber(pos_tagger=PatternTagger())
+
+		return pt
 
 	def pre_process_adverbs(self, tagger="PerceptronTagger"):
 		"""This method extracts all adverbs from each document in the documents collection
@@ -123,7 +116,7 @@ class BaseModel(object):
 			advs = []
 			for word, tag in self.tags(blob):
 				is_adv = len(Word(word).get_synsets(pos=ADV)) > 0
-				if tag in self.PENN_ADVERBS_TAGS and is_adv:
+				if tag in util.PENN_ADVERBS_TAGS and is_adv:
 					advs.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adverbs':advs}})
 
@@ -147,7 +140,7 @@ class BaseModel(object):
 			nouns = []
 			for word, tag in self.tags(blob):
 				is_noun = len(Word(word).get_synsets(pos=NOUN)) > 0
-				if tag in self.PENN_NOUNS_TAGS and is_noun:
+				if tag in util.PENN_NOUNS_TAGS and is_noun:
 					nouns.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'nouns':nouns}})
 
@@ -170,7 +163,7 @@ class BaseModel(object):
 			adjectives = []
 			for word, tag in self.tags(blob):
 				is_adjective = len(Word(word).get_synsets(pos=ADJ)) > 0
-				if tag in self.PENN_ADJECTIVES_TAGS and is_adjective:
+				if tag in util.PENN_ADJECTIVES_TAGS and is_adjective:
 					adjectives.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adjectives':adjectives}})
 
@@ -182,11 +175,7 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = Blobber(pos_tagger=PerceptronTagger())
-		if tagger == "PatternTagger":
-			pt = Blobber(pos_tagger=PatternTagger())
-		else:
-			print "PerceptronTagger will be used"
+		pt = self.get_tagger()
 
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])
@@ -195,7 +184,7 @@ class BaseModel(object):
 				sentence = pt(s.dict['raw'])
 				sentence = pt(sentence.parse())
 				bigrams = sentence.ngrams(n=2)
-				valid_bigrams = valid_bigrams + util.get_bigrams(bigrams, self.ADVERB_ADJECTIVE_BIGRAMS)
+				valid_bigrams = valid_bigrams + util.get_list_bigrams(bigrams, util.ADVERB_ADJECTIVE_BIGRAMS)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adv_adj_bigrams':valid_bigrams}})
 
 	def parse_elements_adv_adj_bigrams(self):
@@ -207,10 +196,10 @@ class BaseModel(object):
 			for bigram in ndoc['adv_adj_bigrams']:
 				element_1 = bigram[0].split('/')
 				element_2 = bigram[1].split('/')
-				if element_1[1] in self.PENN_ADVERBS_TAGS:
+				if element_1[1] in util.PENN_ADVERBS_TAGS:
 					advs_adv_adj_bigram.append(element_1[0])
 
-				if element_2[1] in self.PENN_ADJECTIVES_TAGS:
+				if element_2[1] in util.PENN_ADJECTIVES_TAGS:
 					adjs_adv_adj_bigram.append(element_2[0])
 
 			self.documents.update({'name':ndoc['name']},{'$set':{'advs_adv_adj_bigram':advs_adv_adj_bigram}})
@@ -237,7 +226,7 @@ class BaseModel(object):
 				sentence = pt(s.dict['raw'])
 				sentence = pt(sentence.parse())
 				bigrams = sentence.ngrams(n=2)
-				valid_bigrams = valid_bigrams + util.get_bigrams(bigrams, self.ADVERB_VERB_BIGRAMS)
+				valid_bigrams = valid_bigrams + util.get_list_bigrams(bigrams, util.ADVERB_VERB_BIGRAMS)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adv_verb_bigrams':valid_bigrams}})
 
 	def create_or_update_collection_from_file(self,file_name, collection_name):
@@ -270,6 +259,19 @@ class BaseModel(object):
 		self.pre_process_adverbs(tagger)
 		print 'Pre processing adv/adj bigram...Boy, this last one is big!'
 		self.pre_process_adv_adj_bigrams(tagger)
+
+	def pre_process_adv_xxx_adj_trigrams(self):
+
+		pt = self.get_tagger()
+		for ndoc in self.documents.find():
+			blob = TextBlob(ndoc['text'])
+			valid_trigrams = []
+			for s in blob.sentences:
+				sentence = pt(s.dict['raw'])
+				sentence = pt(sentence.parse())
+				trigrams = sentence.ngrams(n=3)
+				valid_trigrams = valid_trigrams + util.get_list_trigrams(trigrams, "ADV/XXX/ADJ")
+			self.documents.update({'name':ndoc['name']},{'$set':{'adv_xxx_adj_trigrams':valid_trigrams}})
 
 class TripAdvisorModel(BaseModel):
 	"""docstring for TripAdvisorModel"""
