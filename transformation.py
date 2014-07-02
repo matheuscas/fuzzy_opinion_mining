@@ -113,9 +113,9 @@ def default_adv_xxx_bigram_polarity(bigram):
 	ngram_2_tag = bigram[1].split('/')[1]
 
 	ngram_2_polarity = word_polarity(ngram_2, ngram_2_tag)
-	#TODO Refactor - this list is repeated
+	
 	# If is a verb, tries again in lemmatized form
-	if ngram_2_tag in ['MD','VB','VBZ','VBP','VBD','VBN','VBG'] and \
+	if ngram_2_tag in util.PENN_VERBS_TAGS and \
 		(ngram_2_polarity == None or ngram_2_polarity[0] == 0):
 			w = Word(ngram_2)
 			ngram_2_polarity = word_polarity(w.lemmatize("v"))
