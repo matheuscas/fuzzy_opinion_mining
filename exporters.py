@@ -3,6 +3,7 @@ import abc
 import transformation
 import shutil
 import os
+import util
 
 class BaseExport(object):
 	"""This class holds the main functions concerned about
@@ -18,7 +19,7 @@ class BaseExport(object):
 
 	@abc.abstractmethod
 	def export_files(self):
-		pass	
+		pass
 
 	def copy_files(self):
 		try:
@@ -54,16 +55,19 @@ class TripAdvisorExport(BaseExport):
 
 			if float(ndoc['degree']) <= 2:
 
-				adjectives = util.get_ndoc_adjectives(ndoc)
+				#adjectives = util.get_ndoc_adjectives(ndoc)
 
 				#unigrams == adjectives
-				ndoc_polarities = transformation.adjectives_polarities(adjectives)
+				#ndoc_polarities = transformation.adjectives_polarities(adjectives)
 
 				#bigrams 1 == adverbs and adjectives
-				ndoc_polarities + ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
+				#ndoc_polarities + ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
 
 				#bigrams 2 == adverbs and verbs
-				ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
+				#ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
+
+				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True)
+				ndoc_polarities = transformation.ngrams_polarities(ngrams)
 
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
@@ -74,12 +78,15 @@ class TripAdvisorExport(BaseExport):
 
 			elif float(ndoc['degree']) >= 4:
 
-				adjectives = util.get_ndoc_adjectives(ndoc)
+				#adjectives = util.get_ndoc_adjectives(ndoc)
 
-				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
-										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
+				#ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
+				#						transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
 
-				ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
+				#ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
+
+				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True)
+				ndoc_polarities = transformation.ngrams_polarities(ngrams)
 
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
