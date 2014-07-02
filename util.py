@@ -98,19 +98,51 @@ def get_ndoc_adjectives(ndoc, filtered=True):
 	filtered -- Returns only adjectives that are not in ADV / ADJ bigrams (default: True)
 	"""
 
-	adjectives = ndoc['adjectives']
-	adjs_adv_adj_bigram = ndoc['adjs_adv_adj_bigram']
+	adjectives = list(ndoc['adjectives'])
+	adjs_adv_adj_bigram = list(ndoc['adjs_adv_adj_bigram'])
+	trigrams = list(ndoc['adv_xxx_adj_trigrams'])
 
+	#print adjectives
 	if filtered:
+		#removes from adjectives duplicates in adjs_adv_adj_bigram
 		for e in adjs_adv_adj_bigram:
 			if e in adjectives:
+				#print "----> " + e
 				adjectives.remove(e)
+				#print adjectives
+
+		#gathers adjectives from trigrams
+		trigrams_adjectives = []
+		for trigram in trigrams:
+			for e in trigram:
+				etag = e.split('/')[1]
+				eword = e.split('/')[0]
+				if etag in PENN_ADJECTIVES_TAGS:
+					trigrams_adjectives.append(eword)
+
+		#print 'trigram list'
+		#print trigrams_adjectives
+		for adj in adjs_adv_adj_bigram:
+			if adj in trigrams_adjectives:
+				trigrams_adjectives.remove(adj)
+
+		#print 'trigram list depois'
+		#print trigrams_adjectives
+		#removes from adjectives duplicates in trigrams_adjectives
+		for e in trigrams_adjectives:
+			if e in adjectives:
+				#print "----> " + e
+				adjectives.remove(e)
+				#print adjectives
 
 	return adjectives
 
 def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True):
 	unigrams = get_ndoc_adjectives(ndoc,filtered)
 	bigrams = []
+	trigrams = []
+	one_trigram_list = ndoc['adv_xxx_adj_trigrams']
+	
 	for p in bigrams_types:
 		one_bigram_list_name = 'adv_adj_bigrams'
 		if p == 'ADV/VERB':
@@ -118,22 +150,19 @@ def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True):
 
 		one_bigram_list = ndoc[one_bigram_list_name]
 		if filtered:
-			adv_xxx_adj = ndoc['adv_xxx_adj_trigrams']
-			for t in adv_xxx_adj:
-				for b in one_bigram_list:
-					to_add = True
+			for b in one_bigram_list:
+				to_add = True
+				for t in one_trigram_list:
 					if b[0] == t[0] and b[1] == t[1]:
 						to_add = False
 					elif b[0] == t[1] and b[1] == t[2]:
 						to_add = False
-					if to_add and (b[0],b[1]) not in bigrams:
-						bigrams.append((b[0],b[1]))
+				if to_add:
+					bigrams.append((b[0],b[1]))
 		else:
 			for b in one_bigram_list:
 				bigrams.append((b[0],b[1]))
 
-	trigrams = []
-	one_trigram_list = ndoc['adv_xxx_adj_trigrams']
 	for t in one_trigram_list:
 		trigrams.append((t[0],t[1],t[2]))
 
