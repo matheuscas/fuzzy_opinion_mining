@@ -137,7 +137,7 @@ def get_doc_adjectives(ndoc, filtered=True):
 
 	return adjectives
 
-def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True):
+def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'],filtered=True):
 	unigrams = get_doc_adjectives(ndoc,filtered)
 	bigrams = []
 	trigrams = []
