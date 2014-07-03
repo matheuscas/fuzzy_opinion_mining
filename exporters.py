@@ -66,7 +66,7 @@ class TripAdvisorExport(BaseExport):
 				#bigrams 2 == adverbs and verbs
 				#ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
 
-				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True)
+				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'],filtered=True)
 				ndoc_polarities = transformation.ngrams_polarities(ngrams)
 
 				if len(ndoc_polarities) > negative_matrix_max_size:
