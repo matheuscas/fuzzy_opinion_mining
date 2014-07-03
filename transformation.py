@@ -56,10 +56,10 @@ def invert_polarity(polarity, type=None):
 
 	return -1.0 * polarity
 
-def apply_adverb_factor(adverb, polarity):
+def apply_adverb_factor(adverb, polarity, negation=None):
 
 	if is_negation(adverb):
-		return invert_polarity(polarity)
+		return invert_polarity(polarity, negation)
 
 	bigram_polarity = 0.0
 	type = 1 #non-grading again
@@ -101,7 +101,7 @@ def apply_adverb_factor(adverb, polarity):
 		return polarity
 
 
-def default_adv_xxx_bigram_polarity(bigram):
+def default_adv_xxx_bigram_polarity(bigram, negation=None):
 	"""Calculates the bigram polarity based on a empirical factor from each adverb group
 		and SENTIWORDNET word polarity
 	"""
@@ -113,7 +113,7 @@ def default_adv_xxx_bigram_polarity(bigram):
 	ngram_2_tag = bigram[1].split('/')[1]
 
 	ngram_2_polarity = word_polarity(ngram_2, ngram_2_tag)
-	
+
 	# If is a verb, tries again in lemmatized form
 	if ngram_2_tag in util.PENN_VERBS_TAGS and \
 		(ngram_2_polarity == None or ngram_2_polarity[0] == 0):
@@ -124,7 +124,7 @@ def default_adv_xxx_bigram_polarity(bigram):
 	if ngram_2_polarity == None:
 		return None
 
-	return apply_adverb_factor(adverb,ngram_2_polarity[0])
+	return apply_adverb_factor(adverb,ngram_2_polarity[0], negation)
 
 
 def adjectives_polarities(list_of_adjectives):
@@ -142,7 +142,7 @@ def adjectives_polarities(list_of_adjectives):
 
 	return adjectives_polarities
 
-def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams):
+def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams, negation=None):
 	"""This method calculates all bigrams polarities based on the following arguments
 
 	Keyword arguments:
@@ -151,13 +151,13 @@ def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams):
 
 	adv_adj_bigrams_polarities = []
 	for bigram in list_of_adv_adj_bigrams:
-		bigram_polarity = default_adv_xxx_bigram_polarity(bigram)
+		bigram_polarity = default_adv_xxx_bigram_polarity(bigram, negation=None)
 		if bigram_polarity:
 			adv_adj_bigrams_polarities.append(bigram_polarity)
 
 	return adv_adj_bigrams_polarities
 
-def trigram_polarity(trigram):
+def trigram_polarity(trigram, negation=None):
 	first_w = trigram[0]
 	second_w = trigram[1]
 	third_w = trigram[2]
@@ -166,7 +166,7 @@ def trigram_polarity(trigram):
 	#adv/adv/adj trigram
 	if second_w.split('/')[1] in util.PENN_ADVERBS_TAGS and \
 	 		third_w.split('/')[1] in util.PENN_ADJECTIVES_TAGS:
-			parcial_res = default_adv_xxx_bigram_polarity((second_w,third_w))
+			parcial_res = default_adv_xxx_bigram_polarity((second_w,third_w), negation=None)
 			if parcial_res == None:
 				return None
 			parcial_res = apply_adverb_factor(first_w.split('/')[0],parcial_res)
@@ -176,7 +176,7 @@ def trigram_polarity(trigram):
 	#adv/verb/adj or #adv/adj/adj trigram
 	elif second_w.split('/')[1] in util.PENN_ADJECTIVES_TAGS or \
 			second_w.split('/')[1] in util.PENN_VERBS_TAGS:
-			parcial_res = default_adv_xxx_bigram_polarity((first_w,second_w))
+			parcial_res = default_adv_xxx_bigram_polarity((first_w,second_w), negation=None)
 			if parcial_res != None and abs(parcial_res) != 0:
 				results.append(parcial_res)
 
@@ -187,13 +187,13 @@ def trigram_polarity(trigram):
 
 	return results
 
-def ngrams_polarities(ngrams_list):
+def ngrams_polarities(ngrams_list, negation=None):
 	polarities = []
 	for ngram in ngrams_list:
 		pol = 0
 
 		if type(ngram) is tuple and len(ngram) == 2: #bigrams - adverbs and adjectives
-			pol = default_adv_xxx_bigram_polarity(ngram)
+			pol = default_adv_xxx_bigram_polarity(ngram, negation=None)
 		elif type(ngram) is tuple and len(ngram) == 3: #trigrams - adverbs xxx adjectives
 			pols = trigram_polarity(ngram)
 			if pols != None:
