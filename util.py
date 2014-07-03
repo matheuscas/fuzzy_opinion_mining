@@ -90,7 +90,7 @@ def get_list_trigrams(trigram_list, trigram_pattern):
 								word3.split('/')[0] + "/" + tags3[1]))
 	return valids
 
-def get_ndoc_adjectives(ndoc, filtered=True):
+def get_doc_adjectives(ndoc, filtered=True):
 	"""This method return from document all the adjectives based on the following parameters:
 
 	Keyword arguments:
@@ -138,11 +138,11 @@ def get_ndoc_adjectives(ndoc, filtered=True):
 	return adjectives
 
 def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True):
-	unigrams = get_ndoc_adjectives(ndoc,filtered)
+	unigrams = get_doc_adjectives(ndoc,filtered)
 	bigrams = []
 	trigrams = []
 	one_trigram_list = ndoc['adv_xxx_adj_trigrams']
-	
+
 	for p in bigrams_types:
 		one_bigram_list_name = 'adv_adj_bigrams'
 		if p == 'ADV/VERB':

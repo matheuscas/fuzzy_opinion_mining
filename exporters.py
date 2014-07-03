@@ -55,7 +55,7 @@ class TripAdvisorExport(BaseExport):
 
 			if float(ndoc['degree']) <= 2:
 
-				#adjectives = util.get_ndoc_adjectives(ndoc)
+				#adjectives = util.get_doc_adjectives(ndoc)
 
 				#unigrams == adjectives
 				#ndoc_polarities = transformation.adjectives_polarities(adjectives)
@@ -78,7 +78,7 @@ class TripAdvisorExport(BaseExport):
 
 			elif float(ndoc['degree']) >= 4:
 
-				#adjectives = util.get_ndoc_adjectives(ndoc)
+				#adjectives = util.get_doc_adjectives(ndoc)
 
 				#ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
 				#						transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
@@ -162,7 +162,7 @@ class CornellMoviesExport(BaseExport):
 
 		for ndoc in self.model.documents.find():
 
-			adjectives = util.get_ndoc_adjectives(ndoc)
+			adjectives = util.get_doc_adjectives(ndoc)
 
 			if ndoc['polarity'] == 0:
 				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
