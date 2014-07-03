@@ -8,6 +8,7 @@ from textblob.taggers import NLTKTagger
 from textblob.taggers import PatternTagger
 from textblob_aptagger import PerceptronTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
+from bson.objectid import ObjectId
 
 class BaseModel(object):
 	"""docstring for BaseModel class that represents and generic corpora in mongodb"""
@@ -96,6 +97,12 @@ class BaseModel(object):
 			pt = Blobber(pos_tagger=PatternTagger())
 
 		return pt
+
+	def get_doc_by_name(self, doc_name):
+		return self.documents.find({'name':doc_name})[0]
+
+	def get_doc_by_id(self, doc_id):
+		return self.documents.find({'_id':ObjectId(doc_id)})[0]
 
 	def pre_process_adverbs(self, tagger="PerceptronTagger"):
 		"""This method extracts all adverbs from each document in the documents collection
