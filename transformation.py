@@ -49,6 +49,7 @@ def invert_polarity(polarity, type=None):
 	"""It inverts or do a complement of the polarity"""
 
 	if type == 'complement':
+		print type
 		if polarity < 0:
 			return -(1.0 - abs(polarity))
 		else:
@@ -151,7 +152,7 @@ def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams, negation=None):
 
 	adv_adj_bigrams_polarities = []
 	for bigram in list_of_adv_adj_bigrams:
-		bigram_polarity = default_adv_xxx_bigram_polarity(bigram, negation=None)
+		bigram_polarity = default_adv_xxx_bigram_polarity(bigram, negation)
 		if bigram_polarity:
 			adv_adj_bigrams_polarities.append(bigram_polarity)
 
@@ -166,7 +167,7 @@ def trigram_polarity(trigram, negation=None):
 	#adv/adv/adj trigram
 	if second_w.split('/')[1] in util.PENN_ADVERBS_TAGS and \
 	 		third_w.split('/')[1] in util.PENN_ADJECTIVES_TAGS:
-			parcial_res = default_adv_xxx_bigram_polarity((second_w,third_w), negation=None)
+			parcial_res = default_adv_xxx_bigram_polarity((second_w,third_w), negation)
 			if parcial_res == None:
 				return None
 			parcial_res = apply_adverb_factor(first_w.split('/')[0],parcial_res)
@@ -176,7 +177,7 @@ def trigram_polarity(trigram, negation=None):
 	#adv/verb/adj or #adv/adj/adj trigram
 	elif second_w.split('/')[1] in util.PENN_ADJECTIVES_TAGS or \
 			second_w.split('/')[1] in util.PENN_VERBS_TAGS:
-			parcial_res = default_adv_xxx_bigram_polarity((first_w,second_w), negation=None)
+			parcial_res = default_adv_xxx_bigram_polarity((first_w,second_w), negation)
 			if parcial_res != None and abs(parcial_res) != 0:
 				results.append(parcial_res)
 
@@ -193,9 +194,9 @@ def ngrams_polarities(ngrams_list, negation=None):
 		pol = 0
 
 		if type(ngram) is tuple and len(ngram) == 2: #bigrams - adverbs and adjectives
-			pol = default_adv_xxx_bigram_polarity(ngram, negation=None)
+			pol = default_adv_xxx_bigram_polarity(ngram, negation)
 		elif type(ngram) is tuple and len(ngram) == 3: #trigrams - adverbs xxx adjectives
-			pols = trigram_polarity(ngram)
+			pols = trigram_polarity(ngram, negation)
 			if pols != None:
 				polarities = polarities + pols
 		else: #unigrams - adjectives
