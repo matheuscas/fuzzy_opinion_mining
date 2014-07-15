@@ -49,7 +49,6 @@ def invert_polarity(polarity, type=None):
 	"""It inverts or do a complement of the polarity"""
 
 	if type == 'complement':
-		print type
 		if polarity < 0:
 			return -(1.0 - abs(polarity))
 		else:
@@ -159,32 +158,38 @@ def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams, negation=None):
 	return adv_adj_bigrams_polarities
 
 def trigram_polarity(trigram, negation=None):
-	first_w = trigram[0]
-	second_w = trigram[1]
-	third_w = trigram[2]
+	first_word = trigram[0]
+	middle_word = trigram[1]
+	third_word = trigram[2]
+
+	#words
+	first_word_word = first_word.split('/')[0]
+
+	#word tags
+	middle_word_tag = middle_word.split('/')[1]
+	third_word_tag = third_word.split('/')[1]
 
 	results = []
 	#adv/adv/adj trigram
-	if second_w.split('/')[1] in util.PENN_ADVERBS_TAGS and \
-	 		third_w.split('/')[1] in util.PENN_ADJECTIVES_TAGS:
-			parcial_res = default_adv_xxx_bigram_polarity((second_w,third_w), negation)
-			if parcial_res == None:
-				return None
-			parcial_res = apply_adverb_factor(first_w.split('/')[0],parcial_res)
-			if parcial_res != None and abs(parcial_res) != 0:
-				results.append(parcial_res)
-			return results
+	if middle_word_tag in util.PENN_ADVERBS_TAGS and third_word_tag in util.PENN_ADJECTIVES_TAGS:
+		parcial_result = default_adv_xxx_bigram_polarity((middle_word,third_word), negation)
+		if parcial_result == None:
+			return None
+		parcial_result = apply_adverb_factor(first_word_word,parcial_result)
+		if parcial_result != None and abs(parcial_result) != 0:
+			results.append(parcial_result)
+		return results
 	#adv/verb/adj or #adv/adj/adj trigram
-	elif second_w.split('/')[1] in util.PENN_ADJECTIVES_TAGS or \
-			second_w.split('/')[1] in util.PENN_VERBS_TAGS:
-			parcial_res = default_adv_xxx_bigram_polarity((first_w,second_w), negation)
-			if parcial_res != None and abs(parcial_res) != 0:
-				results.append(parcial_res)
+	# elif middle_word_tag in util.PENN_ADJECTIVES_TAGS or \
+	# 		middle_word_tag in util.PENN_VERBS_TAGS:
+	# 		parcial_result = default_adv_xxx_bigram_polarity((first_word,middle_word), negation)
+	# 		if parcial_result != None and abs(parcial_result) != 0:
+	# 			results.append(parcial_result)
 
-			parcial_res_2 = word_polarity(third_w.split('/')[0])
-			if parcial_res_2 != None and abs(parcial_res_2[0]) != 0:
-				results.append(parcial_res_2[0])
-			return results
+	# 		parcial_result_2 = word_polarity(third_word.split('/')[0])
+	# 		if parcial_result_2 != None and abs(parcial_result_2[0]) != 0:
+	# 			results.append(parcial_result_2[0])
+	# 		return results
 
 	return results
 

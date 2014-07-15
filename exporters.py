@@ -55,19 +55,8 @@ class TripAdvisorExport(BaseExport):
 
 			if float(ndoc['degree']) <= 2:
 
-				#adjectives = util.get_doc_adjectives(ndoc)
-
-				#unigrams == adjectives
-				#ndoc_polarities = transformation.adjectives_polarities(adjectives)
-
-				#bigrams 1 == adverbs and adjectives
-				#ndoc_polarities + ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
-
-				#bigrams 2 == adverbs and verbs
-				#ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
-
 				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'],filtered=True)
-				ndoc_polarities = transformation.ngrams_polarities(ngrams)
+				ndoc_polarities = transformation.ngrams_polarities(ngrams, negation="complement")
 
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
@@ -78,15 +67,8 @@ class TripAdvisorExport(BaseExport):
 
 			elif float(ndoc['degree']) >= 4:
 
-				#adjectives = util.get_doc_adjectives(ndoc)
-
-				#ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
-				#						transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
-
-				#ndoc_polarities = ndoc_polarities + transformation.adv_adj_bigrams_polarities(ndoc['adv_verb_bigrams'])
-
-				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADV'],filtered=True)
-				ndoc_polarities = transformation.ngrams_polarities(ngrams)
+				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'],filtered=True)
+				ndoc_polarities = transformation.ngrams_polarities(ngrams, negation="complement")
 
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
