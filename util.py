@@ -1,3 +1,5 @@
+import math
+
 PENN_ADVERBS_TAGS = ['RB', 'RBR', 'RBS', 'RP']
 PENN_ADJECTIVES_TAGS = ['JJ','JJR','JJS']
 PENN_NOUNS_TAGS = ['NN','NNS','NNP','NNPS']
@@ -171,3 +173,13 @@ def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'], use_trigrams=True, filtered=T
 		trigrams.append((t[0],t[1],t[2]))
 
 	return unigrams + bigrams + trigrams
+
+def average(list_of_numbers):
+	return sum(list_of_numbers) * 1.0 / len(list_of_numbers)
+
+def std(list_of_numbers):
+	avg = average(list_of_numbers)
+	variance = map(lambda x: (x - avg)**2, list_of_numbers)
+	standard_deviation = math.sqrt(average(variance))
+	return standard_deviation	
+

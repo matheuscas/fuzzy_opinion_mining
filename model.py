@@ -280,6 +280,40 @@ class BaseModel(object):
 				valid_trigrams = valid_trigrams + util.get_list_trigrams(trigrams, "ADV/XXX/ADJ")
 			self.documents.update({'name':ndoc['name']},{'$set':{'adv_xxx_adj_trigrams':valid_trigrams}})
 
+	def stats(self):
+		num_of_docs = self.documents.count()
+		sentences_per_doc = []
+		adjectives_per_doc = []
+		adverbs_per_doc = []
+		adv_adj_bigram_per_doc = []
+		for ndoc in self.documents.find():
+			#sentences_per_doc.append(util.count_sentences(ndoc['text']))
+			sentences_per_doc.append(len(TextBlob(ndoc['text']).sentences))
+			adjectives_per_doc.append(len(ndoc['adjectives']))
+			adverbs_per_doc.append(len(ndoc['adverbs']))	
+			adv_adj_bigram_per_doc.append(len(ndoc['adv_adj_bigrams']))
+
+		sentences_avg = util.average(sentences_per_doc)
+		sentences_std = util.std(sentences_per_doc)
+
+		adjectives_avg = util.average(adjectives_per_doc)
+		adjectives_std = util.std(adjectives_per_doc)
+
+		adverbs_avg = util.average(adverbs_per_doc)
+		adverbs_std = util.std(adverbs_per_doc)
+
+		adv_adj_bigram_avg = util.average(adv_adj_bigram_per_doc)
+		adv_adj_bigram_std = util.std(adv_adj_bigram_per_doc)
+
+		print "Sentences average: " + str(sentences_avg)
+		print "Sentences standard deviation: " + str(sentences_std)
+		print "Adjectives average: " + str(adjectives_avg)
+		print "Adjectives standard deviation: " + str(adjectives_std)
+		print "Adverbs average: " + str(adverbs_avg)
+		print "Adverbs standard deviation: " + str(adverbs_std)
+		print "Adverb/Adjective bigram average: " + str(adv_adj_bigram_avg)
+		print "Adverb/Adjective bigram standard deviation: " + str(adv_adj_bigram_std)
+
 class TripAdvisorModel(BaseModel):
 	"""docstring for TripAdvisorModel"""
 
