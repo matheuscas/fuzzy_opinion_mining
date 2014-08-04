@@ -92,27 +92,31 @@ def get_list_trigrams(trigram_list, trigram_pattern):
 								word3.split('/')[0] + "/" + tags3[1]))
 	return valids
 
-def get_doc_adjectives(ndoc, filtered=True):
+def get_doc_adjectives(ndoc, bigrams_filtered=False, trigrams_filtered=False):
 	"""This method return from document all the adjectives based on the following parameters:
 
 	Keyword arguments:
 	ndoc -- document from model
-	filtered -- Returns only adjectives that are not in ADV / ADJ bigrams (default: True)
+	bigrams_filtered -- Returns only adjectives that are not in ADV / ADJ bigrams (default: False)
 	"""
 
 	adjectives = list(ndoc['adjectives'])
-	adjs_adv_adj_bigram = list(ndoc['adjs_adv_adj_bigram'])
+
+	#TODO IF more bigrams are added, this list must be updated or a new one should be created
+	#Or still it could be created a method in this module that gather all adjectives from the existed bigrams
+	adjs_adv_adj_bigram = list(ndoc['adjs_adv_adj_bigram']) 
+
+	#TODO IF more trigrams are added, this list must be updated or a new one should be created
+	#Or still it could be created a method in this module that gather all adjectives from the existed trigrams
 	trigrams = list(ndoc['adv_xxx_adj_trigrams'])
 
-	#print adjectives
-	if filtered:
+	if bigrams_filtered:
 		#removes from adjectives duplicates in adjs_adv_adj_bigram
 		for e in adjs_adv_adj_bigram:
 			if e in adjectives:
-				#print "----> " + e
 				adjectives.remove(e)
-				#print adjectives
 
+	if trigrams_filtered:
 		#gathers adjectives from trigrams
 		trigrams_adjectives = []
 		for trigram in trigrams:
@@ -122,20 +126,14 @@ def get_doc_adjectives(ndoc, filtered=True):
 				if etag in PENN_ADJECTIVES_TAGS:
 					trigrams_adjectives.append(eword)
 
-		#print 'trigram list'
-		#print trigrams_adjectives
 		for adj in adjs_adv_adj_bigram:
 			if adj in trigrams_adjectives:
 				trigrams_adjectives.remove(adj)
 
-		#print 'trigram list depois'
-		#print trigrams_adjectives
 		#removes from adjectives duplicates in trigrams_adjectives
 		for e in trigrams_adjectives:
 			if e in adjectives:
-				#print "----> " + e
 				adjectives.remove(e)
-				#print adjectives
 
 	return adjectives
 
