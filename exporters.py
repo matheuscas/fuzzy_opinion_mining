@@ -11,11 +11,12 @@ class BaseExport(object):
 
 	__metaclass__ = abc.ABCMeta
 
-	def __init__(self, baseModel):
+	def __init__(self, baseModel, ngrams_dict):
 		super(BaseExport, self).__init__()
 		self.model = baseModel
 		self.origin_folder = ""
 		self.dest_folder = ""
+		self.ngrams_dict = ngrams_dict
 
 	@abc.abstractmethod
 	def export_files(self):
@@ -36,8 +37,8 @@ class BaseExport(object):
 class TripAdvisorExport(BaseExport):
 	"""Class responsible for create and export files with ngrams polarities from its model"""
 
-	def __init__(self, trip_advisor_model):
-		BaseExport.__init__(self, trip_advisor_model)
+	def __init__(self, trip_advisor_model,ngrams_dict):
+		BaseExport.__init__(self, trip_advisor_model, ngrams_dict)
 		self.origin_folder = "files_to_export/TripAdvisor/"
 		self.dest_folder = "/Users/matheuscas/Dropbox/UFBA/Mestrado/Pesquisa/matlab/polarities_files/TripAdvisor"
 
@@ -51,25 +52,20 @@ class TripAdvisorExport(BaseExport):
 		positive_matrix_index = []
 		negative_matrix_index = []
 
-		for ndoc in self.model.documents.find():
+		for _id, ngrams_list in self.ngrams_dict.iteritems():
 
-			if float(ndoc['degree']) <= 2:
-
-				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'],filtered=True)
-				ndoc_polarities = transformation.ngrams_polarities(ngrams, negation="complement")
-
+			ndoc = self.model.get_doc_by_id(_id)
+			doc_degree = float(ndoc['degree'])
+			if  doc_degree <= 2:
+				ndoc_polarities = self.ngrams_dict[_id]
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
 
 				negative_matrix_polarities.append(ndoc_polarities)
 				negative_matrix_index.append("Name: " + ndoc['name'] + " - Id: " +  str(ndoc['_id']) + \
 											" - Polarities: " + str(ndoc_polarities))
-
-			elif float(ndoc['degree']) >= 4:
-
-				ngrams = util.get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'],filtered=True)
-				ndoc_polarities = transformation.ngrams_polarities(ngrams, negation="complement")
-
+			elif doc_degree >= 4:
+				ndoc_polarities = self.ngrams_dict[_id]
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
 				positive_matrix_polarities.append(ndoc_polarities)
