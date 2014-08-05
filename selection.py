@@ -3,11 +3,12 @@ import util
 class Scenario(object):
 	"""Especifies the scenario for the experiment. Negation type as 'none' means that inversion treatment will be used"""
 
-	def __init__(self, unigrams_types=[], bigrams_types=[], trigrams_types=[]):
+	def __init__(self, unigrams_types=[], bigrams_types=[], trigrams_types=[], negation_type=None):
 		super(Scenario, self).__init__()
 		self.unigrams = unigrams_types
 		self.bigrams = bigrams_types
 		self.trigrams = trigrams_types
+		self.negation_type = negation_type
 
 class FeatureSelector(object):
 	"""docstring for FeatureSelector"""
@@ -59,7 +60,7 @@ class FeatureSelector(object):
 
 	def select_features(self):
 
-		ngrams = []
+		ngrams = {}
 		for doc in self.model.documents.find():
 			doc_ngram = []
 			doc_unigrams = self.__select_unigrams(doc)
@@ -71,7 +72,7 @@ class FeatureSelector(object):
 				doc_ngram = doc_ngram + doc_bigrams	
 
 			if len(doc_ngram) > 0:
-				ngrams.append(doc_ngram)
+				ngrams[str(doc['_id'])] = doc_ngram
 
 		return ngrams
 						

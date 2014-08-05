@@ -194,6 +194,10 @@ def trigram_polarity(trigram, negation=None):
 	return results
 
 def ngrams_polarities(ngrams_list, negation=None):
+	"""
+		Given a list of ngrams (such as "good, bad, (very,good),awesome"), returns a list of corresponding polarities
+	"""
+
 	polarities = []
 	for ngram in ngrams_list:
 		pol = 0
@@ -206,10 +210,18 @@ def ngrams_polarities(ngrams_list, negation=None):
 				polarities = polarities + pols
 		else: #unigrams - adjectives
 			pol = word_polarity(ngram)
-
 		if pol != None and type(pol) is tuple and pol[0] != 0:
 			polarities.append(pol[0])
 		elif pol != None and (type(pol) is int or type(pol) is float) and pol != 0:
 			polarities.append(pol)
 
 	return polarities
+
+def ngrams_matrix_polarities(ngrams_matrix, negation=None):
+	"""Given a matrix of ngrams (or a list of ngrams list), return a matrix of its corresponding polarities"""
+
+	polarities_matrix = {}
+	for _id, ngrams_list in ngrams_matrix.iteritems():
+		polarities_matrix[_id] = ngrams_polarities(ngrams_list, negation)
+
+	return polarities_matrix		
