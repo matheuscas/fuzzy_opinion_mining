@@ -1,4 +1,7 @@
 import math
+from textblob import TextBlob, Word, Blobber
+from textblob.taggers import PatternTagger
+from textblob_aptagger import PerceptronTagger
 
 PENN_ADVERBS_TAGS = ['RB', 'RBR', 'RBS', 'RP']
 PENN_ADJECTIVES_TAGS = ['JJ','JJR','JJS']
@@ -181,3 +184,19 @@ def std(list_of_numbers):
 	standard_deviation = math.sqrt(average(variance))
 	return standard_deviation	
 
+def tags(blob):
+
+	parsed_text = blob.parse().split()
+	tags = []
+	for elem in parsed_text[0]:
+		tags.append((elem[0],elem[1]))
+
+	return tags
+
+def get_tagger(tagger="PerceptronTagger"):
+
+	pt = Blobber(pos_tagger=PerceptronTagger())
+	if tagger == "PatternTagger":
+		pt = Blobber(pos_tagger=PatternTagger())
+
+	return pt

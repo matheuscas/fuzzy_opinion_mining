@@ -36,68 +36,6 @@ class BaseModel(object):
 
 		pass
 
-	def is_adverb(self, word_tag):
-		"""Checks if the passed tag is an adverb tag.
-
-		Keyword arguments:
-		word_tag -- Penn tag from word in ngram
-		"""
-
-		return word_tag in util.PENN_ADVERBS_TAGS
-
-	def is_adjective(self, word_tag):
-		"""Checks if the passed tag is an adjective tag.
-
-		Keyword arguments:
-		word_tag -- Penn tag from word in ngram
-		"""
-
-		return word_tag in util.PENN_ADJECTIVES_TAGS
-
-	def is_noun(self, word_tag):
-		"""Checks if the passed tag is an noun tag.
-
-		Keyword arguments:
-		word_tag -- Penn tag from word in ngram
-		"""
-
-		return word_tag in util.PENN_NOUNS_TAGS
-
-	def is_verb(self, word_tag):
-		"""Checks if the passed tag is an verb tag.
-
-		Keyword arguments:
-		word_tag -- Penn tag from word in ngram
-		"""
-
-		return word_tag in util.PENN_VERBS_TAGS
-
-	def is_adverb_adjective_bigram(self, bigram, type="ADV_ADJ"):
-		"""Checks if the passed bigram is an adverb_adjective bigram.
-
-		Keyword arguments:
-		bigram -- should be in the following pattern: tag1/tag2
-		type -- passes the type of bigram to be validated
-		"""
-
-		return bigram in util.ADVERB_ADJECTIVE_BIGRAMS
-
-	def tags(self, blob):
-		parsed_text = blob.parse().split()
-		tags = []
-		for elem in parsed_text[0]:
-			tags.append((elem[0],elem[1]))
-
-		return tags
-
-	def get_tagger(self, tagger="PerceptronTagger"):
-
-		pt = Blobber(pos_tagger=PerceptronTagger())
-		if tagger == "PatternTagger":
-			pt = Blobber(pos_tagger=PatternTagger())
-
-		return pt
-
 	def get_doc_by_name(self, doc_name):
 		return self.documents.find({'name':doc_name})[0]
 
@@ -121,7 +59,7 @@ class BaseModel(object):
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			advs = []
-			for word, tag in self.tags(blob):
+			for word, tag in util.tags(blob):
 				is_adv = len(Word(word).get_synsets(pos=ADV)) > 0
 				if tag in util.PENN_ADVERBS_TAGS and is_adv:
 					advs.append(word)
@@ -145,7 +83,7 @@ class BaseModel(object):
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			nouns = []
-			for word, tag in self.tags(blob):
+			for word, tag in util.tags(blob):
 				is_noun = len(Word(word).get_synsets(pos=NOUN)) > 0
 				if tag in util.PENN_NOUNS_TAGS and is_noun:
 					nouns.append(word)
@@ -168,7 +106,7 @@ class BaseModel(object):
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			adjectives = []
-			for word, tag in self.tags(blob):
+			for word, tag in util.tags(blob):
 				is_adjective = len(Word(word).get_synsets(pos=ADJ)) > 0
 				if tag in util.PENN_ADJECTIVES_TAGS and is_adjective:
 					adjectives.append(word)
@@ -182,7 +120,7 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = self.get_tagger()
+		pt = util.get_tagger()
 
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])
@@ -269,7 +207,7 @@ class BaseModel(object):
 
 	def pre_process_adv_xxx_adj_trigrams(self):
 
-		pt = self.get_tagger()
+		pt = util.get_tagger()
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])
 			valid_trigrams = []
@@ -375,7 +313,7 @@ class TripAdvisorModel(BaseModel):
 class CornellMoviesModel(BaseModel):
 	"""docstring for CornellMoviesModel"""
 
-	def __init__(self, database_name="CornellMovies"):
+	def __init__(self, database_name="CornellMovies_v2"):
 		BaseModel.__init__(self, database_name)
 
 	def read_corpora_source(self):
