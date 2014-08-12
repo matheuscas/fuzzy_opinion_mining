@@ -125,8 +125,10 @@ class TripAdvisorExport(BaseExport):
 class CornellMoviesExport(BaseExport):
 	"""docstring for CornellMoviesExport"""
 
-	def __init__(self, cornell_movies_model):
-		BaseExport.__init__(self, cornell_movies_model)
+	def __init__(self, cornell_movies_model,ngrams_dict):
+		BaseExport.__init__(self, cornell_movies_model, ngrams_dict)
+		self.origin_folder = "files_to_export/CornellMovies/2.0"
+		self.dest_folder = "/Users/matheuscas/Dropbox/UFBA/Mestrado/Pesquisa/matlab/polarities_files/CornellMovies/2.0"
 
 	def export_files(self):
 
@@ -138,30 +140,29 @@ class CornellMoviesExport(BaseExport):
 		positive_matrix_index = []
 		negative_matrix_index = []
 
-		for ndoc in self.model.documents.find():
+		for _id, ngrams_list in self.ngrams_dict.iteritems():
 
-			adjectives = util.get_doc_adjectives(ndoc)
-
-			if ndoc['polarity'] == 0:
-				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
-										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
+			ndoc = self.model.get_doc_by_id(_id)
+			polarity = ndoc['polarity']
+			if polarity == 0:
+				ndoc_polarities = self.ngrams_dict[_id]
 				if len(ndoc_polarities) > negative_matrix_max_size:
 					negative_matrix_max_size = len(ndoc_polarities)
+
 				negative_matrix_polarities.append(ndoc_polarities)
 				negative_matrix_index.append("Name: " + ndoc['name'] + " - Id: " +  str(ndoc['_id']) + \
 											" - Polarities: " + str(ndoc_polarities))
-
-			elif ndoc['polarity'] == 1:
-				ndoc_polarities = transformation.adjectives_polarities(adjectives) + \
-										transformation.adv_adj_bigrams_polarities(ndoc['adv_adj_bigrams'])
+			elif polarity == 1:
+				ndoc_polarities = self.ngrams_dict[_id]
 				if len(ndoc_polarities) > positive_matrix_max_size:
 					positive_matrix_max_size = len(ndoc_polarities)
+
 				positive_matrix_polarities.append(ndoc_polarities)
 				positive_matrix_index.append("Name: " + ndoc['name'] + " - Id: " +  str(ndoc['_id']) + \
 											" - Polarities: " + str(ndoc_polarities))
 
-		pos_matrix_file = open('files_to_export/CornellMovies/pos_matrix_file.txt','w+')
-		neg_matrix_file = open('files_to_export/CornellMovies/neg_matrix_file.txt','w+')
+		pos_matrix_file = open(self.origin_folder + '/pos_matrix_file.txt','w+')
+		neg_matrix_file = open(self.origin_folder + '/neg_matrix_file.txt','w+')
 
 		for ndoc_polarity in positive_matrix_polarities:
 			if positive_matrix_max_size - len(ndoc_polarity) > 0:
@@ -181,8 +182,8 @@ class CornellMoviesExport(BaseExport):
 
 		neg_matrix_file.close()
 
-		pos_index_file = open('files_to_export/CornellMovies/pos_index_file.txt','w+')
-		neg_index_file = open('files_to_export/CornellMovies/neg_index_file.txt','w+')
+		pos_index_file = open(self.origin_folder + '/pos_index_file.txt','w+')
+		neg_index_file = open(self.origin_folder + '/neg_index_file.txt','w+')
 
 		for index in positive_matrix_index:
 			pos_index_file.write(index)
@@ -194,3 +195,17 @@ class CornellMoviesExport(BaseExport):
 
 		pos_index_file.close()
 		neg_index_file.close()
+
+		pos_sizes_file = open(self.origin_folder + '/pos_sizes.txt','w+')
+		neg_sizes_file = open(self.origin_folder + '/neg_sizes.txt','w+')
+
+		pos_sizes_file.write(str(len(positive_matrix_index)))
+		pos_sizes_file.write('\n')
+		pos_sizes_file.write(str(positive_matrix_max_size))
+
+		neg_sizes_file.write(str(len(negative_matrix_index)))
+		neg_sizes_file.write('\n')
+		neg_sizes_file.write(str(negative_matrix_max_size))
+
+		pos_sizes_file.close()
+		neg_sizes_file.close()

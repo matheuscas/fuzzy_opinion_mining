@@ -111,7 +111,11 @@ def get_doc_adjectives(ndoc, bigrams_filtered=False, trigrams_filtered=False):
 
 	#TODO IF more trigrams are added, this list must be updated or a new one should be created
 	#Or still it could be created a method in this module that gather all adjectives from the existed trigrams
-	trigrams = list(ndoc['adv_xxx_adj_trigrams'])
+	try:
+		trigrams = list(ndoc['adv_xxx_adj_trigrams'])
+	except Exception, e:
+		trigrams_filtered=False
+	
 
 	if bigrams_filtered:
 		#removes from adjectives duplicates in adjs_adv_adj_bigram
