@@ -3,8 +3,7 @@ import os
 import abc
 import string
 import util
-from textblob import TextBlob, Word, Blobber
-from textblob.taggers import NLTKTagger
+from textblob import TextBlob, Word
 from textblob.taggers import PatternTagger
 from textblob_aptagger import PerceptronTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
@@ -50,12 +49,7 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = Blobber(pos_tagger=PerceptronTagger())
-		if tagger == "PatternTagger":
-			pt = Blobber(pos_tagger=PatternTagger())
-		else:
-			print "PerceptronTagger will be used"
-
+		pt = util.get_tagger()
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			advs = []
@@ -74,12 +68,7 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = Blobber(pos_tagger=PerceptronTagger())
-		if tagger == "PatternTagger":
-			pt = Blobber(pos_tagger=PatternTagger())
-		else:
-			print "PerceptronTagger will be used"
-
+		pt = util.get_tagger()
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			nouns = []
@@ -97,12 +86,7 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = Blobber(pos_tagger=PerceptronTagger())
-		if tagger == "PatternTagger":
-			pt = Blobber(pos_tagger=PatternTagger())
-		else:
-			print "PerceptronTagger will be used"
-
+		pt = util.get_tagger()
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			adjectives = []
@@ -158,12 +142,7 @@ class BaseModel(object):
 
 		"""
 
-		pt = Blobber(pos_tagger=PerceptronTagger())
-		if tagger == "PatternTagger":
-			pt = Blobber(pos_tagger=PatternTagger())
-		else:
-			print "PerceptronTagger will be used"
-
+		pt = util.get_tagger()
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])
 			valid_bigrams = []
