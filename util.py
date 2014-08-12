@@ -191,9 +191,10 @@ def std(list_of_numbers):
 def tags(blob):
 
 	parsed_text = blob.parse().split()
-	tags = []
-	for elem in parsed_text[0]:
-		tags.append((elem[0],elem[1]))
+	tags = []	
+	for parsed_sentence in parsed_text:
+		for elem in parsed_sentence:
+			tags.append((elem[0],elem[1]))
 
 	return tags
 
