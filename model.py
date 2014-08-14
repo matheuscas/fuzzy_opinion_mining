@@ -3,6 +3,7 @@ import os
 import abc
 import string
 import util
+import transformation
 from textblob import TextBlob, Word
 from textblob.taggers import PatternTagger
 from textblob_aptagger import PerceptronTagger
@@ -35,8 +36,16 @@ class BaseModel(object):
 
 		pass
 
-	def get_doc_by_name(self, doc_name):
-		return self.documents.find({'name':doc_name})[0]
+	def __is_field_exists(self, collection_name, field_name):
+		collection = self.database[collection_name]
+		for e in collection.find():
+			for k in e.keys():
+				if k == field_name:
+					return True
+		return False			
+
+	def get_doc_by_name(self, doc_name, collection_name='documents'):
+		return self.database[collection_name].find({'name':doc_name})[0]
 
 	def get_doc_by_id(self, doc_id):
 		return self.documents.find({'_id':ObjectId(doc_id)})[0]
@@ -197,39 +206,219 @@ class BaseModel(object):
 				valid_trigrams = valid_trigrams + util.get_list_trigrams(trigrams, "ADV/XXX/ADJ")
 			self.documents.update({'name':ndoc['name']},{'$set':{'adv_xxx_adj_trigrams':valid_trigrams}})
 
-	def stats(self):
-		num_of_docs = self.documents.count()
-		sentences_per_doc = []
-		adjectives_per_doc = []
-		adverbs_per_doc = []
-		adv_adj_bigram_per_doc = []
-		for ndoc in self.documents.find():
-			#sentences_per_doc.append(util.count_sentences(ndoc['text']))
-			sentences_per_doc.append(len(TextBlob(ndoc['text']).sentences))
-			adjectives_per_doc.append(len(ndoc['adjectives']))
-			adverbs_per_doc.append(len(ndoc['adverbs']))	
-			adv_adj_bigram_per_doc.append(len(ndoc['adv_adj_bigrams']))
+	def __documents_stats(self):
 
-		sentences_avg = util.average(sentences_per_doc)
-		sentences_std = util.std(sentences_per_doc)
+		list_of_doc_stats = []
+		for doc in self.documents.find():
+			doc_stats = {}
 
-		adjectives_avg = util.average(adjectives_per_doc)
-		adjectives_std = util.std(adjectives_per_doc)
+			#adjectives
+			adjectives = doc['adjectives']
+			positive_adjectives = []
+			negative_adjectives = []
+			for adj in adjectives:
+				adj_pol = transformation.word_polarity(adj)
+				if adj_pol is None:
+					adj_pol = (0,0)
 
-		adverbs_avg = util.average(adverbs_per_doc)
-		adverbs_std = util.std(adverbs_per_doc)
+				if adj_pol[0] > 0:
+					positive_adjectives.append(adj)
+				elif adj_pol[0] < 0:
+					negative_adjectives.append(adj)		
+			doc_stats['positive_adjectives'] = positive_adjectives
+			doc_stats['negative_adjectives'] = negative_adjectives
+			doc_stats['_id'] = str(doc['_id'])
+			list_of_doc_stats.append(doc_stats)
 
-		adv_adj_bigram_avg = util.average(adv_adj_bigram_per_doc)
-		adv_adj_bigram_std = util.std(adv_adj_bigram_per_doc)
+		return list_of_doc_stats	
 
-		print "Sentences average: " + str(sentences_avg)
-		print "Sentences standard deviation: " + str(sentences_std)
-		print "Adjectives average: " + str(adjectives_avg)
-		print "Adjectives standard deviation: " + str(adjectives_std)
-		print "Adverbs average: " + str(adverbs_avg)
-		print "Adverbs standard deviation: " + str(adverbs_std)
-		print "Adverb/Adjective bigram average: " + str(adv_adj_bigram_avg)
-		print "Adverb/Adjective bigram standard deviation: " + str(adv_adj_bigram_std)
+
+	def stats(self, rewrite=False):
+
+		if "stats" not in self.database.collection_names() or rewrite:
+
+			self.database.drop_collection("stats")
+
+			num_of_docs = self.documents.count()
+			sentences_per_doc = []
+			adjectives_per_doc = []
+			adverbs_per_doc = []
+			adv_adj_bigram_per_doc = []
+			for ndoc in self.documents.find():
+				#sentences_per_doc.append(util.count_sentences(ndoc['text']))
+				sentences_per_doc.append(len(TextBlob(ndoc['text']).sentences))
+				adjectives_per_doc.append(len(ndoc['adjectives']))
+				adv_adj_bigram_per_doc.append(len(ndoc['adv_adj_bigrams']))
+				try:
+					adverbs_per_doc.append(len(ndoc['adverbs']))	
+				except Exception, e:
+					pass
+
+			if len(sentences_per_doc) > 0:
+				sentences_avg = util.average(sentences_per_doc)
+				sentences_std = util.std(sentences_per_doc)
+			else:
+				sentences_avg = 0
+				sentences_std = 0	
+
+			if len(adjectives_per_doc) > 0:	
+				adjectives_avg = util.average(adjectives_per_doc)
+				adjectives_std = util.std(adjectives_per_doc)
+			else:
+				adjectives_avg = 0
+				adjectives_std = 0
+
+			if len(adverbs_per_doc) > 0:
+				adverbs_avg = util.average(adverbs_per_doc)
+				adverbs_std = util.std(adverbs_per_doc)
+			else:
+				adverbs_avg = 0
+				adverbs_std = 0
+
+			if len(adv_adj_bigram_per_doc) > 0:	
+				adv_adj_bigram_avg = util.average(adv_adj_bigram_per_doc)
+				adv_adj_bigram_std = util.std(adv_adj_bigram_per_doc)
+			else:
+				adv_adj_bigram_avg = 0
+				adv_adj_bigram_std = 0	
+
+			general = {}
+			general['general'] = {"avg of sentences":sentences_avg, "sentences std": sentences_std, 
+									"avg of adjectives": adjectives_avg, "adjectives std":adjectives_std,
+									"avg of adverbs": adverbs_avg, "adverbs std": adverbs_std,
+									"RB/JJ bigram avg":adv_adj_bigram_avg,"RB/JJ bigram std":adv_adj_bigram_std}
+			general['name'] = 'general'						
+
+			self.database.stats.insert(general)
+
+			list_of_doc_stats = self.__documents_stats()
+			documents_stats = {}
+			documents_stats['documents_stats'] = list_of_doc_stats
+			documents_stats['name'] = 'documents_stats'
+			self.database.stats.insert(documents_stats)
+
+		return self.database.stats.find()
+
+	def positive_documents_features(self):
+		
+		if "stats" not in self.database.collection_names():
+			return "It must be stats to collect dataset features!"
+		else:
+			documents_stats = self.get_doc_by_name('documents_stats','stats')
+			
+			#features of positive documents
+			#term counting
+			positive_docs_pos_adj_bigger_neg_adj = 0.0
+			positive_docs_neg_adj_bigger_pos_adj = 0.0
+			#sum of polarities
+			positive_docs_bigger_sum_of_positive_adjectives = 0.0
+			positive_docs_bigger_sum_of_negative_adjectives = 0.0
+			#term counting AND #sum of polarities
+			positive_docs_both_bigger_positive_count_and_sum = 0.0
+			positive_docs_both_bigger_negative_count_and_sum = 0.0
+			
+			num_pos_docs = 0.0	
+			for stat in documents_stats['documents_stats']:
+				doc = self.get_doc_by_id(stat['_id'])
+				num_pos_adj = len(stat['positive_adjectives'])
+				num_neg_adj = len(stat['negative_adjectives'])
+				sum_pos_adj = abs(sum(transformation.adjectives_polarities(stat['positive_adjectives'])))
+				sum_neg_adj = abs(sum(transformation.adjectives_polarities(stat['negative_adjectives'])))
+
+				if doc['polarity'] == 1:
+					num_pos_docs += 1
+					#term couting
+					if num_pos_adj > num_neg_adj:
+						positive_docs_pos_adj_bigger_neg_adj += 1
+					else:
+						positive_docs_neg_adj_bigger_pos_adj += 1
+
+					#sum of polarities
+					if sum_pos_adj > sum_neg_adj:
+						positive_docs_bigger_sum_of_positive_adjectives += 1
+					else:
+						positive_docs_bigger_sum_of_negative_adjectives += 1			
+
+			#positive percentual
+			#term counting			
+			perc_positive_docs_pos_adj_bigger_neg_adj = positive_docs_pos_adj_bigger_neg_adj / num_pos_docs
+			perc_positive_docs_neg_adj_bigger_pos_adj = positive_docs_neg_adj_bigger_pos_adj / num_pos_docs
+			#sum of polarities
+			perc_positive_docs_bigger_sum_of_positive_adjectives = positive_docs_bigger_sum_of_positive_adjectives / num_pos_docs
+			perc_positive_docs_bigger_sum_of_negative_adjectives = positive_docs_bigger_sum_of_negative_adjectives / num_pos_docs
+
+			features ={"'%' of DOCS that has BIGGER COUNT of positive adjs than negative":perc_positive_docs_pos_adj_bigger_neg_adj,
+						"'%' of DOCS that has BIGGER COUNT of negative adjs than positive":perc_positive_docs_neg_adj_bigger_pos_adj,
+						"'%' of DOCS that has BIGGER SUM of positive adjs":perc_positive_docs_bigger_sum_of_positive_adjectives,
+						"'%' of DOCS that has BIGGER SUM of negative adjs":perc_positive_docs_bigger_sum_of_negative_adjectives}
+
+			if self.__is_field_exists('stats','positive_documents_features'):
+				self.database.stats.update({'name':'positive_documents_features'},{'$set':{'positive_documents_features':features}})
+			else:
+				dataset_features = {}
+				dataset_features['name'] = 'positive_documents_features'
+				dataset_features['positive_documents_features'] = features
+				self.database.stats.insert(dataset_features)									
+			
+	def negative_documents_features(self):
+		
+		if "stats" not in self.database.collection_names():
+			return "It must be stats to collect dataset features!"
+		else:
+			documents_stats = self.get_doc_by_name('documents_stats','stats')
+		
+			#features of negative documents
+			#term counting
+			negative_docs_pos_adj_bigger_neg_adj = 0.0
+			negative_docs_neg_adj_bigger_pos_adj = 0.0
+			#sum of polarities
+			negative_docs_bigger_sum_of_positive_adjectives = 0.0
+			negative_docs_bigger_sum_of_negative_adjectives = 0.0
+
+			num_neg_docs = 0.0
+
+			for stat in documents_stats['documents_stats']:
+				doc = self.get_doc_by_id(stat['_id'])
+				num_pos_adj = len(stat['positive_adjectives'])
+				num_neg_adj = len(stat['negative_adjectives'])
+				sum_pos_adj = abs(sum(transformation.adjectives_polarities(stat['positive_adjectives'])))
+				sum_neg_adj = abs(sum(transformation.adjectives_polarities(stat['negative_adjectives'])))
+
+				if doc['polarity'] == 0:
+					
+					num_neg_docs += 1
+					#term counting
+					if num_pos_adj > num_neg_adj:
+						negative_docs_pos_adj_bigger_neg_adj += 1
+					else:
+						negative_docs_neg_adj_bigger_pos_adj += 1
+
+					#sum of polarities
+					if sum_pos_adj > sum_neg_adj:
+						negative_docs_bigger_sum_of_positive_adjectives += 1
+					else:
+						negative_docs_bigger_sum_of_negative_adjectives += 1
+
+			#negative percentual
+			perc_negative_docs_pos_adj_bigger_neg_adj = negative_docs_pos_adj_bigger_neg_adj / num_neg_docs
+			perc_negative_docs_neg_adj_bigger_pos_adj = negative_docs_neg_adj_bigger_pos_adj / num_neg_docs
+			#sum of polarities
+			perc_negative_docs_bigger_sum_of_positive_adjectives = negative_docs_bigger_sum_of_positive_adjectives / num_neg_docs
+			perc_negative_docs_bigger_sum_of_negative_adjectives = negative_docs_bigger_sum_of_negative_adjectives / num_neg_docs
+
+			features = {"'%' of DOCS that has BIGGER COUNT of positive adjs than negatives":perc_negative_docs_pos_adj_bigger_neg_adj,
+						"'%' of DOCS that has BIGGER COUNT of negative adjs than positives":perc_negative_docs_neg_adj_bigger_pos_adj,
+						"'%' of DOCS that has BIGGER SUM of positive adjs": perc_negative_docs_bigger_sum_of_positive_adjectives,
+						"'%' of DOCS that has BIGGER SUM of negative adjs":perc_negative_docs_bigger_sum_of_negative_adjectives}
+
+			if self.__is_field_exists('stats','negative_documents_features'):
+				self.database.stats.update({'name':'negative_documents_features'},{'$set':{'negative_documents_features':features}})
+			else:
+				dataset_features = {}
+				dataset_features['name'] = 'negative_documents_features'
+				dataset_features['negative_documents_features'] = features
+				self.database.stats.insert(dataset_features)		
+			
 
 class TripAdvisorModel(BaseModel):
 	"""docstring for TripAdvisorModel"""
