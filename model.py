@@ -490,7 +490,7 @@ class ModelFeatures(object):
 				num_of_docs += 1
 				if num_pos_adj < num_neg_adj:
 					amount_pos_docs_highest_num_neg_adj += 1
-					pos_docs_highest_num_neg_adj.append(str(doc['id']))
+					pos_docs_highest_num_neg_adj.append(str(doc['_id']))
 
 		self.positives_features['positive_documents_highest_num_negative_adjectives'] = (amount_pos_docs_highest_num_neg_adj / num_of_docs, pos_docs_highest_num_neg_adj)
 		
