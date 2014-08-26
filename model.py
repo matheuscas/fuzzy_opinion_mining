@@ -331,6 +331,8 @@ class ModelFeatures(object):
                }
                """)
 		self.documents_stats = []
+		self.BINARY_POSITIVE_POLARITY = 1
+		self.BINARY_NEGATIVE_POLARITY = 0
 
 	def __documents_stats(self):
 
@@ -640,13 +642,21 @@ class ModelFeatures(object):
 
 		return self.positives_features['positive_documents_highest_score_negative_adjectives']
 
-	def positive_documents_equal_adjectives_scores(self):
+	def documents_equal_adjectives_scores(self, doc_type):
 		
-		if 'positive_documents_equal_adjectives_scores' in self.positives_features.keys():
-			return self.positives_features['positive_documents_equal_adjectives_scores']
+		polarity = self.BINARY_POSITIVE_POLARITY
+		key_prefix = "positive_"
+		if doc_type == 'negatives':
+			polarity = self.BINARY_NEGATIVE_POLARITY
+			key_prefix = "negative_"
 
-		amount_pos_docs_equal_adj_score = 0.0
-		pos_docs_equal_adj_scores = []
+		key_name = key_prefix + "documents_equal_adjectives_scores"	
+
+		if key_name in self.positives_features.keys():
+			return self.positives_features[key_name]
+
+		amount_docs_equal_adj_score = 0.0
+		docs_equal_adj_scores = []
 		num_of_docs = 0.0
 
 		for stat in self.__documents_stats():
@@ -656,12 +666,12 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
-			if doc['polarity'] == 1:
+			if doc['polarity'] == polarity:
 				num_of_docs += 1
 				if abs(max_pos_adj) == abs(max_neg_adj):
-					amount_pos_docs_equal_adj_score += 1
-					pos_docs_equal_adj_scores.append(str(doc['_id']))	
+					amount_docs_equal_adj_score += 1
+					docs_equal_adj_scores.append(str(doc['_id']))	
 
-		self.positives_features['positive_documents_equal_adjectives_scores'] = (amount_pos_docs_equal_adj_score / num_of_docs, amount_pos_docs_equal_adj_score, pos_docs_equal_adj_scores)
+		self.features[key_name] = (amount_docs_equal_adj_score / num_of_docs, amount_docs_equal_adj_score, docs_equal_adj_scores)
 
-		return self.positives_features['positive_documents_equal_adjectives_scores']	
+		return self.features[key_name]	
