@@ -486,28 +486,30 @@ class ModelFeatures(object):
 		
 		return self.positives_features['positive_documents_highest_num_positive_adjectives']	
 
-	def positive_documents_highest_num_negative_adjectives(self):
+	def documents_highest_count_negative_adjectives(self, doc_type):
 		
-		if 'positive_documents_highest_num_negative_adjectives' in self.positives_features.keys():
-			return self.positives_features['positive_documents_highest_num_negative_adjectives']
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_negative_adjectives')
 
-		amount_pos_docs_highest_num_neg_adj = 0.0
-		pos_docs_highest_num_neg_adj = []
+		if key_name in self.features.keys():
+			return self.features[key_name]
+
+		amount_docs_highest_count_neg_adj = 0.0
+		docs_highest_num_neg_adj = []
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			num_pos_adj = len(stat['positive_adjectives'])
 			num_neg_adj = len(stat['negative_adjectives'])
 
-			if doc['polarity'] == 1:
+			if doc['polarity'] == polarity:
 				num_of_docs += 1
 				if num_pos_adj < num_neg_adj:
-					amount_pos_docs_highest_num_neg_adj += 1
-					pos_docs_highest_num_neg_adj.append(str(doc['_id']))
+					amount_docs_highest_count_neg_adj += 1
+					docs_highest_num_neg_adj.append(str(doc['_id']))
 
-		self.positives_features['positive_documents_highest_num_negative_adjectives'] = (amount_pos_docs_highest_num_neg_adj / num_of_docs, pos_docs_highest_num_neg_adj)
+		self.features[key_name] = (amount_docs_highest_count_neg_adj / num_of_docs, amount_docs_highest_count_neg_adj, docs_highest_num_neg_adj)
 		
-		return self.positives_features['positive_documents_highest_num_negative_adjectives']
+		return self.features[key_name]
 
 	def documents_equal_count_positive_and_negative_adjectives(self, doc_type):
 		
@@ -516,7 +518,7 @@ class ModelFeatures(object):
 		if key_name in self.features.keys():
 			return self.features[key_name]
 
-		amount_docs_equal_num_adj = 0.0
+		amount_docs_equal_count_adj = 0.0
 		docs_equal_num_adj = []
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
@@ -527,10 +529,10 @@ class ModelFeatures(object):
 			if doc['polarity'] == polarity:
 				num_of_docs += 1
 				if num_pos_adj == num_neg_adj:
-					amount_docs_equal_num_adj += 1
+					amount_docs_equal_count_adj += 1
 					docs_equal_num_adj.append(str(doc['_id']))
 
-		self.features[key_name] = (amount_docs_equal_num_adj / num_of_docs, amount_docs_equal_num_adj, docs_equal_num_adj)
+		self.features[key_name] = (amount_docs_equal_count_adj / num_of_docs, amount_docs_equal_count_adj, docs_equal_num_adj)
 		
 		return self.features[key_name]					
 
