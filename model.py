@@ -578,28 +578,30 @@ class ModelFeatures(object):
 
 		return self.positives_features['positive_documents_highest_sum_negative_adjectives']
 		
-	def positive_documents_equal_sum_positive_and_negative_adjectives(self):
+	def documents_equal_sum_positive_and_negative_adjectives(self, doc_type):
 		
-		if 'positive_documents_equal_sum_positive_and_negative_adjectives' in self.positives_features.keys():
-			return self.positives_features['positive_documents_equal_sum_positive_and_negative_adjectives']
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_sum_positive_and_negative_adjectives')
 
-		amount_pos_docs_equal_sum_pos_neg_adj = 0.0
-		pos_docs_equal_sum_pos_neg_adj = []
+		if key_name in self.features.keys():
+			return self.features[key_name]
+
+		amount_docs_equal_sum_pos_neg_adj = 0.0
+		docs_equal_sum_pos_neg_adj = []
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			sum_pos_adj = abs(sum(transformation.adjectives_polarities(stat['positive_adjectives'])))
 			sum_neg_adj = abs(sum(transformation.adjectives_polarities(stat['negative_adjectives'])))
 
-			if doc['polarity'] == 1:
+			if doc['polarity'] == polarity:
 				num_of_docs += 1
 				if sum_pos_adj == sum_neg_adj:
-					amount_pos_docs_equal_sum_pos_neg_adj += 1
-					pos_docs_equal_sum_pos_neg_adj.append(str(doc['_id']))
+					amount_docs_equal_sum_pos_neg_adj += 1
+					docs_equal_sum_pos_neg_adj.append(str(doc['_id']))
 
-		self.positives_features['positive_documents_equal_sum_positive_and_negative_adjectives'] = (amount_pos_docs_equal_sum_pos_neg_adj / num_of_docs, pos_docs_equal_sum_pos_neg_adj)
+		self.features[key_name] = (amount_docs_equal_sum_pos_neg_adj / num_of_docs, amount_docs_equal_sum_pos_neg_adj, docs_equal_sum_pos_neg_adj)
 
-		return self.positives_features['positive_documents_equal_sum_positive_and_negative_adjectives']	
+		return self.features[key_name]	
 
 	def documents_highest_score_positive_adjectives(self, doc_type):
 		
