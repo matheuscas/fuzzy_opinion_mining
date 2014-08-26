@@ -669,9 +669,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]
 
-	def documents_equal_adjectives_scores(self, doc_type):
+	def documents_equal_score_adjectives(self, doc_type):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_adjectives_scores')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_score_adjectives')
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
