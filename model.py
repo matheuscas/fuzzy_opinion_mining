@@ -587,3 +587,81 @@ class ModelFeatures(object):
 		self.positives_features['positive_documents_equal_sum_positive_and_negative_adjectives'] = (amount_pos_docs_equal_sum_pos_neg_adj / num_of_docs, pos_docs_equal_sum_pos_neg_adj)
 
 		return self.positives_features['positive_documents_equal_sum_positive_and_negative_adjectives']	
+
+	def positive_documents_highest_score_positive_adjective(self):
+		
+		if 'positive_documents_highest_score_positive_adjective' in self.positives_features.keys():
+			return self.positives_features['positive_documents_highest_score_positive_adjective']
+
+		amount_pos_docs_highest_score_pos_adj = 0.0
+		pos_docs_highest_score_pos_adj = []
+		num_of_docs = 0.0
+
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			pos_adjs = transformation.adjectives_polarities(stat['positive_adjectives'])
+			neg_adjs = transformation.adjectives_polarities(stat['negative_adjectives'])
+			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
+			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
+
+			if doc['polarity'] == 1:
+				num_of_docs += 1
+				if abs(max_pos_adj) > abs(max_neg_adj):
+					amount_pos_docs_highest_score_pos_adj += 1
+					pos_docs_highest_score_pos_adj.append(str(doc['_id']))	
+
+		self.positives_features['positive_documents_highest_score_positive_adjective'] = (amount_pos_docs_highest_score_pos_adj / num_of_docs, amount_pos_docs_highest_score_pos_adj, pos_docs_highest_score_pos_adj)
+
+		return self.positives_features['positive_documents_highest_score_positive_adjective']			
+
+	def positive_documents_highest_score_negative_adjectives(self):
+		
+		if 'positive_documents_highest_score_negative_adjectives' in self.positives_features.keys():
+			return self.positives_features['positive_documents_highest_score_negative_adjectives']
+
+		amount_pos_docs_highest_score_neg_adj = 0.0
+		pos_docs_highest_score_neg_adj = []
+		num_of_docs = 0.0
+
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			pos_adjs = transformation.adjectives_polarities(stat['positive_adjectives'])
+			neg_adjs = transformation.adjectives_polarities(stat['negative_adjectives'])
+			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
+			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
+
+			if doc['polarity'] == 1:
+				num_of_docs += 1
+				if abs(max_pos_adj) < abs(max_neg_adj):
+					amount_pos_docs_highest_score_neg_adj += 1
+					pos_docs_highest_score_neg_adj.append(str(doc['_id']))	
+
+		self.positives_features['positive_documents_highest_score_negative_adjectives'] = (amount_pos_docs_highest_score_neg_adj / num_of_docs, amount_pos_docs_highest_score_neg_adj, pos_docs_highest_score_neg_adj)
+
+		return self.positives_features['positive_documents_highest_score_negative_adjectives']
+
+	def positive_documents_equal_adjectives_scores(self):
+		
+		if 'positive_documents_equal_adjectives_scores' in self.positives_features.keys():
+			return self.positives_features['positive_documents_equal_adjectives_scores']
+
+		amount_pos_docs_equal_adj_score = 0.0
+		pos_docs_equal_adj_scores = []
+		num_of_docs = 0.0
+
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			pos_adjs = transformation.adjectives_polarities(stat['positive_adjectives'])
+			neg_adjs = transformation.adjectives_polarities(stat['negative_adjectives'])
+			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
+			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
+
+			if doc['polarity'] == 1:
+				num_of_docs += 1
+				if abs(max_pos_adj) == abs(max_neg_adj):
+					amount_pos_docs_equal_adj_score += 1
+					pos_docs_equal_adj_scores.append(str(doc['_id']))	
+
+		self.positives_features['positive_documents_equal_adjectives_scores'] = (amount_pos_docs_equal_adj_score / num_of_docs, amount_pos_docs_equal_adj_score, pos_docs_equal_adj_scores)
+
+		return self.positives_features['positive_documents_equal_adjectives_scores']	

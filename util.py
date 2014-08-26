@@ -205,3 +205,10 @@ def get_tagger(tagger="PerceptronTagger"):
 		pt = Blobber(pos_tagger=PatternTagger())
 
 	return pt
+
+def max_abs(list_of_numbers):
+	max_abs_val = 0
+	for num in list_of_numbers:
+		if abs(num) > max_abs_val:
+			max_abs_val = num
+	return max_abs_val		
