@@ -10,6 +10,7 @@ from textblob_aptagger import PerceptronTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
 from bson.objectid import ObjectId
 from bson.code import Code
+from collections import Counter
 
 class BaseModel(object):
 	"""docstring for BaseModel class that represents and generic corpora in mongodb"""
@@ -408,6 +409,36 @@ class ModelFeatures(object):
 
 		self.features['most_frequent_positive_adjectives'] = most_frequent_positive_adjectives		
 		return most_frequent_positive_adjectives
+
+	def most_frequent_positive_adjectives_in_positive_documents(self):
+		
+		if 'most_frequent_positive_adjectives_in_positive_documents' in self.features.keys():
+			return self.features['most_frequent_positive_adjectives_in_positive_documents']
+
+		all_positive_adjectives = []
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			if doc['polarity'] == self.BINARY_POSITIVE_POLARITY:
+				all_positive_adjectives = all_positive_adjectives + stat['positive_adjectives']
+
+		all_positive_adjectives_freq = Counter(all_positive_adjectives)
+		self.features['most_frequent_positive_adjectives_in_positive_documents'] = all_positive_adjectives_freq
+		return all_positive_adjectives_freq
+
+	def most_frequent_negative_adjectives_in_negative_documents(self):
+
+		if 'most_frequent_negative_adjectives_in_negative_documents' in self.features.keys():
+			return self.features['most_frequent_negative_adjectives_in_negative_documents']
+
+		all_negative_adjectives = []
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			if doc['polarity'] == self.BINARY_NEGATIVE_POLARITY:
+				all_negative_adjectives = all_negative_adjectives + stat['negative_adjectives']
+
+		all_negative_adjectives_freq = Counter(all_negative_adjectives)
+		self.features['most_frequent_negative_adjectives_in_negative_documents'] = all_negative_adjectives_freq
+		return all_negative_adjectives_freq		
 
 	def general(self):
 
