@@ -535,9 +535,9 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]	
 
-	def documents_highest_count_negative_adjectives(self, doc_type):
+	def documents_highest_count_negative_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_negative_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_negative_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -550,7 +550,8 @@ class ModelFeatures(object):
 			num_pos_adj = len(stat['positive_adjectives'])
 			num_neg_adj = len(stat['negative_adjectives'])
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if num_pos_adj < num_neg_adj:
 					amount_docs_highest_count_neg_adj += 1
@@ -560,9 +561,9 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]
 
-	def documents_equal_count_positive_and_negative_adjectives(self, doc_type):
+	def documents_equal_count_positive_and_negative_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_count_positive_and_negative_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_count_positive_and_negative_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -575,7 +576,8 @@ class ModelFeatures(object):
 			num_pos_adj = len(stat['positive_adjectives'])
 			num_neg_adj = len(stat['negative_adjectives'])
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if num_pos_adj == num_neg_adj:
 					amount_docs_equal_count_adj += 1
@@ -585,9 +587,9 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]					
 
-	def documents_highest_sum_positive_adjectives(self, doc_type):
+	def documents_highest_sum_positive_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_positive_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_positive_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -600,7 +602,8 @@ class ModelFeatures(object):
 			sum_pos_adj = abs(sum(transformation.adjectives_polarities(stat['positive_adjectives'])))
 			sum_neg_adj = abs(sum(transformation.adjectives_polarities(stat['negative_adjectives'])))
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if sum_pos_adj > sum_neg_adj:
 					amount_docs_highest_sum_pos_adj += 1
@@ -610,9 +613,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]			
 
-	def documents_highest_sum_negative_adjectives(self, doc_type):
+	def documents_highest_sum_negative_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_negative_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_negative_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -625,7 +628,8 @@ class ModelFeatures(object):
 			sum_pos_adj = abs(sum(transformation.adjectives_polarities(stat['positive_adjectives'])))
 			sum_neg_adj = abs(sum(transformation.adjectives_polarities(stat['negative_adjectives'])))
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if sum_pos_adj < sum_neg_adj:
 					amount_docs_highest_sum_neg_adj += 1
@@ -635,9 +639,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]
 		
-	def documents_equal_sum_positive_and_negative_adjectives(self, doc_type):
+	def documents_equal_sum_positive_and_negative_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_sum_positive_and_negative_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_sum_positive_and_negative_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -650,7 +654,8 @@ class ModelFeatures(object):
 			sum_pos_adj = abs(sum(transformation.adjectives_polarities(stat['positive_adjectives'])))
 			sum_neg_adj = abs(sum(transformation.adjectives_polarities(stat['negative_adjectives'])))
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if sum_pos_adj == sum_neg_adj:
 					amount_docs_equal_sum_pos_neg_adj += 1
@@ -660,9 +665,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]	
 
-	def documents_highest_score_positive_adjectives(self, doc_type):
+	def documents_highest_score_positive_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_positive_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_positive_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -678,7 +683,8 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if abs(max_pos_adj) > abs(max_neg_adj):
 					amount_docs_highest_score_pos_adj += 1
@@ -688,9 +694,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]			
 
-	def documents_highest_score_negative_adjectives(self, doc_type):
+	def documents_highest_score_negative_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_negative_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_negative_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -706,7 +712,8 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if abs(max_pos_adj) < abs(max_neg_adj):
 					amount_docs_highest_score_neg_adj += 1
@@ -716,9 +723,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]
 
-	def documents_equal_score_adjectives(self, doc_type):
+	def documents_equal_score_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_score_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_score_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -734,7 +741,8 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if abs(max_pos_adj) == abs(max_neg_adj):
 					amount_docs_equal_adj_score += 1
