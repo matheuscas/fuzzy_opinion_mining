@@ -334,6 +334,8 @@ class ModelFeatures(object):
 		self.documents_stats = []
 		self.BINARY_POSITIVE_POLARITY = 1
 		self.BINARY_NEGATIVE_POLARITY = 0
+		self.MULTIPLE_POSITIVE_POLARITY = 4
+		self.MULTIPLE_NEGATIVE_POLARITY = 2
 
 	def __documents_stats(self):
 
@@ -365,16 +367,28 @@ class ModelFeatures(object):
 		self.documents_stats = list_of_doc_stats 	
 		return list_of_doc_stats
 
-	def __set_doc_type(self, doc_type, key_sufix):
+	def __set_doc_type(self, doc_pol, key_sufix, binary_degree=True):
 
-		polarity = self.BINARY_POSITIVE_POLARITY
+		polarity = self.BINARY_POSITIVE_POLARITY if binary_degree else self.MULTIPLE_POSITIVE_POLARITY
 		key_prefix = "positive_"
-		if doc_type == 'negatives':
-			polarity = self.BINARY_NEGATIVE_POLARITY
+		if doc_pol == 'negatives':
+			polarity = self.BINARY_NEGATIVE_POLARITY if binary_degree else self.MULTIPLE_NEGATIVE_POLARITY
 			key_prefix = "negative_"
 
 		key_name = key_prefix + key_sufix
-		return (polarity, key_name)		
+		return (polarity, key_name)
+
+	def __set_polarity_test(self, binary_degree, doc, polarity, doc_type):
+
+		if binary_degree:
+				test_pol = doc['polarity'] == polarity
+				print 'binary_degree'
+		else:
+			if doc_type == 'positives':
+				test_pol = int(doc['degree']) >= polarity
+			elif doc_type == 'negatives':
+				test_pol = int(doc['degree']) <= polarity
+		return test_pol						
 
 	def most_frequent_negative_adjectives(self):
 		
@@ -494,9 +508,9 @@ class ModelFeatures(object):
 		self.features['general'] = general						
 		return general						
 				
-	def documents_highest_count_positive_adjectives(self, doc_type):
+	def documents_highest_count_positive_adjectives(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_positive_adjectives')
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_positive_adjectives', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -509,12 +523,14 @@ class ModelFeatures(object):
 			num_pos_adj = len(stat['positive_adjectives'])
 			num_neg_adj = len(stat['negative_adjectives'])
 
-			if doc['polarity'] == polarity:
+			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
 				num_of_docs += 1
 				if num_pos_adj > num_neg_adj:
 					amount_docs_highest_num_pos_adj += 1
 					docs_highest_num_pos_adj.append(str(doc['_id']))
 
+		print num_of_docs			
 		self.features[key_name] = (amount_docs_highest_num_pos_adj / num_of_docs, amount_docs_highest_num_pos_adj, docs_highest_num_pos_adj)
 		
 		return self.features[key_name]	
