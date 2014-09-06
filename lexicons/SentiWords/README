@@ -1,0 +1,26 @@
+# SentiWords v1.0 (13/03/2014)
+# Copyright 2014 Trento RISE and FBK
+# All rights reserved.
+#
+# SentiWords is distributed under the Attribution-ShareAlike 3.0 Unported (CC BY-SA 3.0) license.
+# http://creativecommons.org/licenses/by-sa/3.0/
+#
+# For any information about SentiWords:
+# https://hlt.fbk.eu/technologies/sentiwords
+#
+# If you use SentiWords, please cite:
+# Guerini M., Gatti L. & Turchi M. "Sentiment Analysis: How to Derive Prior Polarities from SentiWordNet". 
+# In Proceedings of the 2013 Conference on Empirical Methods in Natural Language Processing (EMNLP'13). 
+# pp 1259-1269. Seattle, Washington, USA. 2013.
+#
+# --------------------------------------------
+#
+# SentiWords is based on SentiWordNet version 3.0.
+# SentiWordNet website: http://sentiwordnet.isti.cnr.it/
+#
+# Each lemma#PoS in this file is associated with the prior polarity value computed from the scores of 
+# all the SentiWordNet senses for that lemma#PoS, following the methodology described in Guerini et al. (2013). 
+# Prior Polarity values are between -1 (very negative) and +1 (very positive).
+#
+# --------------------------------------------
+# lemma#PoS	prior_polarity_score
