@@ -14,7 +14,10 @@ class BaseLexicon(object):
 		return self.entries.find({'_id':ObjectId(entry_id)})[0]
 
 	def get_entry_by_name(self, entry_name, entry_field):
-		return self.entries.find({entry_field:entry_name})
+		entries = []
+		for e in self.entries.find({entry_field:entry_name}):
+			entries.append(e)
+		return entries	
 
 class SentiWords(BaseLexicon):
 	"""Class that models SentiWords from (Gerrine et al.,2013)"""
@@ -39,6 +42,9 @@ class SentiWords(BaseLexicon):
 
 	def get_entry_by_name(self, entry_name , entry_field='lemma'):
 		return super(SentiWords, self).get_entry_by_name(entry_name, entry_field)
+
+	def get_entry_by_name_and_pos(self, entry_name , entry_pos):
+		return self.entries.find_one({"lemma":entry_name, "pos":entry_pos})	
 
 class SubjectivityClues(BaseLexicon):
 	"""Class that models SubjectivityClues from (Wilson et al.,2005)"""

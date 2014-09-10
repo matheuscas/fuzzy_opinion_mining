@@ -1,8 +1,11 @@
 import math
+import util
 from pattern.en import wordnet
 from pattern.en import NOUN, VERB, ADJECTIVE, ADVERB
 from textblob import Word
-import util
+from lexicons import SentiWords
+
+__sentiwords = SentiWords()
 
 ATTENUATORS_ADVERBS = open('groups_of_adverbs/medium_attenuator_adv.txt','r').readlines()
 ATTENUATORS_ADVERBS = ATTENUATORS_ADVERBS + open('groups_of_adverbs/strong_attenuator_adv.txt','r').readlines()
@@ -14,10 +17,13 @@ INTENSIFIERS_ADVERBS = INTENSIFIERS_ADVERBS + open('groups_of_adverbs/weak_inten
 
 NON_GRADING_ADVERBS = open('groups_of_adverbs/non_grading_adv.txt','r').readlines()
 
-def word_polarity(word, pos_tag=None):
+def word_polarity(word, pos_tag=None, prior_polarity_score=False):
 	"""returns a (polarity, subjectivity)-tuple for the given word from SENTIWORDNET.
 	If there is no synsets for the given word, None will be returned
 	The word can be NOUN, VERB, ADJECTIVE, ADVERB"""
+
+	if prior_polarity_score:
+		return __word_prior_polarity(word, pos_tag)
 
 	pos_tag = "NOUN" if pos_tag in util.PENN_NOUNS_TAGS else pos_tag
 	pos_tag = "VERB" if pos_tag in util.PENN_VERBS_TAGS else pos_tag
@@ -32,6 +38,21 @@ def word_polarity(word, pos_tag=None):
 		return synsets[0].weight
 	else:
 		return None
+
+def __word_prior_polarity(word, pos_tag=None):
+
+	pos_tag = "n" if pos_tag in util.PENN_NOUNS_TAGS else pos_tag
+	pos_tag = "v" if pos_tag in util.PENN_VERBS_TAGS else pos_tag
+	pos_tag = "r" if pos_tag in util.PENN_ADVERBS_TAGS else pos_tag
+	pos_tag = "a" if pos_tag in util.PENN_ADJECTIVES_TAGS else None
+
+	if pos_tag is None:
+		pos_tag = 'a'
+
+	prior_polarity_score = __sentiwords.get_entry_by_name_and_pos(word,pos_tag)
+	if prior_polarity_score is None:
+		return None
+	return (prior_polarity_score['prior_polarity_score'], 0)	
 
 def is_negation(bigram_first_word):
 	"""Gets the fist word of a bigram and checks if this words is a negation or contraction word"""
@@ -127,7 +148,7 @@ def default_adv_xxx_bigram_polarity(bigram, negation=None):
 	return apply_adverb_factor(adverb,ngram_2_polarity[0], negation)
 
 
-def adjectives_polarities(list_of_adjectives):
+def adjectives_polarities(list_of_adjectives, prior_polarity_score=False):
 	"""This method calculates all adjectives polarities based on the following arguments
 
 	Keyword arguments:
@@ -136,7 +157,7 @@ def adjectives_polarities(list_of_adjectives):
 
 	adjectives_polarities = []
 	for adjective in list_of_adjectives:
-		polarity = word_polarity(adjective)
+		polarity = word_polarity(adjective, prior_polarity_score=prior_polarity_score)
 		if polarity and polarity[0] != 0.0:
 			adjectives_polarities.append(polarity[0])
 
