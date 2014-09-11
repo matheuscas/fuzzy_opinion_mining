@@ -15,7 +15,7 @@ class BaseLexicon(object):
 
 	def get_entry_by_name(self, entry_name, entry_field):
 		entries = []
-		for e in self.entries.find({entry_field:entry_name}):
+		for e in self.entries.find({entry_field:entry_name},timeout=False):
 			entries.append(e)
 		return entries	
 
@@ -72,7 +72,10 @@ class SubjectivityClues(BaseLexicon):
 			self.entries.insert(entry)					
 
 	def get_entry_by_name(self, entry_name , entry_field='word1'):
-		return super(SubjectivityClues, self).get_entry_by_name(entry_name, entry_field)						
+		return super(SubjectivityClues, self).get_entry_by_name(entry_name, entry_field)
+
+	def get_one_entry_by_name(self, entry_name , entry_field='word1'):
+		return self.entries.find_one({entry_field:entry_name},timeout=False)								
 
 
 	
