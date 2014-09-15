@@ -451,151 +451,244 @@ class ModelFeatures(object):
 
 		return self.features[key_name]
 
-# class SubjectivityClues(ModelFeatures):
-# 	"""Features for SubjectivityClues"""
+	# def __split_text_doc(self,doc):
+	# 	tagger = util.get_tagger()
+	# 	doc_blob = tagger(doc['text'])
+	# 	num_of_sentences = len(doc_blob.sentences)
+	# 	first_half = []
+	# 	second_half = []
 
-# 	def __init__(self, model):
-# 		ModelFeatures.__init__(self, model)
-# 		self.lexicon = lexicons.SubjectivityClues()
-# 		self.lexicon_cache = {}
+	# 	if num_of_sentences == 1:
+	# 		num_of_ngrams = len(doc_blob.words)
+	# 		if num_of_ngrams == 1:
+	# 			first_half.append(doc_blob.words[0])
+	# 		else:
+	# 			split_index = (num_of_ngrams) / 2
+	# 			first_half = doc_blob[0:split_index]
+	# 			second_half = doc_blob[split_index:]
+	# 	else:
+	# 		split_index = (num_of_sentences) / 2
+	# 		index_sen = 0
+	# 		for sentence in doc_blob.sentences:
+	# 			if index_sen < split_index:
+	# 				first_half.append(sentence)
+	# 			else:
+	# 				second_half.append(sentence)
+	# 			index_sen += 1
 
-# 	def __get_docs_subjectivity_clues(self, doc):
-# 		tagger = util.get_tagger()
-# 		blob_text = tagger(doc['text'])
-# 		blob_word = None
-# 		clues = []
-# 		hits_on_cache = 0
-# 		hits_on_db = 0
-# 		for word, tag in util.tags(blob_text):
-# 			if word in self.lexicon_cache:
-# 				clues.append(self.lexicon_cache[word])
-# 				hits_on_cache += 1
-# 			else:
-# 				clue = self.lexicon.get_one_entry_by_name(word)
-# 				hits_on_db += 1
-# 				if clue is None:
-# 					wordnet_tag = blob._penn_to_wordnet(tag)
-# 					word_lemma = Word(word).lemmatize(wordnet_tag)
-# 					if word_lemma in self.lexicon_cache:
-# 						clues.append(self.lexicon_cache[word_lemma])
-# 						hits_on_cache += 1
-# 					else:
-# 						clue = self.lexicon.get_one_entry_by_name(word_lemma)
-# 						hits_on_db += 1
-# 						if clue is not None:
-# 							clues.append(clue)
-# 							self.lexicon_cache[word_lemma] = clue
-# 				else:
-# 					clues.append(clue)
-# 					self.lexicon_cache[word] = clue
-# 		return clues, hits_on_cache, hits_on_db
+	# 	return first_half, second_half		
+
+	# def adjectives_distribution(self, doc_type, binary_degree=True):
 		
-# 	def __get_weak_subjectivity_clues(self, doc_subjectivity_clues):
-# 		weak_scs = []
-# 		for sc in doc_subjectivity_clues:
-# 			if sc['type'] == 'weaksubj':
-# 				weak_scs.append(sc)
-# 		return weak_scs
+	# 	polarity, key_name = self.__set_doc_type(doc_type, 'adjectives_distribution', binary_degree)
 
-# 	def __get_positive_weak_subjectivity_clues(self, doc_weak_subjectivity_clues):
-# 		pos_weak_scs = []
-# 		for sc in doc_weak_subjectivity_clues:
-# 			if sc['priorpolarity'] == 'positive':
-# 				pos_weak_scs.append(sc)
-# 		return pos_weak_scs	
+	# 	if key_name in self.features.keys():
+	# 		return self.features[key_name]
 
-# 	def __get_negative_weak_subjectivity_clues(self, doc_weak_subjectivity_clues):
-# 		neg_weak_scs = []
-# 		for sc in doc_weak_subjectivity_clues:
-# 			if sc['priorpolarity'] == 'negative':
-# 				neg_weak_scs.append(sc)
-# 		return neg_weak_scs
+	# 	amount_docs_equal_adj_score = 0.0
+	# 	first_half_count = []
+	# 	first_half_pos_count = []
+	# 	first_half_neg_count = []
 
-# 	def __get_strong_subjectivity_clues(self, doc_subjectivity_clues):
-# 		strong_scs = []
-# 		for sc in doc_subjectivity_clues:
-# 			if sc['type'] == 'strongsubj':
-# 				strong_scs.append(sc)
-# 		return strong_scs
+	# 	second_half_count = []
+	# 	second_half_pos_count = []
+	# 	second_half_neg_count = []
+	# 	num_of_docs = 0.0
+
+	# 	for stat in self.__documents_stats():
+	# 		doc = self.model.get_doc_by_id(stat['_id'])
+	# 		test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
+	# 		if test_pol:
+	# 			num_of_docs += 1
+	# 			print "adjectives_distribution", num_of_docs
+	# 			first_half_adj_qtd = 0
+	# 			first_half_pos_adj_qtd = 0
+	# 			first_half_neg_adj_qtd = 0
+
+	# 			second_half_adj_qtd = 0
+	# 			second_half_pos_adj_qtd = 0
+	# 			second_half_neg_adj_qtd = 0
+	# 			first_half, second_half = self.__split_text_doc(doc)
+				
+	# 			for part in first_half:
+	# 				for w in part.words:
+	# 					if w in stat['positive_adjectives']:
+	# 						first_half_adj_qtd += 1
+	# 						first_half_pos_adj_qtd += 1
+	# 					elif w in stat['negative_adjectives']:
+	# 						first_half_adj_qtd += 1
+	# 						first_half_neg_adj_qtd += 1	
+	# 			first_half_count.append(first_half_adj_qtd)
+	# 			first_half_pos_count.append(first_half_pos_adj_qtd)
+	# 			first_half_neg_count.append(first_half_neg_adj_qtd)										
+
+	# 			for part in second_half:
+	# 				for w in part.words:
+	# 					if w in stat['positive_adjectives']:
+	# 						second_half_adj_qtd += 1
+	# 						second_half_pos_adj_qtd += 1
+	# 					elif w in stat['negative_adjectives']:
+	# 						second_half_adj_qtd += 1
+	# 						second_half_neg_adj_qtd += 1
+
+	# 			second_half_count.append(second_half_adj_qtd)
+	# 			second_half_pos_count.append(second_half_pos_adj_qtd)
+	# 			second_half_neg_count.append(second_half_neg_adj_qtd)
+
+	# 	first_half_avg = util.average(first_half_count)
+	# 	first_half_std = util.std(first_half_count)
+
+	# 	second_half_avg = util.average(second_half_count)
+	# 	second_half_std = util.std(second_half_count)
+
+	# 	first_half_pos_avg = util.average(first_half_pos_count)
+	# 	first_half_pos_std = util.std(first_half_pos_count)
+	# 	first_half_neg_avg = util.average(first_half_neg_count)
+	# 	first_half_neg_std = util.std(first_half_neg_count)
+
+	# 	second_half_pos_avg = util.average(second_half_pos_count)
+	# 	second_half_pos_std = util.std(second_half_pos_count)
+	# 	second_half_neg_avg = util.average(second_half_neg_count)
+	# 	second_half_neg_std = util.std(second_half_neg_count)
+
+	# 	return (first_half_avg,first_half_std, second_half_avg, second_half_std), (first_half_pos_avg,first_half_pos_std,first_half_neg_avg,first_half_neg_std), (second_half_pos_avg,second_half_pos_std,second_half_neg_avg,second_half_neg_std), num_of_docs
+
+	
+
+class SubjectivityClues(ModelFeatures):
+	"""Features for SubjectivityClues"""
+
+	def __init__(self, model):
+		ModelFeatures.__init__(self, model)
+		self.lexicon = lexicons.SubjectivityClues()
+		self.lexicon_cache = {}
+
+	def __load_lexicon_to_cache(self):
+		for e in self.lexicon.entries.find(timeout=False):
+			self.lexicon_cache[e['word1']] = e
+
+	def __get_docs_subjectivity_clues(self, doc):
+		tagger = util.get_tagger()
+		blob_text = tagger(doc['text'])
+		blob_word = None
+		clues = []
+		self.__load_lexicon_to_cache()
+		for word, tag in util.tags(blob_text):
+			wordnet_tag = blob._penn_to_wordnet(tag)
+			word_lemma = Word(word).lemmatize(wordnet_tag)	
+
+			if word in self.lexicon_cache:
+				clues.append(self.lexicon_cache[word])
+			elif word_lemma in self.lexicon_cache:
+				clues.append(self.lexicon_cache[word_lemma])
+		return clues
 		
-# 	def __get_positive_strong_subjectivity_clues(self, doc_strong_subjectivity_clues):
-# 		pos_strong_scs = []
-# 		for sc in doc_strong_subjectivity_clues:
-# 			if sc['priorpolarity'] == 'positive':
-# 				pos_strong_scs.append(sc)
-# 		return pos_strong_scs
+	def __get_weak_subjectivity_clues(self, doc_subjectivity_clues):
+		weak_scs = []
+		for sc in doc_subjectivity_clues:
+			if sc['type'] == 'weaksubj':
+				weak_scs.append(sc)
+		return weak_scs
+
+	def __get_positive_weak_subjectivity_clues(self, doc_weak_subjectivity_clues):
+		pos_weak_scs = []
+		for sc in doc_weak_subjectivity_clues:
+			if sc['priorpolarity'] == 'positive':
+				pos_weak_scs.append(sc)
+		return pos_weak_scs	
+
+	def __get_negative_weak_subjectivity_clues(self, doc_weak_subjectivity_clues):
+		neg_weak_scs = []
+		for sc in doc_weak_subjectivity_clues:
+			if sc['priorpolarity'] == 'negative':
+				neg_weak_scs.append(sc)
+		return neg_weak_scs
+
+	def __get_strong_subjectivity_clues(self, doc_subjectivity_clues):
+		strong_scs = []
+		for sc in doc_subjectivity_clues:
+			if sc['type'] == 'strongsubj':
+				strong_scs.append(sc)
+		return strong_scs
 		
-# 	def __get_negative_strong_subjectivity_clues(self, doc_strong_subjectivity_clues):
-# 		neg_strong_scs = []
-# 		for sc in doc_strong_subjectivity_clues:
-# 			if sc['priorpolarity'] == 'negative':
-# 				neg_strong_scs.append(sc)
-# 		return neg_strong_scs					
-
-# 	def documents_with_subjectivity_clues(self, doc_type, binary_degree=True):
+	def __get_positive_strong_subjectivity_clues(self, doc_strong_subjectivity_clues):
+		pos_strong_scs = []
+		for sc in doc_strong_subjectivity_clues:
+			if sc['priorpolarity'] == 'positive':
+				pos_strong_scs.append(sc)
+		return pos_strong_scs
 		
-# 		polarity, key_name = self._ModelFeatures__set_doc_type(doc_type, 'documents_with_subjectivity_clues', binary_degree)
+	def __get_negative_strong_subjectivity_clues(self, doc_strong_subjectivity_clues):
+		neg_strong_scs = []
+		for sc in doc_strong_subjectivity_clues:
+			if sc['priorpolarity'] == 'negative':
+				neg_strong_scs.append(sc)
+		return neg_strong_scs					
 
-# 		if key_name in self.features.keys():
-# 			return self.features[key_name]
+	def documents_with_subjectivity_clues(self, doc_type, binary_degree=True):
+		
+		polarity, key_name = self._ModelFeatures__set_doc_type(doc_type, 'documents_with_subjectivity_clues', binary_degree)
 
-# 		scs_in_docs = []
-# 		weak_scs_in_docs = []
-# 		pos_weak_scs_in_docs = []
-# 		neg_weak_scs_in_docs = []
-# 		strong_scs_in_docs = []
-# 		pos_strong_scs_in_docs = []
-# 		neg_strong_scs_in_docs = []
+		if key_name in self.features.keys():
+			return self.features[key_name]
 
-# 		docs_qtd = 0.0
-# 		for doc in self.model.documents.find():
-# 			test_pol = self._ModelFeatures__set_polarity_test(binary_degree, doc, polarity, doc_type)
-# 			if test_pol:
-# 				docs_sc, hits_on_cache, hits_on_db = self.__get_docs_subjectivity_clues(doc)
-# 				scs_in_docs.append(len(docs_sc))
+		scs_in_docs = []
+		weak_scs_in_docs = []
+		pos_weak_scs_in_docs = []
+		neg_weak_scs_in_docs = []
+		strong_scs_in_docs = []
+		pos_strong_scs_in_docs = []
+		neg_strong_scs_in_docs = []
 
-# 				docs_weak_sc = self.__get_weak_subjectivity_clues(docs_sc)
-# 				weak_scs_in_docs.append(len(docs_weak_sc))
+		docs_qtd = 0.0
+		for doc in self.model.documents.find(timeout=False):
+			test_pol = self._ModelFeatures__set_polarity_test(binary_degree, doc, polarity, doc_type)
+			if test_pol:
+				docs_sc = self.__get_docs_subjectivity_clues(doc)
+				scs_in_docs.append(len(docs_sc))
 
-# 				docs_pos_weak_sc = self.__get_positive_weak_subjectivity_clues(docs_weak_sc)
-# 				pos_weak_scs_in_docs.append(len(docs_pos_weak_sc))
+				docs_weak_sc = self.__get_weak_subjectivity_clues(docs_sc)
+				weak_scs_in_docs.append(len(docs_weak_sc))
 
-# 				docs_neg_weak_sc = self.__get_negative_weak_subjectivity_clues(docs_weak_sc)
-# 				neg_weak_scs_in_docs.append(len(docs_neg_weak_sc))
+				docs_pos_weak_sc = self.__get_positive_weak_subjectivity_clues(docs_weak_sc)
+				pos_weak_scs_in_docs.append(len(docs_pos_weak_sc))
 
-# 				docs_strong_sc = self.__get_strong_subjectivity_clues(docs_sc)
-# 				strong_scs_in_docs.append(len(docs_strong_sc))
+				docs_neg_weak_sc = self.__get_negative_weak_subjectivity_clues(docs_weak_sc)
+				neg_weak_scs_in_docs.append(len(docs_neg_weak_sc))
 
-# 				docs_pos_strong_sc = self.__get_positive_strong_subjectivity_clues(docs_strong_sc)
-# 				pos_strong_scs_in_docs.append(len(docs_pos_strong_sc))
+				docs_strong_sc = self.__get_strong_subjectivity_clues(docs_sc)
+				strong_scs_in_docs.append(len(docs_strong_sc))
 
-# 				docs_neg_strong_sc = self.__get_negative_strong_subjectivity_clues(docs_strong_sc)
-# 				neg_strong_scs_in_docs.append(len(docs_neg_strong_sc))
+				docs_pos_strong_sc = self.__get_positive_strong_subjectivity_clues(docs_strong_sc)
+				pos_strong_scs_in_docs.append(len(docs_pos_strong_sc))
 
-# 				docs_qtd += 1.0
-# 				print docs_qtd, len(self.lexicon_cache.keys()), hits_on_cache, hits_on_db
+				docs_neg_strong_sc = self.__get_negative_strong_subjectivity_clues(docs_strong_sc)
+				neg_strong_scs_in_docs.append(len(docs_neg_strong_sc))
 
-# 		sc_avg = util.average(scs_in_docs)
-# 		sc_std = util.std(scs_in_docs)
-# 		general_stats = (sc_avg, sc_std, docs_qtd)
+				docs_qtd += 1.0
+				print docs_qtd
 
-# 		weak_sc_avg = util.average(weak_scs_in_docs)
-# 		weak_sc_std = util.std(weak_scs_in_docs)
-# 		pos_weak_sc_avg = util.average(pos_weak_scs_in_docs)
-# 		pos_weak_sc_std = util.std(pos_weak_scs_in_docs)
-# 		neg_weak_sc_avg = util.average(neg_weak_scs_in_docs)
-# 		neg_weak_sc_std = util.std(neg_weak_scs_in_docs)
-# 		weak_stats = (weak_sc_avg, weak_sc_std, pos_weak_sc_avg, pos_weak_sc_std, neg_weak_sc_avg, neg_weak_sc_std)
+		sc_avg = util.average(scs_in_docs)
+		sc_std = util.std(scs_in_docs)
+		general_stats = (sc_avg, sc_std, docs_qtd)
 
-# 		strong_sc_avg = util.average(strong_scs_in_docs)
-# 		strong_sc_std = util.std(strong_scs_in_docs)
-# 		pos_strong_sc_avg = util.average(pos_strong_scs_in_docs)
-# 		pos_strong_sc_std = util.std(pos_strong_scs_in_docs)
-# 		neg_strong_sc_avg = util.average(neg_strong_scs_in_docs)
-# 		neg_strong_sc_std = util.std(neg_strong_scs_in_docs)
-# 		strong_stats = (strong_sc_avg, strong_sc_std, pos_strong_sc_avg, pos_strong_sc_std, neg_strong_sc_avg, neg_strong_sc_std)
+		weak_sc_avg = util.average(weak_scs_in_docs)
+		weak_sc_std = util.std(weak_scs_in_docs)
+		pos_weak_sc_avg = util.average(pos_weak_scs_in_docs)
+		pos_weak_sc_std = util.std(pos_weak_scs_in_docs)
+		neg_weak_sc_avg = util.average(neg_weak_scs_in_docs)
+		neg_weak_sc_std = util.std(neg_weak_scs_in_docs)
+		weak_stats = (weak_sc_avg, weak_sc_std, pos_weak_sc_avg, pos_weak_sc_std, neg_weak_sc_avg, neg_weak_sc_std)
 
-# 		return general_stats, weak_stats, strong_stats		
+		strong_sc_avg = util.average(strong_scs_in_docs)
+		strong_sc_std = util.std(strong_scs_in_docs)
+		pos_strong_sc_avg = util.average(pos_strong_scs_in_docs)
+		pos_strong_sc_std = util.std(pos_strong_scs_in_docs)
+		neg_strong_sc_avg = util.average(neg_strong_scs_in_docs)
+		neg_strong_sc_std = util.std(neg_strong_scs_in_docs)
+		strong_stats = (strong_sc_avg, strong_sc_std, pos_strong_sc_avg, pos_strong_sc_std, neg_strong_sc_avg, neg_strong_sc_std)
+
+		return general_stats, weak_stats, strong_stats		
 
 		
 
