@@ -1,7 +1,8 @@
 import math
 from textblob import TextBlob, Word, Blobber
-from textblob.taggers import PatternTagger
-from textblob_aptagger import PerceptronTagger
+from textblob.taggers import PatternTagger, NLTKTagger
+#Commented temporaly due to a bug after the upgrade to TextBlob 0.9
+#from textblob_aptagger import PerceptronTagger
 
 PENN_ADVERBS_TAGS = ['RB', 'RBR', 'RBS', 'RP']
 PENN_ADJECTIVES_TAGS = ['JJ','JJR','JJS']
@@ -200,9 +201,12 @@ def tags(blob):
 
 def get_tagger(tagger="PerceptronTagger"):
 
-	pt = Blobber(pos_tagger=PerceptronTagger())
+	#Commented temporaly due to a bug after the upgrade to TextBlob 0.9
+	#pt = Blobber(pos_tagger=PerceptronTagger())
 	if tagger == "PatternTagger":
 		pt = Blobber(pos_tagger=PatternTagger())
+	else:
+		pt = Blobber(pos_tagger=NLTKTagger())	
 
 	return pt
 

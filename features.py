@@ -4,7 +4,6 @@ import util
 import lexicons
 from textblob import blob, TextBlob, Word
 from textblob.taggers import PatternTagger
-from textblob_aptagger import PerceptronTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
 from collections import Counter
 from bson.code import Code
@@ -450,109 +449,6 @@ class ModelFeatures(object):
 		self.features[key_name] = (amount_docs_equal_adj_score / num_of_docs, amount_docs_equal_adj_score, docs_equal_adj_scores)
 
 		return self.features[key_name]
-
-	# def __split_text_doc(self,doc):
-	# 	tagger = util.get_tagger()
-	# 	doc_blob = tagger(doc['text'])
-	# 	num_of_sentences = len(doc_blob.sentences)
-	# 	first_half = []
-	# 	second_half = []
-
-	# 	if num_of_sentences == 1:
-	# 		num_of_ngrams = len(doc_blob.words)
-	# 		if num_of_ngrams == 1:
-	# 			first_half.append(doc_blob.words[0])
-	# 		else:
-	# 			split_index = (num_of_ngrams) / 2
-	# 			first_half = doc_blob[0:split_index]
-	# 			second_half = doc_blob[split_index:]
-	# 	else:
-	# 		split_index = (num_of_sentences) / 2
-	# 		index_sen = 0
-	# 		for sentence in doc_blob.sentences:
-	# 			if index_sen < split_index:
-	# 				first_half.append(sentence)
-	# 			else:
-	# 				second_half.append(sentence)
-	# 			index_sen += 1
-
-	# 	return first_half, second_half		
-
-	# def adjectives_distribution(self, doc_type, binary_degree=True):
-		
-	# 	polarity, key_name = self.__set_doc_type(doc_type, 'adjectives_distribution', binary_degree)
-
-	# 	if key_name in self.features.keys():
-	# 		return self.features[key_name]
-
-	# 	amount_docs_equal_adj_score = 0.0
-	# 	first_half_count = []
-	# 	first_half_pos_count = []
-	# 	first_half_neg_count = []
-
-	# 	second_half_count = []
-	# 	second_half_pos_count = []
-	# 	second_half_neg_count = []
-	# 	num_of_docs = 0.0
-
-	# 	for stat in self.__documents_stats():
-	# 		doc = self.model.get_doc_by_id(stat['_id'])
-	# 		test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
-	# 		if test_pol:
-	# 			num_of_docs += 1
-	# 			print "adjectives_distribution", num_of_docs
-	# 			first_half_adj_qtd = 0
-	# 			first_half_pos_adj_qtd = 0
-	# 			first_half_neg_adj_qtd = 0
-
-	# 			second_half_adj_qtd = 0
-	# 			second_half_pos_adj_qtd = 0
-	# 			second_half_neg_adj_qtd = 0
-	# 			first_half, second_half = self.__split_text_doc(doc)
-				
-	# 			for part in first_half:
-	# 				for w in part.words:
-	# 					if w in stat['positive_adjectives']:
-	# 						first_half_adj_qtd += 1
-	# 						first_half_pos_adj_qtd += 1
-	# 					elif w in stat['negative_adjectives']:
-	# 						first_half_adj_qtd += 1
-	# 						first_half_neg_adj_qtd += 1	
-	# 			first_half_count.append(first_half_adj_qtd)
-	# 			first_half_pos_count.append(first_half_pos_adj_qtd)
-	# 			first_half_neg_count.append(first_half_neg_adj_qtd)										
-
-	# 			for part in second_half:
-	# 				for w in part.words:
-	# 					if w in stat['positive_adjectives']:
-	# 						second_half_adj_qtd += 1
-	# 						second_half_pos_adj_qtd += 1
-	# 					elif w in stat['negative_adjectives']:
-	# 						second_half_adj_qtd += 1
-	# 						second_half_neg_adj_qtd += 1
-
-	# 			second_half_count.append(second_half_adj_qtd)
-	# 			second_half_pos_count.append(second_half_pos_adj_qtd)
-	# 			second_half_neg_count.append(second_half_neg_adj_qtd)
-
-	# 	first_half_avg = util.average(first_half_count)
-	# 	first_half_std = util.std(first_half_count)
-
-	# 	second_half_avg = util.average(second_half_count)
-	# 	second_half_std = util.std(second_half_count)
-
-	# 	first_half_pos_avg = util.average(first_half_pos_count)
-	# 	first_half_pos_std = util.std(first_half_pos_count)
-	# 	first_half_neg_avg = util.average(first_half_neg_count)
-	# 	first_half_neg_std = util.std(first_half_neg_count)
-
-	# 	second_half_pos_avg = util.average(second_half_pos_count)
-	# 	second_half_pos_std = util.std(second_half_pos_count)
-	# 	second_half_neg_avg = util.average(second_half_neg_count)
-	# 	second_half_neg_std = util.std(second_half_neg_count)
-
-	# 	return (first_half_avg,first_half_std, second_half_avg, second_half_std), (first_half_pos_avg,first_half_pos_std,first_half_neg_avg,first_half_neg_std), (second_half_pos_avg,second_half_pos_std,second_half_neg_avg,second_half_neg_std), num_of_docs
-
 	
 
 class SubjectivityClues(ModelFeatures):
@@ -690,6 +586,221 @@ class SubjectivityClues(ModelFeatures):
 
 		return general_stats, weak_stats, strong_stats		
 
+class NgramsDistribuition(ModelFeatures):
+	"""docstring for NgramsDistribuition"""
+	
+	def __init__(self, model):
+		ModelFeatures.__init__(self, model)
+		self.ngrams_distribuition = []
+
+	def create_basic_model(self):
+		"""Creates a list of dict elements with the following format:
+			{'id':doc id,'polarity':polarity or degree ,'first_sentences':list of sentences, 'last_sentences':list of sentences}
+		"""
 		
+		self.ngrams_distribuition = []
+		tagger = util.get_tagger()
+		aux_count = self.model.documents.count()
+		aux_qtd = 1 
+		for doc in self.model.documents.find(timeout=False):
+			print 'create_basic_model', aux_qtd, aux_count
+			_id = str(doc['_id'])
+			_polarity = doc['polarity'] if 'polarity' in doc else doc['degree']
+			first_sentences = []
+			second_sentences = []
+			doc_blob = tagger(doc['text'])
+			num_of_sentences = len(doc_blob.sentences)
+			if num_of_sentences == 1:
+				split_index = len(doc_blob.words) / 2
+				sentence_tags = doc_blob.tags
+				first_sentences = sentence_tags[0:split_index] #Wordlist obj from Textblob
+				second_sentences = sentence_tags[split_index:]
+			else:
+				split_index = num_of_sentences / 2
+				first_sentences = doc_blob.sentences[0:split_index] #Wordlist obj from Textblob
+				second_sentences = doc_blob.sentences[split_index:]
+			self.ngrams_distribuition.append({'id':_id,'polarity':_polarity,'num_of_sentences': num_of_sentences,'first_sentences':first_sentences,'last_sentences':second_sentences})
+			aux_qtd += 1
+
+		self.__store_model_to_db()	
+
+	def __blob_sentence_to_dict_list(self, list_of_blob_sentences):
+
+		sentences_objs = list_of_blob_sentences
+		sentences_dics = []
+		for s in sentences_objs:
+			if type(s) is not tuple:
+				sentences_dics.append(s.dict)
+			else:
+				sentences_dics.append(s)
+		return sentences_dics
+
+	def __dict_to_blob_sentence(self, _dict):
+
+		blob_sentence = blob.Sentence(_dict['raw'])
+		#blob_sentence.raw = _dict['raw']
+		blob_sentence.start_index = _dict['start_index']
+		blob_sentence.end_index = _dict['end_index']
+		blob_sentence.stripped = _dict['stripped']
+		blob_sentence.noun_phrases = _dict['noun_phrases']
+		blob_sentence.polarity = _dict['polarity']
+		blob_sentence.subjectivity = _dict['subjectivity']
+		return blob_sentence
+
+	def __store_model_to_db(self):
+
+		self.model.database['ngrams_distribuition'].drop()
+		collection = self.model.database['ngrams_distribuition']
+		aux_count = len(self.ngrams_distribuition)
+		aux_qtd = 1 
+		for nd in self.ngrams_distribuition:
+			print 'store_model_to_db', aux_qtd, aux_count
+			sentences_dics_1 = self.__blob_sentence_to_dict_list(nd['first_sentences'])
+			sentences_dics_2 = self.__blob_sentence_to_dict_list(nd['last_sentences'])
+			collection.insert({'id':nd['id'],'polarity':nd['polarity'],'num_of_sentences':nd['num_of_sentences'],'first_sentences':sentences_dics_1,'last_sentences':sentences_dics_2})
+			aux_qtd += 1		
+
+	def __update_db_from_model(self):
+		
+		self.model.database['ngrams_distribuition'].drop()
+		collection = self.model.database['ngrams_distribuition']
+		aux_count = len(self.ngrams_distribuition)
+		aux_qtd = 1 
+		for nd in self.ngrams_distribuition:
+			temp_nd = nd.copy()
+			temp_nd['first_sentences'] = self.__blob_sentence_to_dict_list(nd['first_sentences'])
+			temp_nd['last_sentences'] = self.__blob_sentence_to_dict_list(nd['last_sentences'])
+			collection.insert(temp_nd)	
+
+	def load_model_from_db(self):
+
+		collection = self.model.database['ngrams_distribuition']
+		self.ngrams_distribuition = []
+		for e in collection.find():
+			sentences_objs_1 = []
+			sentences_objs_2 = []
+			sentences_dics_1 = e['first_sentences']
+			sentences_dics_2 = e['last_sentences']
+			for sd in sentences_dics_1:
+				if type(sd) is not dict:
+					sentences_objs_1.append(sd)
+				else:
+					sentences_objs_1.append(self.__dict_to_blob_sentence(sd))
+			for sd in sentences_dics_2:
+				if type(sd) is not dict:
+					sentences_objs_2.append(sd)
+				else:
+					sentences_objs_2.append(self.__dict_to_blob_sentence(sd))
+			e['first_sentences'] = sentences_objs_1
+			e['last_sentences'] = sentences_objs_2					
+			self.ngrams_distribuition.append(e)
+
+	def _define_tags_by_type(self, _type='adjective'):
+
+		tags_to_consider = util.PENN_ADJECTIVES_TAGS
+		if _type == 'adverb':
+		 	tags_to_consider = util.PENN_ADVERBS_TAGS
+		elif _type == 'noun':
+			tags_to_consider = util.PENN_NOUNS_TAGS
+		elif _type == 'verb':
+			tags_to_consider = util.PENN_VERBS_TAGS
+
+		return tags_to_consider	
+
+	def add_ngram_distribuition_to_model(self, _type='adjective'):
+		"""Add to basic model the following key,value pairs:
+			{'first_ngrams': list of ngrams based on type from first sentences,
+			 'last_ngrams': list of ngrams based on type from first sentences,}
+		"""
+
+		tags_to_consider = self._define_tags_by_type(_type)
+
+		aux_count = len(self.ngrams_distribuition)
+		aux_qtd = 1 	
+		for md in self.ngrams_distribuition:
+			print "add_ngram_distribuition_to_model", aux_qtd, aux_count
+			if md['num_of_sentences'] == 1:
+				first_ngrams = []
+				for ngram in md['first_sentences']:
+					if ngram[1] in tags_to_consider:
+						first_ngrams.append(ngram)
+				md['first_'+_type+'s'] = first_ngrams
+
+				lasts_ngrams = []
+				for ngram in md['last_sentences']:
+					if ngram[1] in tags_to_consider:
+						lasts_ngrams.append(ngram)
+				md['last_'+_type+'s'] = lasts_ngrams		
+			else:
+				first_ngrams = []
+				for s in md['first_sentences']:
+					for ngram in s.tags:
+						if ngram[1] in tags_to_consider:
+							first_ngrams.append(ngram)
+				md['first_'+_type+'s'] = first_ngrams
+
+				lasts_ngrams = []
+				for s in md['last_sentences']:
+					for ngram in s.tags:
+						if ngram[1] in tags_to_consider:
+							lasts_ngrams.append(ngram)
+				md['last_'+_type+'s'] = lasts_ngrams
+			aux_qtd += 1
+		self.__update_db_from_model()
+			
+	def get_ngram_distribuition(self, _type='adjective'):
+		
+		tags_to_consider = self._define_tags_by_type(_type)
+		ngram_freq_first_part = []
+		ngram_freq_second_part = []
+		aux_count = len(self.ngrams_distribuition)
+		aux_qtd = 1
+		self.ngrams_distribuition = self.load_model_from_db() if len(self.ngrams_distribuition) == 0 else self.ngrams_distribuition	
+		for nd in self.ngrams_distribuition:
+			print 'get_ngram_distribuition of ' + _type,aux_qtd, aux_count
+			ngram_freq_first_part.append(len(nd['first_'+_type+'s']))
+			ngram_freq_second_part.append(len(nd['last_'+_type+'s']))
+			aux_qtd += 1
+
+		return util.average(ngram_freq_first_part), util.std(ngram_freq_first_part), util.average(ngram_freq_second_part), util.std(ngram_freq_second_part)
+
+	def get_ngram_distribuition_from_polar_docs(self, doc_type='positives', _type='adjective', binary_degree=True):
+
+		tags_to_consider = self._define_tags_by_type(_type)
+		ngram_freq_first_part = []
+		ngram_freq_second_part = []
+		aux_count = len(self.ngrams_distribuition)
+		aux_qtd = 1
+		self.ngrams_distribuition = self.load_model_from_db() if len(self.ngrams_distribuition) == 0 else self.ngrams_distribuition	
+		polarity, key_name = self._ModelFeatures__set_doc_type(doc_type, 'get_ngram_distribuition_from_positive_docs', binary_degree)
+
+		print len(self.ngrams_distribuition), polarity, doc_type
+		for nd in self.ngrams_distribuition:
+			test_pol = True
+			print '1'
+			if binary_degree:
+					print '2'
+					test_pol = nd['polarity'] == polarity
+			else:
+				print '3'
+				if doc_type == 'positives':
+					print '3a'
+					test_pol = int(nd['polarity']) >= polarity
+				elif doc_type == 'negatives':
+					print '3b'
+					test_pol = int(nd['polarity']) <= polarity
+			if test_pol:
+				print '4'
+				print 'get_ngram_distribuition_from_polar_docs of ' + _type + 's',aux_qtd, aux_count
+				print nd['id'], nd['polarity'], 'first_'+_type+'s', len(nd['first_'+_type+'s']), 'last_'+_type+'s', len(nd['last_'+_type+'s']) 
+				ngram_freq_first_part.append(len(nd['first_'+_type+'s']))
+				ngram_freq_second_part.append(len(nd['last_'+_type+'s']))
+			aux_qtd += 1
+
+		return util.average(ngram_freq_first_part), util.std(ngram_freq_first_part), util.average(ngram_freq_second_part), util.std(ngram_freq_second_part)	
+						
+
+									 		
+						
 
 

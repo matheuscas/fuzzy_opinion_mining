@@ -5,7 +5,6 @@ import string
 import util
 from textblob import TextBlob, Word
 from textblob.taggers import PatternTagger
-from textblob_aptagger import PerceptronTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
 from bson.objectid import ObjectId
 from bson.code import Code
