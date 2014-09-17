@@ -774,23 +774,16 @@ class NgramsDistribuition(ModelFeatures):
 		self.ngrams_distribuition = self.load_model_from_db() if len(self.ngrams_distribuition) == 0 else self.ngrams_distribuition	
 		polarity, key_name = self._ModelFeatures__set_doc_type(doc_type, 'get_ngram_distribuition_from_positive_docs', binary_degree)
 
-		print len(self.ngrams_distribuition), polarity, doc_type
 		for nd in self.ngrams_distribuition:
 			test_pol = True
-			print '1'
 			if binary_degree:
-					print '2'
 					test_pol = nd['polarity'] == polarity
 			else:
-				print '3'
 				if doc_type == 'positives':
-					print '3a'
 					test_pol = int(nd['polarity']) >= polarity
 				elif doc_type == 'negatives':
-					print '3b'
 					test_pol = int(nd['polarity']) <= polarity
 			if test_pol:
-				print '4'
 				print 'get_ngram_distribuition_from_polar_docs of ' + _type + 's',aux_qtd, aux_count
 				print nd['id'], nd['polarity'], 'first_'+_type+'s', len(nd['first_'+_type+'s']), 'last_'+_type+'s', len(nd['last_'+_type+'s']) 
 				ngram_freq_first_part.append(len(nd['first_'+_type+'s']))
