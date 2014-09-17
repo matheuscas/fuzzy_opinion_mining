@@ -40,17 +40,13 @@ class ModelFeatures(object):
 		for doc in self.model.documents.find():
 			doc_stats = {}
 			print temp_num
-			#adjectives
-			#adjectives = doc['adjectives']
 			ngrams = util.get_doc_ngrams(doc,bigrams_types=['ADV/ADJ'], use_trigrams=False, filtered=True)
 			positive_ngrams = []
 			negative_ngrams = []
 			for ngram in ngrams:
-				#ngram_pol = transformation.word_polarity(ngram, prior_polarity_score=self.prior_polarity_score)
 				ngram_pol = transformation.ngrams_polarities([ngram], prior_polarity_score=self.prior_polarity_score)
 				if ngram_pol is None or len(ngram_pol) == 0:
 					ngram_pol = (0,0)
-
 				if ngram_pol[0] > 0:
 					positive_ngrams.append(ngram)
 				elif ngram_pol[0] < 0:
@@ -613,11 +609,11 @@ class NgramsDistribuition(ModelFeatures):
 			if num_of_sentences == 1:
 				split_index = len(doc_blob.words) / 2
 				sentence_tags = doc_blob.tags
-				first_sentences = sentence_tags[0:split_index] #Wordlist obj from Textblob
+				first_sentences = sentence_tags[0:split_index]
 				second_sentences = sentence_tags[split_index:]
 			else:
 				split_index = num_of_sentences / 2
-				first_sentences = doc_blob.sentences[0:split_index] #Wordlist obj from Textblob
+				first_sentences = doc_blob.sentences[0:split_index]
 				second_sentences = doc_blob.sentences[split_index:]
 			self.ngrams_distribuition.append({'id':_id,'polarity':_polarity,'num_of_sentences': num_of_sentences,'first_sentences':first_sentences,'last_sentences':second_sentences})
 			aux_qtd += 1
@@ -638,7 +634,6 @@ class NgramsDistribuition(ModelFeatures):
 	def __dict_to_blob_sentence(self, _dict):
 
 		blob_sentence = blob.Sentence(_dict['raw'])
-		#blob_sentence.raw = _dict['raw']
 		blob_sentence.start_index = _dict['start_index']
 		blob_sentence.end_index = _dict['end_index']
 		blob_sentence.stripped = _dict['stripped']
