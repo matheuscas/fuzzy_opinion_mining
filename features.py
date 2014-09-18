@@ -336,8 +336,12 @@ class ModelFeatures(object):
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-			sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+			if self.trim_polarity:
+				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_adjectives'])))
+				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_adjectives'])))
+			else:	
+				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -362,9 +366,13 @@ class ModelFeatures(object):
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-			sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-
+			if self.trim_polarity:
+				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_adjectives'])))
+				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_adjectives'])))
+			else:	
+				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
 				num_of_docs += 1
@@ -388,8 +396,12 @@ class ModelFeatures(object):
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-			sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+			if self.trim_polarity:
+				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_adjectives'])))
+				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_adjectives'])))
+			else:	
+				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
