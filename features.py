@@ -372,7 +372,7 @@ class ModelFeatures(object):
 			else:	
 				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
 				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-				
+
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
 				num_of_docs += 1
@@ -427,8 +427,12 @@ class ModelFeatures(object):
 
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
-			neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
+			if self.trim_polarity:
+				pos_adjs = self._trim_ngram_list(stat['positive_adjectives'])
+				neg_adjs = self._trim_ngram_list(stat['negative_adjectives'])
+			else:	
+				pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
+				neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
@@ -456,8 +460,12 @@ class ModelFeatures(object):
 
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
-			neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
+			if self.trim_polarity:
+				pos_adjs = self._trim_ngram_list(stat['positive_adjectives'])
+				neg_adjs = self._trim_ngram_list(stat['negative_adjectives'])
+			else:	
+				pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
+				neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
@@ -485,8 +493,12 @@ class ModelFeatures(object):
 
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
-			neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
+			if self.trim_polarity:
+				pos_adjs = self._trim_ngram_list(stat['positive_adjectives'])
+				neg_adjs = self._trim_ngram_list(stat['negative_adjectives'])
+			else:	
+				pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
+				neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
