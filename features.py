@@ -30,8 +30,8 @@ class ModelFeatures(object):
 		self.MULTIPLE_NEGATIVE_POLARITY = 2
 		self.prior_polarity_score = False
 		self.trim_polarity = False
-		self.positive_trim = 0.875
-		self.negative_trim = -0.25
+		self.positive_limit = 0.875
+		self.negative_limit = -0.25
 		self.binary_degree = True
 
 	def __documents_stats(self):
@@ -85,7 +85,16 @@ class ModelFeatures(object):
 			elif doc_type == 'negatives':
 				test_pol = int(doc['degree']) <= polarity
 
-		return test_pol						
+		return test_pol
+
+	def _trim_ngram_list(self, ngram_list):
+		
+		trimmed_ngram_polarities = []
+		ngram_polarities = transformation.ngrams_polarities(ngram_list, prior_polarity_score=self.prior_polarity_score)
+		for pol in ngram_polarities:
+			if (pol > 0 and pol >= self.positive_limit) or (pol < 0 and pol <= self.negative_limit):
+				trimmed_ngram_polarities.append(pol)
+		return trimmed_ngram_polarities		
 
 	def most_frequent_negative_adjectives(self):
 		
@@ -235,8 +244,12 @@ class ModelFeatures(object):
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			num_pos_adj = len(stat['positive_adjectives'])
-			num_neg_adj = len(stat['negative_adjectives'])
+			if self.trim_polarity:
+				num_pos_adj = len(self._trim_ngram_list(stat['positive_adjectives']))
+				num_neg_adj = len(self._trim_ngram_list(stat['negative_adjectives']))
+			else:
+				num_pos_adj = len(stat['positive_adjectives'])
+				num_neg_adj = len(stat['negative_adjectives'])
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -263,8 +276,12 @@ class ModelFeatures(object):
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			num_pos_adj = len(stat['positive_adjectives'])
-			num_neg_adj = len(stat['negative_adjectives'])
+			if self.trim_polarity:
+				num_pos_adj = len(self._trim_ngram_list(stat['positive_adjectives']))
+				num_neg_adj = len(self._trim_ngram_list(stat['negative_adjectives']))
+			else:
+				num_pos_adj = len(stat['positive_adjectives'])
+				num_neg_adj = len(stat['negative_adjectives'])
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -289,8 +306,12 @@ class ModelFeatures(object):
 		num_of_docs = 0.0
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			num_pos_adj = len(stat['positive_adjectives'])
-			num_neg_adj = len(stat['negative_adjectives'])
+			if self.trim_polarity:
+				num_pos_adj = len(self._trim_ngram_list(stat['positive_adjectives']))
+				num_neg_adj = len(self._trim_ngram_list(stat['negative_adjectives']))
+			else:
+				num_pos_adj = len(stat['positive_adjectives'])
+				num_neg_adj = len(stat['negative_adjectives'])
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
