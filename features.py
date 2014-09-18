@@ -29,6 +29,10 @@ class ModelFeatures(object):
 		self.MULTIPLE_POSITIVE_POLARITY = 4
 		self.MULTIPLE_NEGATIVE_POLARITY = 2
 		self.prior_polarity_score = False
+		self.trim_polarity = False
+		self.positive_trim = 0.875
+		self.negative_trim = -0.25
+		self.binary_degree = True
 
 	def __documents_stats(self):
 
@@ -117,36 +121,54 @@ class ModelFeatures(object):
 		self.features['most_frequent_positive_adjectives'] = most_frequent_positive_adjectives		
 		return most_frequent_positive_adjectives
 
-	def most_frequent_positive_adjectives_in_positive_documents(self):
+	# def most_frequent_positive_adjectives_in_positive_documents(self):
 		
-		if 'most_frequent_positive_adjectives_in_positive_documents' in self.features.keys():
-			return self.features['most_frequent_positive_adjectives_in_positive_documents']
+	# 	if 'most_frequent_positive_adjectives_in_positive_documents' in self.features.keys():
+	# 		return self.features['most_frequent_positive_adjectives_in_positive_documents']
 
-		all_positive_adjectives = []
+	# 	all_positive_adjectives = []
+	# 	for stat in self.__documents_stats():
+	# 		doc = self.model.get_doc_by_id(stat['_id'])
+	# 		if doc['polarity'] == self.BINARY_POSITIVE_POLARITY:
+	# 			all_positive_adjectives = all_positive_adjectives + stat['positive_adjectives']
+
+	# 	all_positive_adjectives_freq = Counter(all_positive_adjectives)
+	# 	self.features['most_frequent_positive_adjectives_in_positive_documents'] = all_positive_adjectives_freq
+	# 	return all_positive_adjectives_freq
+
+	# def most_frequent_negative_adjectives_in_negative_documents(self):
+
+	# 	if 'most_frequent_negative_adjectives_in_negative_documents' in self.features.keys():
+	# 		return self.features['most_frequent_negative_adjectives_in_negative_documents']
+
+	# 	all_negative_adjectives = []
+	# 	for stat in self.__documents_stats():
+	# 		doc = self.model.get_doc_by_id(stat['_id'])
+	# 		if doc['polarity'] == self.BINARY_NEGATIVE_POLARITY:
+	# 			all_negative_adjectives = all_negative_adjectives + stat['negative_adjectives']
+
+	# 	all_negative_adjectives_freq = Counter(all_negative_adjectives)
+	# 	self.features['most_frequent_negative_adjectives_in_negative_documents'] = all_negative_adjectives_freq
+	# 	return all_negative_adjectives_freq
+
+	def most_frequent_polar_adjectives_in_polar_documents(self, adjectives_polarity='positives',docs_polarity='positives'):
+		
+		key_name = 'most_frequent_' + adjectives_polarity + '_adjectives_in_' + docs_polarity + '_documents'
+		if key_name in self.features.keys():
+			return self.features[key_name]
+
+		all_polar_adjectives = []
+		polarity, key = self.__set_doc_type(docs_polarity, key_name, self.binary_degree) #key is not used. Refactor later #TODO
+		key = 'positive_adjectives' if adjectives_polarity == 'positives' else 'negative_adjectives' #Key, here, is overriden
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
-			if doc['polarity'] == self.BINARY_POSITIVE_POLARITY:
-				all_positive_adjectives = all_positive_adjectives + stat['positive_adjectives']
-
-		all_positive_adjectives_freq = Counter(all_positive_adjectives)
-		self.features['most_frequent_positive_adjectives_in_positive_documents'] = all_positive_adjectives_freq
-		return all_positive_adjectives_freq
-
-	def most_frequent_negative_adjectives_in_negative_documents(self):
-
-		if 'most_frequent_negative_adjectives_in_negative_documents' in self.features.keys():
-			return self.features['most_frequent_negative_adjectives_in_negative_documents']
-
-		all_negative_adjectives = []
-		for stat in self.__documents_stats():
-			doc = self.model.get_doc_by_id(stat['_id'])
-			if doc['polarity'] == self.BINARY_NEGATIVE_POLARITY:
-				all_negative_adjectives = all_negative_adjectives + stat['negative_adjectives']
-
-		all_negative_adjectives_freq = Counter(all_negative_adjectives)
-		self.features['most_frequent_negative_adjectives_in_negative_documents'] = all_negative_adjectives_freq
-		return all_negative_adjectives_freq		
-
+			test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
+			if test_polarity:
+				all_polar_adjectives = all_polar_adjectives + stat[key]
+		all_polar_adjectives_freq = Counter(all_polar_adjectives)
+		self.features[key_name] = all_polar_adjectives_freq
+		return all_polar_adjectives_freq
+			
 	def general(self):
 
 		if 'general' in self.features.keys():
