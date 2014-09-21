@@ -810,7 +810,7 @@ class NgramsDistribuition(ModelFeatures):
 			aux_qtd += 1
 		self.__update_db_from_model()
 			
-	def get_ngram_distribuition(self, _type='adjective'):
+	def get_ngrams_stats(self, _type='adjective'):
 		
 		tags_to_consider = self._define_tags_by_type(_type)
 		ngram_freq_first_part = []
@@ -819,14 +819,14 @@ class NgramsDistribuition(ModelFeatures):
 		aux_qtd = 1
 		self.ngrams_distribuition = self.load_model_from_db() if len(self.ngrams_distribuition) == 0 else self.ngrams_distribuition	
 		for nd in self.ngrams_distribuition:
-			print 'get_ngram_distribuition of ' + _type,aux_qtd, aux_count
+			print 'get_ngrams_stats of ' + _type,aux_qtd, aux_count
 			ngram_freq_first_part.append(len(nd['first_'+_type+'s']))
 			ngram_freq_second_part.append(len(nd['last_'+_type+'s']))
 			aux_qtd += 1
 
 		return util.average(ngram_freq_first_part), util.std(ngram_freq_first_part), util.average(ngram_freq_second_part), util.std(ngram_freq_second_part)
 
-	def get_ngram_distribuition_from_polar_docs(self, doc_type='positives', _type='adjective', binary_degree=True):
+	def get_ngrams_stats_from_polar_docs(self, doc_type='positives', _type='adjective', binary_degree=True):
 
 		tags_to_consider = self._define_tags_by_type(_type)
 		ngram_freq_first_part = []
@@ -834,7 +834,7 @@ class NgramsDistribuition(ModelFeatures):
 		aux_count = len(self.ngrams_distribuition)
 		aux_qtd = 1
 		self.ngrams_distribuition = self.load_model_from_db() if len(self.ngrams_distribuition) == 0 else self.ngrams_distribuition	
-		polarity, key_name = self._ModelFeatures__set_doc_type(doc_type, 'get_ngram_distribuition_from_positive_docs', binary_degree)
+		polarity, key_name = self._ModelFeatures__set_doc_type(doc_type, 'get_ngrams_stats_from_positive_docs', binary_degree)
 
 		for nd in self.ngrams_distribuition:
 			test_pol = True
@@ -846,13 +846,39 @@ class NgramsDistribuition(ModelFeatures):
 				elif doc_type == 'negatives':
 					test_pol = int(nd['polarity']) <= polarity
 			if test_pol:
-				print 'get_ngram_distribuition_from_polar_docs of ' + _type + 's',aux_qtd, aux_count
+				print 'get_ngrams_stats_from_polar_docs of ' + _type + 's',aux_qtd, aux_count
 				print nd['id'], nd['polarity'], 'first_'+_type+'s', len(nd['first_'+_type+'s']), 'last_'+_type+'s', len(nd['last_'+_type+'s']) 
 				ngram_freq_first_part.append(len(nd['first_'+_type+'s']))
 				ngram_freq_second_part.append(len(nd['last_'+_type+'s']))
 			aux_qtd += 1
 
-		return util.average(ngram_freq_first_part), util.std(ngram_freq_first_part), util.average(ngram_freq_second_part), util.std(ngram_freq_second_part)	
+		return util.average(ngram_freq_first_part), util.std(ngram_freq_first_part), util.average(ngram_freq_second_part), util.std(ngram_freq_second_part)
+
+	def get_adjectives_polarities_distribuition(self, prior_polarity_score=False):
+		
+		_type = 'adjective'
+		tags_to_consider = self._define_tags_by_type(_type)
+		self.ngrams_distribuition = self.load_model_from_db() if len(self.ngrams_distribuition) == 0 else self.ngrams_distribuition	
+		aux_count = len(self.ngrams_distribuition)
+		aux_qtd = 1
+		adjectives_polarities_distribuition = []
+		first_adjectives_polarities_distribuition = []
+		last_adjectives_polarities_distribuition = []
+		for nd in self.ngrams_distribuition:
+			print 'get_adjectives_polarities_distribuition', aux_qtd, aux_count
+			for adj in nd['first_'+_type+'s']:
+				polarity = transformation.word_polarity(adj[0],pos_tag=adj[1], prior_polarity_score=prior_polarity_score)
+				if polarity is not None and polarity[0] != 0:
+					first_adjectives_polarities_distribuition.append(polarity[0])
+					adjectives_polarities_distribuition.append(polarity[0])
+
+			for adj in nd['last_'+_type+'s']:
+				polarity = transformation.word_polarity(adj[0],pos_tag=adj[1], prior_polarity_score=prior_polarity_score)
+				if polarity is not None and polarity[0] != 0:
+					last_adjectives_polarities_distribuition.append(polarity[0])
+					adjectives_polarities_distribuition.append(polarity[0])	
+			aux_qtd += 1
+		return adjectives_polarities_distribuition, first_adjectives_polarities_distribuition, last_adjectives_polarities_distribuition			
 						
 
 									 		
