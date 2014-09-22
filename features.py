@@ -55,8 +55,8 @@ class ModelFeatures(object):
 					positive_ngrams.append(ngram)
 				elif ngram_pol[0] < 0:
 					negative_ngrams.append(ngram)		
-			doc_stats['positive_adjectives'] = positive_ngrams
-			doc_stats['negative_adjectives'] = negative_ngrams
+			doc_stats['positive_ngrams'] = positive_ngrams
+			doc_stats['negative_ngrams'] = negative_ngrams
 			doc_stats['_id'] = str(doc['_id'])
 			list_of_doc_stats.append(doc_stats)
 			temp_num = temp_num + 1
@@ -96,69 +96,39 @@ class ModelFeatures(object):
 				trimmed_ngram_polarities.append(pol)
 		return trimmed_ngram_polarities		
 
-	def most_frequent_negative_adjectives(self):
+	def most_frequent_negative_ngrams(self):
 		
-		if 'most_frequent_negative_adjectives' in self.features.keys():
-			return self.features['most_frequent_negative_adjectives']
+		if 'most_frequent_negative_ngrams' in self.features.keys():
+			return self.features['most_frequent_negative_ngrams']
 
 		results = self.model.documents.map_reduce(self.MAPPER, self.model.REDUCER, 'tempresults')
 		sorted_results = sorted(results.find(), key=lambda k: k['value'], reverse=True)
 		self.model.database['tempresults'].drop()
-		most_frequent_negative_adjectives = []
+		most_frequent_negative_ngrams = []
 		for x in sorted_results:
 			polarity = transformation.word_polarity(x['_id'], prior_polarity_score=self.prior_polarity_score)
 			if polarity is not None and polarity[0] < 0:
-				most_frequent_negative_adjectives.append(x)
+				most_frequent_negative_ngrams.append(x)
 
-		self.features['most_frequent_negative_adjectives'] = most_frequent_negative_adjectives		
-		return most_frequent_negative_adjectives
+		self.features['most_frequent_negative_ngrams'] = most_frequent_negative_ngrams		
+		return most_frequent_negative_ngrams
 
-	def most_frequent_positive_adjectives(self):
+	def most_frequent_positive_ngrams(self):
 		
-		if 'most_frequent_positive_adjectives' in self.features.keys():
-			return self.features['most_frequent_positive_adjectives']
+		if 'most_frequent_positive_ngrams' in self.features.keys():
+			return self.features['most_frequent_positive_ngrams']
 
 		results = self.model.documents.map_reduce(self.MAPPER, self.model.REDUCER, 'tempresults')
 		sorted_results = sorted(results.find(), key=lambda k: k['value'], reverse=True)
 		self.model.database['tempresults'].drop()
-		most_frequent_positive_adjectives = []
+		most_frequent_positive_ngrams = []
 		for x in sorted_results:
 			polarity = transformation.word_polarity(x['_id'], prior_polarity_score=self.prior_polarity_score)
 			if polarity is not None and polarity[0] > 0:
-				most_frequent_positive_adjectives.append(x)
+				most_frequent_positive_ngrams.append(x)
 
-		self.features['most_frequent_positive_adjectives'] = most_frequent_positive_adjectives		
-		return most_frequent_positive_adjectives
-
-	# def most_frequent_positive_adjectives_in_positive_documents(self):
-		
-	# 	if 'most_frequent_positive_adjectives_in_positive_documents' in self.features.keys():
-	# 		return self.features['most_frequent_positive_adjectives_in_positive_documents']
-
-	# 	all_positive_adjectives = []
-	# 	for stat in self.__documents_stats():
-	# 		doc = self.model.get_doc_by_id(stat['_id'])
-	# 		if doc['polarity'] == self.BINARY_POSITIVE_POLARITY:
-	# 			all_positive_adjectives = all_positive_adjectives + stat['positive_adjectives']
-
-	# 	all_positive_adjectives_freq = Counter(all_positive_adjectives)
-	# 	self.features['most_frequent_positive_adjectives_in_positive_documents'] = all_positive_adjectives_freq
-	# 	return all_positive_adjectives_freq
-
-	# def most_frequent_negative_adjectives_in_negative_documents(self):
-
-	# 	if 'most_frequent_negative_adjectives_in_negative_documents' in self.features.keys():
-	# 		return self.features['most_frequent_negative_adjectives_in_negative_documents']
-
-	# 	all_negative_adjectives = []
-	# 	for stat in self.__documents_stats():
-	# 		doc = self.model.get_doc_by_id(stat['_id'])
-	# 		if doc['polarity'] == self.BINARY_NEGATIVE_POLARITY:
-	# 			all_negative_adjectives = all_negative_adjectives + stat['negative_adjectives']
-
-	# 	all_negative_adjectives_freq = Counter(all_negative_adjectives)
-	# 	self.features['most_frequent_negative_adjectives_in_negative_documents'] = all_negative_adjectives_freq
-	# 	return all_negative_adjectives_freq
+		self.features['most_frequent_positive_ngrams'] = most_frequent_positive_ngrams		
+		return most_frequent_positive_ngrams
 
 	def most_frequent_polar_adjectives_in_polar_documents(self, adjectives_polarity='positives',docs_polarity='positives'):
 		
@@ -168,7 +138,7 @@ class ModelFeatures(object):
 
 		all_polar_adjectives = []
 		polarity, key = self.__set_doc_type(docs_polarity, key_name, self.binary_degree) #key is not used. Refactor later #TODO
-		key = 'positive_adjectives' if adjectives_polarity == 'positives' else 'negative_adjectives' #Key, here, is overriden
+		key = 'positive_ngrams' if adjectives_polarity == 'positives' else 'negative_ngrams' #Key, here, is overriden
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
@@ -232,9 +202,9 @@ class ModelFeatures(object):
 		self.features['general'] = general						
 		return general						
 				
-	def documents_highest_count_positive_adjectives(self, doc_type, binary_degree=True):
+	def documents_highest_count_positive_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_positive_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_positive_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -245,11 +215,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				num_pos_adj = len(self._trim_ngram_list(stat['positive_adjectives']))
-				num_neg_adj = len(self._trim_ngram_list(stat['negative_adjectives']))
+				num_pos_adj = len(self._trim_ngram_list(stat['positive_ngrams']))
+				num_neg_adj = len(self._trim_ngram_list(stat['negative_ngrams']))
 			else:
-				num_pos_adj = len(stat['positive_adjectives'])
-				num_neg_adj = len(stat['negative_adjectives'])
+				num_pos_adj = len(stat['positive_ngrams'])
+				num_neg_adj = len(stat['negative_ngrams'])
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -264,9 +234,9 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]	
 
-	def documents_highest_count_negative_adjectives(self, doc_type, binary_degree=True):
+	def documents_highest_count_negative_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_negative_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_count_negative_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -277,11 +247,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				num_pos_adj = len(self._trim_ngram_list(stat['positive_adjectives']))
-				num_neg_adj = len(self._trim_ngram_list(stat['negative_adjectives']))
+				num_pos_adj = len(self._trim_ngram_list(stat['positive_ngrams']))
+				num_neg_adj = len(self._trim_ngram_list(stat['negative_ngrams']))
 			else:
-				num_pos_adj = len(stat['positive_adjectives'])
-				num_neg_adj = len(stat['negative_adjectives'])
+				num_pos_adj = len(stat['positive_ngrams'])
+				num_neg_adj = len(stat['negative_ngrams'])
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -294,9 +264,9 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]
 
-	def documents_equal_count_positive_and_negative_adjectives(self, doc_type, binary_degree=True):
+	def documents_equal_count_positive_and_negative_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_count_positive_and_negative_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_count_positive_and_negative_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -307,11 +277,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				num_pos_adj = len(self._trim_ngram_list(stat['positive_adjectives']))
-				num_neg_adj = len(self._trim_ngram_list(stat['negative_adjectives']))
+				num_pos_adj = len(self._trim_ngram_list(stat['positive_ngrams']))
+				num_neg_adj = len(self._trim_ngram_list(stat['negative_ngrams']))
 			else:
-				num_pos_adj = len(stat['positive_adjectives'])
-				num_neg_adj = len(stat['negative_adjectives'])
+				num_pos_adj = len(stat['positive_ngrams'])
+				num_neg_adj = len(stat['negative_ngrams'])
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -324,9 +294,9 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]					
 
-	def documents_highest_sum_positive_adjectives(self, doc_type, binary_degree=True):
+	def documents_highest_sum_positive_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_positive_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_positive_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -337,11 +307,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_adjectives'])))
-				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_adjectives'])))
+				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_ngrams'])))
+				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_ngrams'])))
 			else:	
-				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)))
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -354,9 +324,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]			
 
-	def documents_highest_sum_negative_adjectives(self, doc_type, binary_degree=True):
+	def documents_highest_sum_negative_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_negative_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_sum_negative_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -367,11 +337,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_adjectives'])))
-				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_adjectives'])))
+				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_ngrams'])))
+				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_ngrams'])))
 			else:	
-				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)))
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -384,9 +354,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]
 		
-	def documents_equal_sum_positive_and_negative_adjectives(self, doc_type, binary_degree=True):
+	def documents_equal_sum_positive_and_negative_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_sum_positive_and_negative_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_equal_sum_positive_and_negative_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -397,11 +367,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_adjectives'])))
-				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_adjectives'])))
+				sum_pos_adj = abs(sum(self._trim_ngram_list(stat['positive_ngrams'])))
+				sum_neg_adj = abs(sum(self._trim_ngram_list(stat['negative_ngrams'])))
 			else:	
-				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)))
-				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)))
+				sum_pos_adj = abs(sum(transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+				sum_neg_adj = abs(sum(transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)))
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
@@ -414,9 +384,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]	
 
-	def documents_highest_score_positive_adjectives(self, doc_type, binary_degree=True):
+	def documents_highest_score_positive_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_positive_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_positive_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -428,11 +398,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				pos_adjs = self._trim_ngram_list(stat['positive_adjectives'])
-				neg_adjs = self._trim_ngram_list(stat['negative_adjectives'])
+				pos_adjs = self._trim_ngram_list(stat['positive_ngrams'])
+				neg_adjs = self._trim_ngram_list(stat['negative_ngrams'])
 			else:	
-				pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
-				neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
+				pos_adjs = transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
+				neg_adjs = transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
@@ -447,9 +417,9 @@ class ModelFeatures(object):
 
 		return self.features[key_name]			
 
-	def documents_highest_score_negative_adjectives(self, doc_type, binary_degree=True):
+	def documents_highest_score_negative_ngrams(self, doc_type, binary_degree=True):
 		
-		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_negative_adjectives', binary_degree)
+		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_negative_ngrams', binary_degree)
 
 		if key_name in self.features.keys():
 			return self.features[key_name]
@@ -461,11 +431,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				pos_adjs = self._trim_ngram_list(stat['positive_adjectives'])
-				neg_adjs = self._trim_ngram_list(stat['negative_adjectives'])
+				pos_adjs = self._trim_ngram_list(stat['positive_ngrams'])
+				neg_adjs = self._trim_ngram_list(stat['negative_ngrams'])
 			else:	
-				pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
-				neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
+				pos_adjs = transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
+				neg_adjs = transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
@@ -494,11 +464,11 @@ class ModelFeatures(object):
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
-				pos_adjs = self._trim_ngram_list(stat['positive_adjectives'])
-				neg_adjs = self._trim_ngram_list(stat['negative_adjectives'])
+				pos_adjs = self._trim_ngram_list(stat['positive_ngrams'])
+				neg_adjs = self._trim_ngram_list(stat['negative_ngrams'])
 			else:	
-				pos_adjs = transformation.ngrams_polarities(stat['positive_adjectives'], prior_polarity_score=self.prior_polarity_score)
-				neg_adjs = transformation.ngrams_polarities(stat['negative_adjectives'], prior_polarity_score=self.prior_polarity_score)
+				pos_adjs = transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
+				neg_adjs = transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
