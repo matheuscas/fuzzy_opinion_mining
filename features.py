@@ -470,6 +470,84 @@ class ModelFeatures(object):
 
 		return self.features[key_name]	
 
+	def histogram_highest_sum_positive_ngrams(self):
+
+		if self.plotly_login is None or self.plotly_password is None:
+			raise Exception('Plotly credentials not configured')
+
+		dist = []	
+		for doc_stat in self.__documents_stats():
+			dist.append(sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+
+		dist = np.array(dist)
+		py.sign_in(self.plotly_login, self.plotly_password)
+
+		trace1 = Histogram(
+		    x=dist,
+		    histnorm='count',
+		    name='sum of polarities'
+		)
+		data = Data([trace1])
+		fig = Figure(data=data)
+		plot_url = py.plot(fig, filename='cornell-positive-sum-of-polarities-histogram')
+
+	def histogram_highest_sum_negative_ngrams(self):
+
+		if self.plotly_login is None or self.plotly_password is None:
+			raise Exception('Plotly credentials not configured')
+
+		dist = []	
+		for doc_stat in self.__documents_stats():
+			dist.append(sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+
+		dist = np.array(dist)
+		py.sign_in(self.plotly_login, self.plotly_password)
+
+		trace1 = Histogram(
+		    x=dist,
+		    histnorm='count',
+		    name='sum of polarities'
+		)
+		data = Data([trace1])
+		fig = Figure(data=data)
+		plot_url = py.plot(fig, filename='cornell-negative-sum-of-polarities-histogram')
+
+	def histogram_highest_sum_positive_vs_negative_ngrams(self):
+		
+		if self.plotly_login is None or self.plotly_password is None:
+			raise Exception('Plotly credentials not configured')
+
+		pos_dist = []
+		neg_dist = []	
+		for doc_stat in self.__documents_stats():
+			pos_dist.append(sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+			neg_dist.append(sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)))
+
+		pos_dist = np.array(pos_dist)
+		neg_dist = np.array(neg_dist)
+		py.sign_in(self.plotly_login, self.plotly_password)
+
+		pos_trace = Histogram(
+		    x=pos_dist,
+		    histnorm='count',
+		    name='positive sum of polarities',
+		    opacity=0.75
+		)
+
+		neg_trace = Histogram(
+		    x=neg_dist,
+		    histnorm='count',
+		    name='negative sum of polarities',
+		    opacity=0.75
+		)
+
+		data = Data([pos_trace, neg_trace])	
+		layout = Layout(
+		    barmode='overlay'
+		)
+		fig = Figure(data=data, layout=layout)
+		plot_url = py.plot(fig, filename='cornell-positive_vs_negative-sum-of-polarities-histogram')			
+
 	def documents_highest_score_positive_ngrams(self, doc_type, binary_degree=True):
 		
 		polarity, key_name = self.__set_doc_type(doc_type, 'documents_highest_score_positive_ngrams', binary_degree)
