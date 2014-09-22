@@ -2,11 +2,14 @@ import pymongo
 import transformation
 import util
 import lexicons
+import plotly.plotly as py
+import numpy as np
 from textblob import blob, TextBlob, Word
 from textblob.taggers import PatternTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
 from collections import Counter
 from bson.code import Code
+from plotly.graph_objs import *
 
 class ModelFeatures(object):
 	"""docstring for ModelFeatures"""
@@ -33,6 +36,8 @@ class ModelFeatures(object):
 		self.positive_limit = 0.875
 		self.negative_limit = -0.25
 		self.binary_degree = True
+		self.plotly_login = None
+		self.plotly_password = None
 
 	def __documents_stats(self):
 
@@ -212,6 +217,7 @@ class ModelFeatures(object):
 		amount_docs_highest_num_pos_adj = 0.0
 		docs_highest_num_pos_adj = []
 		num_of_docs = 0.0
+		highest_count_distribution = []
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
@@ -223,14 +229,14 @@ class ModelFeatures(object):
 
 			test_pol = self.__set_polarity_test(binary_degree, doc, polarity, doc_type)
 			if test_pol:
-				print num_pos_adj, num_neg_adj
 				num_of_docs += 1
 				if num_pos_adj > num_neg_adj:
 					amount_docs_highest_num_pos_adj += 1
 					docs_highest_num_pos_adj.append(str(doc['_id']))
+					highest_count_distribution.append(len(stat['positive_ngrams']))
 
 		print num_of_docs			
-		self.features[key_name] = (amount_docs_highest_num_pos_adj / num_of_docs, amount_docs_highest_num_pos_adj, docs_highest_num_pos_adj)
+		self.features[key_name] = (amount_docs_highest_num_pos_adj / num_of_docs, amount_docs_highest_num_pos_adj, docs_highest_num_pos_adj, highest_count_distribution)
 		
 		return self.features[key_name]	
 
@@ -244,6 +250,7 @@ class ModelFeatures(object):
 		amount_docs_highest_count_neg_adj = 0.0
 		docs_highest_num_neg_adj = []
 		num_of_docs = 0.0
+		highest_count_distribution = []
 		for stat in self.__documents_stats():
 			doc = self.model.get_doc_by_id(stat['_id'])
 			if self.trim_polarity:
@@ -259,8 +266,9 @@ class ModelFeatures(object):
 				if num_pos_adj < num_neg_adj:
 					amount_docs_highest_count_neg_adj += 1
 					docs_highest_num_neg_adj.append(str(doc['_id']))
+					highest_count_distribution.append(len(stat['negative_ngrams']))
 
-		self.features[key_name] = (amount_docs_highest_count_neg_adj / num_of_docs, amount_docs_highest_count_neg_adj, docs_highest_num_neg_adj)
+		self.features[key_name] = (amount_docs_highest_count_neg_adj / num_of_docs, amount_docs_highest_count_neg_adj, docs_highest_num_neg_adj, highest_count_distribution)
 		
 		return self.features[key_name]
 
@@ -292,7 +300,85 @@ class ModelFeatures(object):
 
 		self.features[key_name] = (amount_docs_equal_count_adj / num_of_docs, amount_docs_equal_count_adj, docs_equal_num_adj)
 		
-		return self.features[key_name]					
+		return self.features[key_name]
+
+	def histogram_highest_count_positive_ngrams(self):
+
+		if self.plotly_login is None or self.plotly_password is None:
+			raise Exception('Plotly credentials not configured')
+
+		dist = []	
+		for doc_stat in self.__documents_stats():
+			dist.append(len(doc_stat['positive_ngrams']))
+
+		dist = np.array(dist)
+		py.sign_in(self.plotly_login, self.plotly_password)
+
+		trace1 = Histogram(
+		    x=dist,
+		    histnorm='count',
+		    name='term counting'
+		)
+		data = Data([trace1])
+		fig = Figure(data=data)
+		plot_url = py.plot(fig, filename='cornell-positive-term_couting-histogram')
+
+	def histogram_highest_count_negative_ngrams(self):
+
+		if self.plotly_login is None or self.plotly_password is None:
+			raise Exception('Plotly credentials not configured')
+
+		dist = []	
+		for doc_stat in self.__documents_stats():
+			dist.append(len(doc_stat['negative_ngrams']))
+
+		dist = np.array(dist)
+		py.sign_in(self.plotly_login, self.plotly_password)
+
+		trace1 = Histogram(
+		    x=dist,
+		    histnorm='count',
+		    name='term counting'
+		)
+		data = Data([trace1])
+		fig = Figure(data=data)
+		plot_url = py.plot(fig, filename='cornell-negative-term_couting-histogram')	
+
+	def histogram_highest_count_positive_vs_negative_ngrams(self):
+		
+		if self.plotly_login is None or self.plotly_password is None:
+			raise Exception('Plotly credentials not configured')
+
+		pos_dist = []
+		neg_dist = []	
+		for doc_stat in self.__documents_stats():
+			pos_dist.append(len(doc_stat['positive_ngrams']))
+			neg_dist.append(len(doc_stat['negative_ngrams']))
+
+		pos_dist = np.array(pos_dist)
+		neg_dist = np.array(neg_dist)
+		py.sign_in(self.plotly_login, self.plotly_password)
+
+		pos_trace = Histogram(
+		    x=pos_dist,
+		    histnorm='count',
+		    name='positive term counting',
+		    opacity=0.75
+		)
+
+		neg_trace = Histogram(
+		    x=neg_dist,
+		    histnorm='count',
+		    name='negative term counting',
+		    opacity=0.75
+		)
+
+		data = Data([pos_trace, neg_trace])	
+		layout = Layout(
+		    barmode='overlay'
+		)
+		fig = Figure(data=data, layout=layout)
+		plot_url = py.plot(fig, filename='cornell-positive_vs_negative-term_couting-histogram')	
 
 	def documents_highest_sum_positive_ngrams(self, doc_type, binary_degree=True):
 		
