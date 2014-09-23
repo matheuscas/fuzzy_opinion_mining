@@ -302,10 +302,33 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]
 
-	def histogram_highest_count_positive_ngrams(self, histogram_name='hist_highest_count_positive_ngrams', docs_polarity='all'):
-
+	def create_histogram(self, dist_list, histogram_name, bins=None):
+		
 		if self.plotly_login is None or self.plotly_password is None:
 			raise Exception('Plotly credentials not configured')
+
+		py.sign_in(self.plotly_login, self.plotly_password)
+		traces = []
+		if len(dist_list) == 1:
+			if bins:
+				traces.append(Histogram(x=dist_list[0], xbins=XBins(start=bins[0],end=bins[1],size=bins[2])))
+			else:
+				traces.append(Histogram(x=dist_list[0]))
+		elif len(dist_list) > 1:
+			for dist in dist_list:
+				if bins:
+					traces.append(Histogram(x=dist, xbins=XBins(start=bins[0],end=bins[1],size=bins[2]), opacity=0.75))
+				else:
+					traces.append(Histogram(x=dist, opacity=0.75))
+
+		data = Data(traces)
+		layout = Layout(
+		    barmode='overlay'
+		)
+		fig = Figure(data=data, layout=layout)
+		plot_url = py.plot(fig, filename=histogram_name)		
+
+	def get_dist_highest_count_positive_ngrams(self, docs_polarity='all'):
 
 		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO	
 		dist = []	
@@ -318,17 +341,7 @@ class ModelFeatures(object):
 			if test_polarity:
 				dist.append(len(doc_stat['positive_ngrams']))
 
-		dist = np.array(dist)
-		py.sign_in(self.plotly_login, self.plotly_password)
-
-		trace1 = Histogram(
-		    x=dist,
-		    histnorm='count',
-		    name='term counting'
-		)
-		data = Data([trace1])
-		fig = Figure(data=data)
-		plot_url = py.plot(fig, filename=histogram_name)
+		return np.array(dist)
 
 	def histogram_highest_count_negative_ngrams(self):
 
@@ -351,11 +364,12 @@ class ModelFeatures(object):
 		fig = Figure(data=data)
 		plot_url = py.plot(fig, filename='cornell-negative-term_couting-histogram')	
 
-	def histogram_highest_count_positive_vs_negative_ngrams(self):
+	def histogram_highest_count_positive_vs_negative_ngrams(self, histogram_name='hist_highest_count_positive_vs_negative_ngrams', docs_polarity='all'):
 		
 		if self.plotly_login is None or self.plotly_password is None:
 			raise Exception('Plotly credentials not configured')
 
+		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO
 		pos_dist = []
 		neg_dist = []	
 		for doc_stat in self.__documents_stats():
