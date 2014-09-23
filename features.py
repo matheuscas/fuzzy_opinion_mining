@@ -577,117 +577,39 @@ class ModelFeatures(object):
 
 		return self.features[key_name]
 
-	def histogram_highest_score_positive_ngrams(self):
+	def get_dist_highest_score_positive_ngrams(self, docs_polarity='all'):
 
-		if self.plotly_login is None or self.plotly_password is None:
-			raise Exception('Plotly credentials not configured')
-
+		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO
 		dist = []	
 		for doc_stat in self.__documents_stats():
-			pos_adjs = transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
-			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
-			dist.append(max_pos_adj)
+			doc = self.model.get_doc_by_id(doc_stat['_id'])
+			if docs_polarity == 'all':
+				test_polarity = True
+			else:
+				test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
+			if test_polarity:	
+				pos_adjs = transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
+				max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
+				dist.append(max_pos_adj)
 
-		dist = np.array(dist)
-		py.sign_in(self.plotly_login, self.plotly_password)
+		return np.array(dist)
 
-		trace1 = Histogram(
-		    x=dist,
-		    histnorm='count',
-		    name='highest score',
-		    autobinx=False,
-		    xbins=XBins(
-		        start=-1,
-		        end=1,
-		        size=0.125
-		    )
-		)
-		data = Data([trace1])
-		fig = Figure(data=data)
-		plot_url = py.plot(fig, filename='cornell-positive-highest_score-histogram')
+	def get_dist_highest_score_negative_ngrams(self, docs_polarity='all'):
 
-	def histogram_highest_score_negative_ngrams(self):
-
-		if self.plotly_login is None or self.plotly_password is None:
-			raise Exception('Plotly credentials not configured')
-
+		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO
 		dist = []	
 		for doc_stat in self.__documents_stats():
-			neg_adjs = transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
-			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
-			dist.append(max_neg_adj)
+			doc = self.model.get_doc_by_id(doc_stat['_id'])
+			if docs_polarity == 'all':
+				test_polarity = True
+			else:
+				test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
+			if test_polarity:
+				neg_adjs = transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
+				max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
+				dist.append(max_neg_adj)
 
-		dist = np.array(dist)
-		py.sign_in(self.plotly_login, self.plotly_password)
-
-		trace1 = Histogram(
-		    x=dist,
-		    histnorm='count',
-		    name='highest score',
-		    autobinx=False,
-		    xbins=XBins(
-		        start=-1,
-		        end=1,
-		        size=0.125
-		    )
-		)
-		data = Data([trace1])
-		fig = Figure(data=data)
-		plot_url = py.plot(fig, filename='cornell-negative-highest_score-histogram')
-
-	def histogram_highest_score_positive_vs_negative_ngrams(self):
-		
-		if self.plotly_login is None or self.plotly_password is None:
-			raise Exception('Plotly credentials not configured')
-
-		pos_dist = []
-		neg_dist = []	
-		for doc_stat in self.__documents_stats():
-			pos_adjs = transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
-			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
-			pos_dist.append(max_pos_adj)
-
-			neg_adjs = transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
-			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
-			neg_dist.append(max_neg_adj)
-
-		pos_dist = np.array(pos_dist)
-		neg_dist = np.array(neg_dist)
-		py.sign_in(self.plotly_login, self.plotly_password)
-
-		pos_trace = Histogram(
-		    x=pos_dist,
-		    histnorm='count',
-		    name='positive highest_score',
-		    opacity=0.75,
-		    autobinx=False,
-		    xbins=XBins(
-		        start=-1,
-		        end=1,
-		        size=0.125
-		    )
-		)
-
-		neg_trace = Histogram(
-		    x=neg_dist,
-		    histnorm='count',
-		    name='negative highest_score',
-		    opacity=0.75,
-		    autobinx=False,
-		    xbins=XBins(
-		        start=-1,
-		        end=1,
-		        size=0.125
-		    )
-		)
-
-		data = Data([pos_trace, neg_trace])	
-		layout = Layout(
-		    barmode='overlay'
-		)
-		fig = Figure(data=data, layout=layout)
-		plot_url = py.plot(fig, filename='cornell-positive_vs_negative-highest_score-histogram')			
-	
+		return np.array(dist)
 
 class SubjectivityClues(ModelFeatures):
 	"""Features for SubjectivityClues"""
