@@ -302,14 +302,21 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]
 
-	def histogram_highest_count_positive_ngrams(self):
+	def histogram_highest_count_positive_ngrams(self, histogram_name='hist_highest_count_positive_ngrams', docs_polarity='all'):
 
 		if self.plotly_login is None or self.plotly_password is None:
 			raise Exception('Plotly credentials not configured')
 
+		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO	
 		dist = []	
 		for doc_stat in self.__documents_stats():
-			dist.append(len(doc_stat['positive_ngrams']))
+			doc = self.model.get_doc_by_id(doc_stat['_id'])
+			if docs_polarity == 'all':
+				test_polarity = True
+			else:
+				test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
+			if test_polarity:
+				dist.append(len(doc_stat['positive_ngrams']))
 
 		dist = np.array(dist)
 		py.sign_in(self.plotly_login, self.plotly_password)
@@ -321,7 +328,7 @@ class ModelFeatures(object):
 		)
 		data = Data([trace1])
 		fig = Figure(data=data)
-		plot_url = py.plot(fig, filename='cornell-positive-term_couting-histogram')
+		plot_url = py.plot(fig, filename=histogram_name)
 
 	def histogram_highest_count_negative_ngrams(self):
 
