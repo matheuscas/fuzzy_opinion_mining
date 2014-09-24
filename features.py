@@ -611,6 +611,28 @@ class ModelFeatures(object):
 
 		return np.array(dist)
 
+	def get_dist_positive_polarities(self, docs_polarity='positives'):
+
+		all_polar_adjectives = []
+		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
+			if test_polarity:
+				all_polar_adjectives = all_polar_adjectives + transformation.ngrams_polarities(stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
+		return all_polar_adjectives
+
+	def get_dist_negative_polarities(self, docs_polarity='positives'):
+		
+		all_polar_adjectives = []
+		polarity, key = self.__set_doc_type(docs_polarity, '', self.binary_degree) #key is not used. Refactor later #TODO
+		for stat in self.__documents_stats():
+			doc = self.model.get_doc_by_id(stat['_id'])
+			test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
+			if test_polarity:
+				all_polar_adjectives = all_polar_adjectives + transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
+		return all_polar_adjectives		
+
 class SubjectivityClues(ModelFeatures):
 	"""Features for SubjectivityClues"""
 
