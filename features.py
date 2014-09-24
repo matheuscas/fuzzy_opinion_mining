@@ -4,6 +4,7 @@ import util
 import lexicons
 import plotly.plotly as py
 import numpy as np
+import arff
 from textblob import blob, TextBlob, Word
 from textblob.taggers import PatternTagger
 from textblob.wordnet import ADV, ADJ, NOUN, VERB
@@ -631,7 +632,34 @@ class ModelFeatures(object):
 			test_polarity = self.__set_polarity_test(self.binary_degree, doc, polarity, docs_polarity)
 			if test_polarity:
 				all_polar_adjectives = all_polar_adjectives + transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
-		return all_polar_adjectives		
+		return all_polar_adjectives
+
+	def write_arff_file(self):
+		
+		relation = self.model.database.name + '_features'
+		attribute_names = ['id','positive_term_counting','negative_term_counting',
+							'positive_highest_sum','negative_highest_sum',
+							'positive_highest_score','negative_highest_score']
+
+		file_name = self.model.database.name + '.arff'
+		data = [] #it should be a list of lists.
+
+		for doc_stat in self.__documents_stats():
+			positive_term_counting = len(doc_stat['positive_ngrams'])
+			negative_term_counting = len(doc_stat['negative_ngrams'])
+
+			pos_sum = sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score))
+			neg_sum = sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score))
+
+			pos_adjs = transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
+			neg_adjs = transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
+			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
+			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
+
+			data.append([doc_stat['_id'],positive_term_counting, negative_term_counting, pos_sum, neg_sum, max_pos_adj, max_neg_adj])
+
+		arff.dump(file_name, data, relation=relation, names=attribute_names)	
+
 
 class SubjectivityClues(ModelFeatures):
 	"""Features for SubjectivityClues"""
