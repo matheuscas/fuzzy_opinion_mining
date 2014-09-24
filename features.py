@@ -303,7 +303,7 @@ class ModelFeatures(object):
 		
 		return self.features[key_name]
 
-	def create_histogram(self, dist_list, histogram_name, bins=None):
+	def create_histogram(self, dist_list, hist_file_name, hist_title, traces_name, xaxis_title='', yaxis_title='',bins=None):
 		
 		if self.plotly_login is None or self.plotly_password is None:
 			raise Exception('Plotly credentials not configured')
@@ -312,22 +312,50 @@ class ModelFeatures(object):
 		traces = []
 		if len(dist_list) == 1:
 			if bins:
-				traces.append(Histogram(x=dist_list[0], xbins=XBins(start=bins[0],end=bins[1],size=bins[2])))
+				traces.append(Histogram(
+					x=dist_list[0], 
+					xbins=XBins(
+						start=bins[0],
+						end=bins[1],
+						size=bins[2]
+					),
+					name=traces_name[0]
+				))
 			else:
-				traces.append(Histogram(x=dist_list[0]))
+				traces.append(Histogram(x=dist_list[0],name=traces_name[0]))
 		elif len(dist_list) > 1:
-			for dist in dist_list:
+			for idx, dist in enumerate(dist_list):
 				if bins:
-					traces.append(Histogram(x=dist, xbins=XBins(start=bins[0],end=bins[1],size=bins[2]), opacity=0.75))
+					traces.append(Histogram(
+						x=dist, 
+						xbins=XBins(
+							start=bins[0],
+							end=bins[1],
+							size=bins[2]
+						), 
+						opacity=0.75,
+						name=traces_name[idx]
+					))
 				else:
-					traces.append(Histogram(x=dist, opacity=0.75))
+					traces.append(Histogram(
+						x=dist, 
+						opacity=0.75, 
+						name=traces_name[idx]
+					))
 
 		data = Data(traces)
 		layout = Layout(
-		    barmode='overlay'
+		    barmode='overlay',
+		    title=hist_title,
+		    xaxis=XAxis(
+        		title=xaxis_title
+        	),
+        	yaxis=YAxis(
+        		title=yaxis_title
+        	)	
 		)
 		fig = Figure(data=data, layout=layout)
-		plot_url = py.plot(fig, filename=histogram_name)		
+		plot_url = py.plot(fig, filename=hist_file_name)		
 
 	def get_dist_highest_count_positive_ngrams(self, docs_polarity='all'):
 
