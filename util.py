@@ -215,4 +215,12 @@ def max_abs(list_of_numbers):
 	for num in list_of_numbers:
 		if abs(num) > max_abs_val:
 			max_abs_val = num
-	return max_abs_val		
+	return max_abs_val
+
+def is_doc_positive(doc):
+	is_positive = False
+
+	if ('polarity' in doc.keys() and doc['polarity'] == 1) or ('degree' in doc.keys() and int(doc['degree']) >= 4):
+		is_positive = True
+
+	return is_positive			
