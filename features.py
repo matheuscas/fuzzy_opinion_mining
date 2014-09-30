@@ -665,9 +665,20 @@ class ModelFeatures(object):
 	def get_arff_file(self):
 		
 		relation = self.model.database.name + '_features'
-		attribute_names = ['id','polarity','positive_term_counting','negative_term_counting',
-							'positive_highest_sum','negative_highest_sum',
-							'positive_highest_score','negative_highest_score']
+		dataset_features = {
+			'description': self.model.database.name + ' dataset',
+			'relation': relation,
+			'attributes':[
+				('id','STRING'),
+				('polarity',['positive','negative']),
+				('positive_term_counting','INTEGER'),
+				('negative_term_counting','INTEGER'),
+				('positive_sum','REAL'),
+				('negative_sum','REAL'),
+				('positive_highest_score','REAL'),
+				('negative_highest_score','REAL')	
+			]	
+		}
 
 		file_name = self.model.database.name + '.arff'
 		data = [] #it should be a list of lists.
@@ -690,7 +701,11 @@ class ModelFeatures(object):
 
 			data.append([doc_stat['_id'],polarity, positive_term_counting, negative_term_counting, pos_sum, neg_sum, max_pos_adj, max_neg_adj])
 
-		arff.dump(file_name, data, relation=relation, names=attribute_names)	
+		dataset_features['data'] = data	
+
+		arff_str = arff.dumps(dataset_features)	
+		f = open(file_name,'w+')
+		f.write(arff_str)
 
 
 class SubjectivityClues(ModelFeatures):
