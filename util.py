@@ -223,4 +223,14 @@ def is_doc_positive(doc):
 	if ('polarity' in doc.keys() and doc['polarity'] == 1) or ('degree' in doc.keys() and int(doc['degree']) >= 4):
 		is_positive = True
 
-	return is_positive			
+	return is_positive
+
+def normalize_list(list_of_numbers, __min=None, __max=None):
+	_min = float(min(list_of_numbers)) if __min is None else __min
+	_max = float(max(list_of_numbers)) if __max is None else __max
+	normalized_list = []
+	norm = lambda x: (float(x) - _min) / (_max - _min)
+	for num in list_of_numbers:
+		normalized_list.append(norm(num))
+	return normalized_list
+					
