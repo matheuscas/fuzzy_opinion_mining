@@ -676,16 +676,19 @@ class ModelFeatures(object):
 				('positive_sum','REAL'),
 				('negative_sum','REAL'),
 				('positive_highest_score','REAL'),
-				('negative_highest_score','REAL')	
+				('negative_highest_score','REAL'),
+				('document_size','INTEGER'),
+				('ngrams_size','INTEGER')	
 			]	
 		}
 
 		file_name = self.model.database.name + '.arff'
 		data = [] #it should be a list of lists.
-
+		tagger = util.get_tagger()
 		for doc_stat in self.__documents_stats():
 
 			doc = self.model.get_doc_by_id(doc_stat['_id'])
+			doc_blob = tagger(doc['text'])
 			polarity = 'positive' if util.is_doc_positive(doc) else 'negative'
 
 			positive_term_counting = len(doc_stat['positive_ngrams'])
@@ -699,7 +702,7 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
-			data.append([doc_stat['_id'],polarity, positive_term_counting, negative_term_counting, pos_sum, neg_sum, max_pos_adj, max_neg_adj])
+			data.append([doc_stat['_id'],polarity, positive_term_counting, negative_term_counting, pos_sum, neg_sum, max_pos_adj, max_neg_adj, len(doc_blob.words), negative_term_counting + positive_term_counting])
 
 		dataset_features['data'] = data	
 
