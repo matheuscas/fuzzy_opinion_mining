@@ -662,7 +662,144 @@ class ModelFeatures(object):
 				all_polar_adjectives = all_polar_adjectives + transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
 		return all_polar_adjectives
 
-	def get_arff_file(self):
+	def __normalize_arff_data(self, arff_data, _round=False):
+
+		#positive_term_counting
+		min_positive_term_counting = 0
+		max_positive_term_counting = 0
+		positive_term_counting_index = 2
+		positive_term_counting_data = []
+
+		#negative_term_counting
+		min_negative_term_counting = 0
+		max_negative_term_counting = 0
+		negative_term_counting_index = 3
+		negative_term_counting_data = []
+
+		#positive_sum
+		min_positive_sum = 0
+		max_positive_sum = 0
+		positive_sum_index = 4
+		positive_sum_data = []
+
+		#negative_sum
+		min_negative_sum = 0
+		max_negative_sum = 0
+		negative_sum_index = 5
+		negative_sum_data = []
+
+		#positive_highest_score
+		# min_positive_highest_score = 0
+		# max_positive_highest_score = 0
+		# positive_highest_score_index = 6
+		# positive_highest_score_data = []
+
+		#negative_highest_score
+		# min_negative_highest_score = 0
+		# max_negative_highest_score = 0
+		# negative_highest_score_index = 7
+		# negative_highest_score_data = []
+
+		#document_size
+		min_document_size = 0
+		max_document_size = 0
+		document_size_index = 8
+		document_size_data = []
+
+		#ngrams_size
+		min_ngrams_size = 0
+		max_ngrams_size = 0
+		ngrams_size_index = 9
+		ngrams_size_data = []
+
+		for data in arff_data:
+			ngrams_size_data.append(data[ngrams_size_index])
+			document_size_data.append(data[document_size_index])
+			# negative_highest_score_data.append(data[negative_highest_score_index])
+			# positive_highest_score_data.append(data[positive_highest_score_index])
+			negative_sum_data.append(data[negative_sum_index])
+			positive_sum_data.append(data[positive_sum_index])
+			negative_term_counting_data.append(data[negative_term_counting_index])
+			positive_term_counting_data.append(data[positive_term_counting_index])
+
+		min_ngrams_size = min(ngrams_size_data)
+		max_ngrams_size = max(ngrams_size_data)
+		min_document_size = min(document_size_data)
+		max_document_size = max(document_size_data)
+		# min_negative_highest_score = min(negative_highest_score_data)
+		# max_negative_highest_score = max(negative_highest_score_data)
+		# min_positive_highest_score = min(positive_highest_score_data)
+		# max_positive_highest_score = max(positive_highest_score_data)
+		# min_negative_sum = min(negative_sum_data)
+		# max_negative_sum = max(negative_sum_data)
+		min_negative_sum = max(negative_sum_data)
+		max_negative_sum = abs(min(negative_sum_data))
+		min_positive_sum = min(positive_sum_data)
+		max_positive_sum = max(positive_sum_data)
+		min_positive_term_counting = min(positive_term_counting_data)
+		max_positive_term_counting = max(positive_term_counting_data)
+		min_negative_term_counting = min(negative_term_counting_data)
+		max_negative_term_counting = max(negative_term_counting_data)
+
+		# print "min_ngrams_size ",min_ngrams_size 
+		# print "max_ngrams_size ",max_ngrams_size 
+		# print "min_document_size ",min_document_size 
+		# print "max_document_size ",max_document_size 
+		# print "min_negative_highest_score",min_negative_highest_score 
+		# print "max_negative_highest_score",max_negative_highest_score 
+		# print "min_positive_highest_score",min_positive_highest_score 
+		# print "max_positive_highest_score",max_positive_highest_score 
+		# print "min_negative_sum ",min_negative_sum 
+		# print "max_negative_sum ",max_negative_sum 
+		# print "min_positive_sum ",min_positive_sum 
+		# print "max_positive_sum ",max_positive_sum 
+		# print "min_positive_term_counting",min_positive_term_counting 
+		# print "max_positive_term_counting",max_positive_term_counting 
+		# print "min_negative_term_counting",min_negative_term_counting 
+		# print "max_negative_term_counting",max_negative_term_counting 	
+
+		for d in arff_data:
+			d[ngrams_size_index] = util.normalize_number(d[ngrams_size_index], 
+														lower=min_ngrams_size, 
+														upper=max_ngrams_size, 
+														_round=_round)
+
+			d[document_size_index] = util.normalize_number(d[document_size_index], 
+														lower=min_document_size, 
+														upper=max_document_size, 
+														_round=_round)
+
+			# d[negative_highest_score_index] = util.normalize_number(d[negative_highest_score_index], 
+			# 											lower=min_negative_highest_score, 
+			# 											upper=max_negative_highest_score)
+
+			# d[positive_highest_score_index] = util.normalize_number(d[positive_highest_score_index], 
+			# 											lower=min_positive_highest_score, 
+			# 											upper=max_positive_highest_score)
+
+			d[negative_sum_index] = util.normalize_number(d[negative_sum_index], 
+														lower=min_negative_sum, 
+														upper=max_negative_sum, 
+														_round=_round)
+
+			d[positive_sum_index] = util.normalize_number(d[positive_sum_index], 
+														lower=min_positive_sum, 
+														upper=max_positive_sum,
+														_round=_round)
+
+			d[negative_term_counting_index] = util.normalize_number(d[negative_term_counting_index], 
+														lower=min_negative_term_counting, 
+														upper=max_negative_term_counting,
+														_round=_round)
+
+			d[positive_term_counting_index] = util.normalize_number(d[positive_term_counting_index], 
+														lower=min_positive_term_counting, 
+														upper=max_positive_term_counting,
+														_round=_round)
+
+		
+
+	def get_arff_file(self, normalize=False, _round=False):
 		
 		relation = self.model.database.name + '_features'
 		dataset_features = {
@@ -681,8 +818,7 @@ class ModelFeatures(object):
 				('ngrams_size','INTEGER')	
 			]	
 		}
-
-		file_name = self.model.database.name + '.arff'
+		
 		data = [] #it should be a list of lists.
 		tagger = util.get_tagger()
 		for doc_stat in self.__documents_stats():
@@ -704,9 +840,14 @@ class ModelFeatures(object):
 
 			data.append([doc_stat['_id'],polarity, positive_term_counting, negative_term_counting, pos_sum, neg_sum, max_pos_adj, max_neg_adj, len(doc_blob.words), negative_term_counting + positive_term_counting])
 
-		dataset_features['data'] = data	
+		file_name = self.model.database.name
+		if normalize:
+			self.__normalize_arff_data(data, _round=_round)
+			file_name = file_name + '_normalize'
+		file_name = file_name  + '.arff'	
 
-		arff_str = arff.dumps(dataset_features)	
+		dataset_features['data'] = data	
+		arff_str = arff.dumps(dataset_features)
 		f = open(file_name,'w+')
 		f.write(arff_str)
 

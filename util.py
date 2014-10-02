@@ -225,12 +225,16 @@ def is_doc_positive(doc):
 
 	return is_positive
 
-def normalize_list(list_of_numbers, __min=None, __max=None):
-	_min = float(min(list_of_numbers)) if __min is None else __min
-	_max = float(max(list_of_numbers)) if __max is None else __max
+def normalize_number(number, lower, upper, _round=False):
+	normalized = (float(number) - lower) / (upper - lower)
+	return round(normalized,2) if _round else normalized
+
+def normalize_list(list_of_numbers, lower=None, upper=None):
+	_min = float(min(list_of_numbers)) if lower is None else lower
+	_max = float(max(list_of_numbers)) if upper is None else upper
 	normalized_list = []
-	norm = lambda x: (float(x) - _min) / (_max - _min)
+	
 	for num in list_of_numbers:
-		normalized_list.append(norm(num))
+		normalized_list.append(normalize_number(num, _min, _max))
 	return normalized_list
 					
