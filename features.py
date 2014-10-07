@@ -830,6 +830,9 @@ class ModelFeatures(object):
 			positive_term_counting = len(doc_stat['positive_ngrams'])
 			negative_term_counting = len(doc_stat['negative_ngrams'])
 
+			doc_size = len(doc_blob.words)
+			ngrams_qtd = negative_term_counting + positive_term_counting
+
 			pos_sum = sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score))
 			neg_sum = sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score))
 
@@ -838,14 +841,59 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_adjs) == 0 else util.max_abs(pos_adjs)
 			max_neg_adj = 0 if len(neg_adjs) == 0 else util.max_abs(neg_adjs)
 
-			data.append([doc_stat['_id'],polarity, positive_term_counting, negative_term_counting, pos_sum, neg_sum, max_pos_adj, max_neg_adj, len(doc_blob.words), negative_term_counting + positive_term_counting])
+			features = [doc_stat['_id'],
+						polarity, 
+						positive_term_counting, 
+						negative_term_counting, 
+						pos_sum, 
+						neg_sum, 
+						max_pos_adj, 
+						max_neg_adj, 
+						doc_size, 
+						ngrams_qtd]
+
+			if normalize:
+				positive_term_counting_by_doc_size = positive_term_counting / float(doc_size)
+				negative_term_counting_by_doc_size = negative_term_counting / float(doc_size)
+				pos_sum_by_doc_size = pos_sum / float(doc_size)
+				neg_sum_by_doc_size = neg_sum / float(doc_size)
+
+				if ngrams_qtd > 0:
+					positive_term_counting_by_ngrams = positive_term_counting / float(ngrams_qtd)
+					negative_term_counting_by_ngrams = negative_term_counting / float(ngrams_qtd)
+					pos_sum_by_ngrams = pos_sum / float(ngrams_qtd)
+					neg_sum_by_ngrams = neg_sum / float(ngrams_qtd)
+				else:
+					positive_term_counting_by_ngrams = 0.0
+					negative_term_counting_by_ngrams = 0.0
+					pos_sum_by_ngrams = 0.0
+					neg_sum_by_ngrams = 0.0
+				
+				features = features + [positive_term_counting_by_doc_size, 
+										negative_term_counting_by_doc_size, 
+										pos_sum_by_doc_size, 
+										neg_sum_by_doc_size,
+										positive_term_counting_by_ngrams, 
+										negative_term_counting_by_ngrams, 
+										pos_sum_by_ngrams, 
+										neg_sum_by_ngrams]
+			data.append(features)
 
 		file_name = self.model.database.name
 		if normalize:
-			self.__normalize_arff_data(data, _round=_round)
+			#self.__normalize_arff_data(data, _round=_round)
 			file_name = file_name + '_normalize'
-		file_name = file_name  + '.arff'	
+			dataset_features['attributes'] = dataset_features['attributes'] + [('positive_term_counting_by_doc_size','REAL'),
+																					('negative_term_counting_by_doc_size','REAL'),
+																					('positive_sum_by_doc_size','REAL'),
+																					('negative_sum_by_doc_size','REAL'),
+																					('positive_term_counting_by_ngrams','REAL'),
+																					('negative_term_counting_by_ngrams','REAL'),
+																					('positive_sum_by_ngrams','REAL'),
+																					('negative_sum_by_ngrams','REAL')]
 
+
+		file_name = file_name  + '.arff'
 		dataset_features['data'] = data	
 		arff_str = arff.dumps(dataset_features)
 		f = open(file_name,'w+')
