@@ -113,6 +113,24 @@ class BaseModel(object):
 					adjectives.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adjectives':adjectives}})
 
+	def pre_process_verbs(self, tagger="PerceptronTagger"):
+		"""This method extracts all verbs from each document in the documents collection
+
+			Keyword:
+			tagger -- tagger choosed. It could be among the following:
+                      PerceptronTagger (default) and PatternTagger
+		"""
+
+		pt = util.get_tagger(tagger)
+		for ndoc in self.documents.find():
+			blob = pt(ndoc['text'])
+			verbs = []
+			for word, tag in util.tags(blob):
+				is_verb = len(Word(word).get_synsets(pos=VERB)) > 0
+				if tag in util.PENN_VERBS_TAGS and is_verb:
+					verbs.append(word)
+			self.documents.update({'name':ndoc['name']},{'$set':{'verbs':verbs}})		
+
 	def pre_process_adv_adj_bigrams(self, tagger="PerceptronTagger"):
 		"""This method extracts all adv_adj_bigrams from each document in the documents collection
 
