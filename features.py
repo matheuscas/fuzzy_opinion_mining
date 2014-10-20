@@ -64,6 +64,20 @@ class ModelFeatures(object):
 			doc_stats['positive_ngrams'] = positive_ngrams
 			doc_stats['negative_ngrams'] = negative_ngrams
 			doc_stats['_id'] = str(doc['_id'])
+
+			positive_verbs = []
+			negative_verbs = [] 
+
+			for verb in doc['verbs']:
+				verb_pol = transformation.word_polarity(verb, pos_tag="VERB", prior_polarity_score=True)
+				if verb_pol is None or len(verb_pol) == 0:
+					verb_pol = (0,0)
+				if verb_pol[0] > 0:
+					positive_verbs.append(verb)
+				elif verb_pol[0] < 0:
+					negative_verbs.append(verb)
+			doc_stats['positive_verbs'] = positive_verbs
+			doc_stats['negative_verbs'] = negative_verbs			
 			list_of_doc_stats.append(doc_stats)
 			temp_num = temp_num + 1
 
@@ -662,7 +676,7 @@ class ModelFeatures(object):
 				all_polar_adjectives = all_polar_adjectives + transformation.ngrams_polarities(stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
 		return all_polar_adjectives
 
-	def get_arff_file(self, normalize=False, _round=False):
+	def get_arff_file(self, normalize=False):
 		
 		relation = self.model.database.name + '_features'
 		dataset_features = {
@@ -678,7 +692,9 @@ class ModelFeatures(object):
 				('ngrams_positive_highest_score','REAL'),
 				('ngrams_negative_highest_score','REAL'),
 				('document_size','INTEGER'),
-				('ngrams_size','INTEGER')	
+				('ngrams_size','INTEGER'),
+				('verbs_positive_sum','REAL'),
+				('verbs_negative_sum','REAL'),
 			]	
 		}
 		
@@ -704,6 +720,24 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_ngrams) == 0 else util.max_abs(pos_ngrams)
 			max_neg_adj = 0 if len(neg_ngrams) == 0 else util.max_abs(neg_ngrams)
 
+			verbs_positive_sum = []
+			for vp in doc_stat['positive_verbs']:
+				vpp = transformation.word_polarity(vp, pos_tag="VERB", prior_polarity_score=True)
+				if vpp is not None and vpp[0] != 0:
+					verbs_positive_sum.append(vpp[0])
+
+			ngrams_qtd = ngrams_qtd + len(verbs_positive_sum)
+			verbs_positive_sum = sum(verbs_positive_sum);		
+
+			verbs_negative_sum = []
+			for vn in doc_stat['negative_verbs']:
+				vnp = transformation.word_polarity(vn, pos_tag="VERB", prior_polarity_score=True)
+				if vnp is not None and vnp[0] != 0:
+					verbs_negative_sum.append(vnp[0])
+
+			ngrams_qtd = ngrams_qtd + len(verbs_negative_sum)		
+			verbs_negative_sum = sum(verbs_negative_sum);
+
 			features = [doc_stat['_id'],
 						polarity, 
 						positive_term_count, 
@@ -713,24 +747,32 @@ class ModelFeatures(object):
 						max_pos_adj, 
 						max_neg_adj, 
 						doc_size, 
-						ngrams_qtd]
+						ngrams_qtd,
+						verbs_positive_sum,
+						verbs_negative_sum]
 
 			if normalize:
 				positive_term_count_by_doc_size = positive_term_count / float(doc_size)
 				negative_term_count_by_doc_size = negative_term_count / float(doc_size)
 				ngrams_pos_sum_by_doc_size = ngrams_pos_sum / float(doc_size)
 				ngrams_neg_sum_by_doc_size = ngrams_neg_sum / float(doc_size)
+				verbs_positive_sum_by_doc_size = verbs_positive_sum / float(doc_size)
+				verbs_negative_sum_by_doc_size = verbs_negative_sum / float(doc_size)
 
 				if ngrams_qtd > 0:
 					positive_term_count_by_ngrams = positive_term_count / float(ngrams_qtd)
 					negative_term_count_by_ngrams = negative_term_count / float(ngrams_qtd)
 					ngrams_pos_sum_by_ngrams = ngrams_pos_sum / float(ngrams_qtd)
 					ngrams_neg_sum_by_ngrams = ngrams_neg_sum / float(ngrams_qtd)
+					verbs_positive_sum_by_ngrams = verbs_positive_sum / float(ngrams_qtd)
+					verbs_negative_sum_by_ngrams = verbs_negative_sum / float(ngrams_qtd)
 				else:
 					positive_term_count_by_ngrams = 0.0
 					negative_term_count_by_ngrams = 0.0
 					ngrams_pos_sum_by_ngrams = 0.0
 					ngrams_neg_sum_by_ngrams = 0.0
+					verbs_positive_sum_by_ngrams = 0.0
+					verbs_negative_sum_by_ngrams = 0.0
 				
 				features = features + [positive_term_count_by_doc_size, 
 										negative_term_count_by_doc_size, 
@@ -739,20 +781,29 @@ class ModelFeatures(object):
 										positive_term_count_by_ngrams, 
 										negative_term_count_by_ngrams, 
 										ngrams_pos_sum_by_ngrams, 
-										ngrams_neg_sum_by_ngrams]
+										ngrams_neg_sum_by_ngrams,
+										verbs_positive_sum_by_doc_size,
+										verbs_negative_sum_by_doc_size,
+										verbs_positive_sum_by_ngrams,
+										verbs_negative_sum_by_ngrams]
 			data.append(features)
 
 		file_name = self.model.database.name
 		if normalize:
 			file_name = file_name + '_normalize'
-			dataset_features['attributes'] = dataset_features['attributes'] + [('positive_term_count_by_doc_size','REAL'),
-																					('negative_term_count_by_doc_size','REAL'),
-																					('ngrams_positive_sum_by_doc_size','REAL'),
-																					('ngrams_negative_sum_by_doc_size','REAL'),
-																					('positive_term_count_by_ngrams','REAL'),
-																					('negative_term_count_by_ngrams','REAL'),
-																					('ngrams_positive_sum_by_ngrams','REAL'),
-																					('ngrams_negative_sum_by_ngrams','REAL')]
+			dataset_features['attributes'] = dataset_features['attributes'] + \
+											[('positive_term_count_by_doc_size','REAL'),
+											('negative_term_count_by_doc_size','REAL'),
+											('ngrams_positive_sum_by_doc_size','REAL'),
+											('ngrams_negative_sum_by_doc_size','REAL'),
+											('positive_term_count_by_ngrams','REAL'),
+											('negative_term_count_by_ngrams','REAL'),
+											('ngrams_positive_sum_by_ngrams','REAL'),
+											('ngrams_negative_sum_by_ngrams','REAL'),
+											('verbs_positive_sum_by_doc_size','REAL'),
+											('verbs_negative_sum_by_doc_size','REAL'),
+											('verbs_positive_sum_by_ngrams','REAL'),
+											('verbs_negative_sum_by_ngrams','REAL')]
 
 
 		file_name = file_name  + '.arff'
