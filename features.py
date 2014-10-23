@@ -721,6 +721,9 @@ class ModelFeatures(object):
 
 			ngrams_pos_sum = sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score))
 			ngrams_neg_sum = sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score))
+			ngrams_sum_pos_to_neg_ratio = 0
+			if abs(ngrams_neg_sum) > 0:
+				ngrams_sum_pos_to_neg_ratio = ngrams_pos_sum / abs(ngrams_neg_sum)
 
 			pos_ngrams = transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
 			neg_ngrams = transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
