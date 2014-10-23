@@ -776,25 +776,50 @@ class ModelFeatures(object):
 			if normalize:
 				positive_term_count_by_doc_size = positive_term_count / float(doc_size)
 				negative_term_count_by_doc_size = negative_term_count / float(doc_size)
+				ngrams_term_count_by_doc_size_ratio = 0.0
+				if negative_term_count_by_doc_size > 0:
+					ngrams_term_count_by_doc_size_ratio = positive_term_count_by_doc_size / negative_term_count_by_doc_size
+
 				ngrams_pos_sum_by_doc_size = ngrams_pos_sum / float(doc_size)
 				ngrams_neg_sum_by_doc_size = ngrams_neg_sum / float(doc_size)
+				ngrams_sum_by_doc_size_ratio = 0.0
+				if abs(ngrams_neg_sum_by_doc_size) > 0:
+					ngrams_sum_by_doc_size_ratio = ngrams_pos_sum_by_doc_size / abs(ngrams_neg_sum_by_doc_size)
+
 				verbs_positive_sum_by_doc_size = verbs_positive_sum / float(doc_size)
 				verbs_negative_sum_by_doc_size = verbs_negative_sum / float(doc_size)
+				verbs_sum_by_doc_size_ratio = 0.0
+				if abs(verbs_negative_sum_by_doc_size) > 0:
+					verbs_sum_by_doc_size_ratio = verbs_positive_sum_by_doc_size / verbs_negative_sum_by_doc_size
 
+				ngrams_term_count_by_ngrams_ratio = 0.0
+				ngrams_sum_by_ngrams_ratio = 0.0
+				verbs_sum_by_ngrams_ratio = 0.0
 				if ngrams_qtd > 0:
 					positive_term_count_by_ngrams = positive_term_count / float(ngrams_qtd)
 					negative_term_count_by_ngrams = negative_term_count / float(ngrams_qtd)
+					if negative_term_count_by_ngrams > 0:
+						ngrams_term_count_by_ngrams_ratio = positive_term_count_by_ngrams / negative_term_count_by_ngrams
+
 					ngrams_pos_sum_by_ngrams = ngrams_pos_sum / float(ngrams_qtd)
 					ngrams_neg_sum_by_ngrams = ngrams_neg_sum / float(ngrams_qtd)
+					if abs(ngrams_neg_sum_by_ngrams) > 0:
+						ngrams_sum_by_ngrams_ratio = ngrams_pos_sum_by_ngrams / ngrams_neg_sum_by_ngrams
+
 					verbs_positive_sum_by_ngrams = verbs_positive_sum / float(ngrams_qtd)
 					verbs_negative_sum_by_ngrams = verbs_negative_sum / float(ngrams_qtd)
+					if abs(verbs_negative_sum_by_ngrams) > 0:
+						verbs_sum_by_ngrams_ratio = verbs_positive_sum_by_ngrams / verbs_negative_sum_by_ngrams
 				else:
 					positive_term_count_by_ngrams = 0.0
 					negative_term_count_by_ngrams = 0.0
+
 					ngrams_pos_sum_by_ngrams = 0.0
 					ngrams_neg_sum_by_ngrams = 0.0
+
 					verbs_positive_sum_by_ngrams = 0.0
 					verbs_negative_sum_by_ngrams = 0.0
+					
 				
 				features = features + [positive_term_count_by_doc_size, 
 										negative_term_count_by_doc_size, 
@@ -807,7 +832,13 @@ class ModelFeatures(object):
 										verbs_positive_sum_by_doc_size,
 										verbs_negative_sum_by_doc_size,
 										verbs_positive_sum_by_ngrams,
-										verbs_negative_sum_by_ngrams]
+										verbs_negative_sum_by_ngrams,
+										ngrams_term_count_by_doc_size_ratio,
+										ngrams_sum_by_doc_size_ratio,
+										verbs_sum_by_doc_size_ratio,
+										ngrams_term_count_by_ngrams_ratio,
+										ngrams_sum_by_ngrams_ratio,
+										verbs_sum_by_ngrams_ratio]
 			data.append(features)
 
 		file_name = self.model.database.name
@@ -825,7 +856,13 @@ class ModelFeatures(object):
 											('verbs_positive_sum_by_doc_size','REAL'),
 											('verbs_negative_sum_by_doc_size','REAL'),
 											('verbs_positive_sum_by_ngrams','REAL'),
-											('verbs_negative_sum_by_ngrams','REAL')]
+											('verbs_negative_sum_by_ngrams','REAL'),
+											('ngrams_term_count_by_doc_size_ratio','REAL'),
+											('ngrams_sum_by_doc_size_ratio','REAL'),
+											('verbs_sum_by_doc_size_ratio','REAL'),
+											('ngrams_term_count_by_ngrams_ratio','REAL'),
+											('ngrams_sum_by_ngrams_ratio','REAL'),
+											('verbs_sum_by_ngrams_ratio','REAL')]
 
 
 		file_name = file_name  + '.arff'
