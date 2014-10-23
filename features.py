@@ -695,8 +695,10 @@ class ModelFeatures(object):
 				('ngrams_size','INTEGER'),
 				('verbs_positive_sum','REAL'),
 				('verbs_negative_sum','REAL'),
-				('ngrams_pos_to_neg_ratio','REAL'),
-				('verbs_pos_to_neg_ratio','REAL')
+				('ngrams_sum_pos_to_neg_ratio','REAL'),
+				('verbs_sum_pos_to_neg_ratio','REAL'),
+				('ngrams_count_pos_to_neg_ratio','REAL'),
+				('ngrams_score_pos_to_neg_ratio','REAL'),
 			]	
 		}
 		
@@ -710,6 +712,9 @@ class ModelFeatures(object):
 
 			positive_term_count = len(doc_stat['positive_ngrams'])
 			negative_term_count = len(doc_stat['negative_ngrams'])
+			ngrams_count_pos_to_neg_ratio = 0
+			if negative_term_count > 0:
+				ngrams_count_pos_to_neg_ratio = float(positive_term_count) / float(negative_term_count)
 
 			doc_size = len(doc_blob.words)
 			ngrams_qtd = negative_term_count + positive_term_count
@@ -722,9 +727,9 @@ class ModelFeatures(object):
 			max_pos_adj = 0 if len(pos_ngrams) == 0 else util.max_abs(pos_ngrams)
 			max_neg_adj = 0 if len(neg_ngrams) == 0 else util.max_abs(neg_ngrams)
 
-			ngrams_pos_to_neg_ratio = 0
-			if abs(ngrams_neg_sum) > 0:
-				ngrams_pos_to_neg_ratio = ngrams_pos_sum / abs(ngrams_neg_sum)
+			ngrams_score_pos_to_neg_ratio = 0
+			if abs(max_neg_adj) > 0:
+				ngrams_score_pos_to_neg_ratio = max_pos_adj / abs(max_neg_adj)
 
 			verbs_positive_sum = []
 			for vp in doc_stat['positive_verbs']:
@@ -744,9 +749,9 @@ class ModelFeatures(object):
 			ngrams_qtd = ngrams_qtd + len(verbs_negative_sum)		
 			verbs_negative_sum = sum(verbs_negative_sum);
 
-			verbs_pos_to_neg_ratio = 0
+			verbs_sum_pos_to_neg_ratio = 0
 			if abs(verbs_negative_sum) > 0:
-				verbs_pos_to_neg_ratio = verbs_positive_sum / abs(verbs_negative_sum)
+				verbs_sum_pos_to_neg_ratio = verbs_positive_sum / abs(verbs_negative_sum)
 
 			features = [doc_stat['_id'],
 						polarity, 
@@ -759,7 +764,11 @@ class ModelFeatures(object):
 						doc_size, 
 						ngrams_qtd,
 						verbs_positive_sum,
-						verbs_negative_sum]
+						verbs_negative_sum,
+						ngrams_sum_pos_to_neg_ratio,
+						verbs_sum_pos_to_neg_ratio,
+						ngrams_count_pos_to_neg_ratio,
+						ngrams_score_pos_to_neg_ratio]
 
 			if normalize:
 				positive_term_count_by_doc_size = positive_term_count / float(doc_size)
