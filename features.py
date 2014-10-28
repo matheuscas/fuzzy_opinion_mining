@@ -699,6 +699,7 @@ class ModelFeatures(object):
 				('verbs_sum_pos_to_neg_ratio','REAL'),
 				('ngrams_count_pos_to_neg_ratio','REAL'),
 				('ngrams_score_pos_to_neg_ratio','REAL'),
+				('negation_percentage','REAL')
 			]	
 		}
 		
@@ -706,10 +707,12 @@ class ModelFeatures(object):
 		tagger = util.get_tagger()
 		for doc_stat in self.__documents_stats():
 
+			#polarity
 			doc = self.model.get_doc_by_id(doc_stat['_id'])
 			doc_blob = tagger(doc['text'])
 			polarity = 'positive' if util.is_doc_positive(doc) else 'negative'
 
+			#positive_term_count, negative_term_count AND ngrams_count_pos_to_neg_ratio
 			positive_term_count = len(doc_stat['positive_ngrams'])
 			negative_term_count = len(doc_stat['negative_ngrams'])
 			ngrams_count_pos_to_neg_ratio = 0
@@ -719,21 +722,25 @@ class ModelFeatures(object):
 			doc_size = len(doc_blob.words)
 			ngrams_qtd = negative_term_count + positive_term_count
 
+			#ngrams_positive_sum, ngrams_negative_sum AND ngrams_sum_pos_to_neg_ratio
 			ngrams_pos_sum = sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score))
 			ngrams_neg_sum = sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score))
 			ngrams_sum_pos_to_neg_ratio = 0
 			if abs(ngrams_neg_sum) > 0:
 				ngrams_sum_pos_to_neg_ratio = ngrams_pos_sum / abs(ngrams_neg_sum)
 
+			#ngrams_positive_highest_score and ngrams_negative_highest_score
 			pos_ngrams = transformation.ngrams_polarities(doc_stat['positive_ngrams'], prior_polarity_score=self.prior_polarity_score)
 			neg_ngrams = transformation.ngrams_polarities(doc_stat['negative_ngrams'], prior_polarity_score=self.prior_polarity_score)
 			max_pos_adj = 0 if len(pos_ngrams) == 0 else util.max_abs(pos_ngrams)
 			max_neg_adj = 0 if len(neg_ngrams) == 0 else util.max_abs(neg_ngrams)
 
+			#ngrams_score_pos_to_neg_ratio
 			ngrams_score_pos_to_neg_ratio = 0
 			if abs(max_neg_adj) > 0:
 				ngrams_score_pos_to_neg_ratio = max_pos_adj / abs(max_neg_adj)
 
+			#verbs_positive_sum
 			verbs_positive_sum = []
 			for vp in doc_stat['positive_verbs']:
 				vpp = transformation.word_polarity(vp, pos_tag="VERB", prior_polarity_score=True)
@@ -743,6 +750,7 @@ class ModelFeatures(object):
 			ngrams_qtd = ngrams_qtd + len(verbs_positive_sum)
 			verbs_positive_sum = sum(verbs_positive_sum);		
 
+			#verbs_negative_sum
 			verbs_negative_sum = []
 			for vn in doc_stat['negative_verbs']:
 				vnp = transformation.word_polarity(vn, pos_tag="VERB", prior_polarity_score=True)
@@ -752,9 +760,17 @@ class ModelFeatures(object):
 			ngrams_qtd = ngrams_qtd + len(verbs_negative_sum)		
 			verbs_negative_sum = sum(verbs_negative_sum);
 
+			#verbs_sum_pos_to_neg_ratio
 			verbs_sum_pos_to_neg_ratio = 0
 			if abs(verbs_negative_sum) > 0:
 				verbs_sum_pos_to_neg_ratio = verbs_positive_sum / abs(verbs_negative_sum)
+
+			#negation_percentage
+			negated_ngrams_qtd = 0
+			for ngram in (doc_stat['positive_ngrams'] + doc_stat['negative_ngrams']):
+				if type(ngram) is tuple and transformation.is_negation(ngram):
+					negated_ngrams_qtd += 1
+			negation_percentage = (negated_ngrams_qtd / float(len((doc_stat['positive_ngrams'] + doc_stat['negative_ngrams'])))) * 100					
 
 			features = [doc_stat['_id'],
 						polarity, 
@@ -771,7 +787,8 @@ class ModelFeatures(object):
 						ngrams_sum_pos_to_neg_ratio,
 						verbs_sum_pos_to_neg_ratio,
 						ngrams_count_pos_to_neg_ratio,
-						ngrams_score_pos_to_neg_ratio]
+						ngrams_score_pos_to_neg_ratio,
+						negation_percentage]
 
 			if normalize:
 				positive_term_count_by_doc_size = positive_term_count / float(doc_size)
