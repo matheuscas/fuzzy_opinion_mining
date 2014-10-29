@@ -139,7 +139,7 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = util.get_tagger()
+		pt = util.get_tagger(tagger)
 
 		for ndoc in self.documents.find():
 			blob = TextBlob(ndoc['text'])

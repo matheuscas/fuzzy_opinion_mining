@@ -27,6 +27,7 @@ def get_list_bigrams(bigrams_list, bigrams_reference):
 	"""
 
 	valids = []
+	bigram_index = 1
 	for bigram in bigrams_list:
 		word1 = bigram[0]
 		word2 = bigram[1]
@@ -35,8 +36,12 @@ def get_list_bigrams(bigrams_list, bigrams_reference):
 		if len(tags1) > 1 and len(tags2) > 1:
 			pattern = tags1[1] + "/" + tags2[1]
 			if pattern in bigrams_reference:
-				valids.append((word1.split('/')[0] + "/" + tags1[1],
-								word2.split('/')[0] + "/" + tags2[1]))
+				word2_index = bigram_index * 2
+				word1_index = word2_index - 1
+				first_word = {'raw':word1.split('/')[0],'tag':tags1[1],'index':word1_index}
+				second_word = {'raw':word2.split('/')[0],'tag':tags2[1],'index':word2_index}
+				valids.append({'first_word':first_word, 'second_word':second_word})
+		bigram_index += 1		
 	return valids
 
 def get_list_trigrams(trigram_list, trigram_pattern):
