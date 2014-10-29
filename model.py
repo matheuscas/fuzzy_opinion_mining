@@ -76,25 +76,6 @@ class BaseModel(object):
 					advs.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adverbs':advs}})
 
-	def pre_process_nouns(self, tagger="PerceptronTagger"):
-		"""This method extracts all nouns from each document in the documents collection
-
-
-			Keyword:
-			tagger -- tagger choosed. It could be among the following:
-                      PerceptronTagger (default) and PatternTagger
-		"""
-
-		pt = util.get_tagger()
-		for ndoc in self.documents.find():
-			blob = pt(ndoc['text'])
-			nouns = []
-			for word, tag in util.tags(blob):
-				is_noun = len(Word(word).get_synsets(pos=NOUN)) > 0
-				if tag in util.PENN_NOUNS_TAGS and is_noun:
-					nouns.append(word)
-			self.documents.update({'name':ndoc['name']},{'$set':{'nouns':nouns}})
-
 	def pre_process_adjectives(self, tagger="PerceptronTagger"):
 		"""This method extracts all adjectives from each document in the documents collection
 
@@ -198,37 +179,6 @@ class BaseModel(object):
 			factor = values[1]
 			collection.insert({'word':adverb,'factor':factor})
 		f.close()
-
-	def pre_process_ngrams(self, tagger="PerceptronTagger"):
-		"""This method calls the other methods for each type of ngram. It is a shorcut instead of call
-			the other one by one.
-
-			Keyword:
-			tagger -- tagger choosed. It could be among the following:
-                      PerceptronTagger (default) and PatternTagger
-		"""
-
-		print 'Pre processing adjectives...This can take awhile, depending on corpora size. Cofee, maybe?'
-		self.pre_process_adjectives(tagger)
-		print 'Pre processing noun...A snack, perhaps?'
-		self.pre_process_nouns(tagger)
-		print 'Pre processing adverbs...Go read a book or something else, what do you think?'
-		self.pre_process_adverbs(tagger)
-		print 'Pre processing adv/adj bigram...Boy, this last one is big!'
-		self.pre_process_adv_adj_bigrams(tagger)
-
-	def pre_process_adv_xxx_adj_trigrams(self):
-
-		pt = util.get_tagger()
-		for ndoc in self.documents.find():
-			blob = TextBlob(ndoc['text'])
-			valid_trigrams = []
-			for s in blob.sentences:
-				sentence = pt(s.dict['raw'])
-				sentence = pt(sentence.parse())
-				trigrams = sentence.ngrams(n=3)
-				valid_trigrams = valid_trigrams + util.get_list_trigrams(trigrams, "ADV/XXX/ADJ")
-			self.documents.update({'name':ndoc['name']},{'$set':{'adv_xxx_adj_trigrams':valid_trigrams}})
 	
 	
 class TripAdvisorModel(BaseModel):
