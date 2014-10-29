@@ -125,9 +125,9 @@ class BaseModel(object):
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			verbs = []
-			for word, tag in util.tags(blob):
-				is_verb = len(Word(word).get_synsets(pos=VERB)) > 0
-				if tag in util.PENN_VERBS_TAGS and is_verb:
+			for word in util.tags(blob):
+				is_verb = len(Word(word['raw']).get_synsets(pos=VERB)) > 0
+				if word['tag'] in util.PENN_VERBS_TAGS and is_verb:
 					verbs.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'verbs':verbs}})		
 
