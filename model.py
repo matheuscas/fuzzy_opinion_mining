@@ -158,13 +158,11 @@ class BaseModel(object):
 			advs_adv_adj_bigram = []
 			adjs_adv_adj_bigram = []
 			for bigram in ndoc['adv_adj_bigrams']:
-				element_1 = bigram[0].split('/')
-				element_2 = bigram[1].split('/')
-				if element_1[1] in util.PENN_ADVERBS_TAGS:
-					advs_adv_adj_bigram.append(element_1[0])
+				if bigram['first_word']['tag'] in util.PENN_ADVERBS_TAGS:
+					advs_adv_adj_bigram.append(bigram['first_word'])
 
-				if element_2[1] in util.PENN_ADJECTIVES_TAGS:
-					adjs_adv_adj_bigram.append(element_2[0])
+				if bigram['second_word']['tag'] in util.PENN_ADJECTIVES_TAGS:
+					adjs_adv_adj_bigram.append(bigram['second_word'])
 
 			self.documents.update({'name':ndoc['name']},{'$set':{'advs_adv_adj_bigram':advs_adv_adj_bigram}})
 			self.documents.update({'name':ndoc['name']},{'$set':{'adjs_adv_adj_bigram':adjs_adv_adj_bigram}})
