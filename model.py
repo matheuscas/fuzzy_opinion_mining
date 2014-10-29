@@ -66,13 +66,13 @@ class BaseModel(object):
                       PerceptronTagger (default) and PatternTagger
 		"""
 
-		pt = util.get_tagger()
+		pt = util.get_tagger(tagger)
 		for ndoc in self.documents.find():
 			blob = pt(ndoc['text'])
 			advs = []
-			for word, tag in util.tags(blob):
-				is_adv = len(Word(word).get_synsets(pos=ADV)) > 0
-				if tag in util.PENN_ADVERBS_TAGS and is_adv:
+			for word in util.tags(blob):
+				is_adv = len(Word(word['raw']).get_synsets(pos=ADV)) > 0
+				if word['tag'] in util.PENN_ADVERBS_TAGS and is_adv:
 					advs.append(word)
 			self.documents.update({'name':ndoc['name']},{'$set':{'adverbs':advs}})
 
