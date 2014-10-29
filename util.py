@@ -192,10 +192,12 @@ def std(list_of_numbers):
 def tags(blob):
 
 	parsed_text = blob.parse().split()
-	tags = []	
+	tags = []
+	word_index = 1;	
 	for parsed_sentence in parsed_text:
 		for elem in parsed_sentence:
-			tags.append((elem[0],elem[1]))
+			tags.append({'index':word_index, 'raw': elem[0], 'tag': elem[1]})
+			word_index += 1
 
 	return tags
 
