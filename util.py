@@ -101,7 +101,7 @@ def get_list_trigrams(trigram_list, trigram_pattern):
 								word3.split('/')[0] + "/" + tags3[1]))
 	return valids
 
-def get_doc_adjectives(ndoc, bigrams_filtered=False, trigrams_filtered=False):
+def get_doc_adjectives(ndoc, bigrams_filtered=False):
 	"""This method return from document all the adjectives based on the following parameters:
 
 	Keyword arguments:
@@ -115,75 +115,30 @@ def get_doc_adjectives(ndoc, bigrams_filtered=False, trigrams_filtered=False):
 	#Or still it could be created a method in this module that gather all adjectives from the existed bigrams
 	adjs_adv_adj_bigram = list(ndoc['adjs_adv_adj_bigram']) 
 
-	#TODO IF more trigrams are added, this list must be updated or a new one should be created
-	#Or still it could be created a method in this module that gather all adjectives from the existed trigrams
-	try:
-		trigrams = list(ndoc['adv_xxx_adj_trigrams'])
-	except Exception, e:
-		trigrams_filtered=False
-	
-
 	if bigrams_filtered:
 		#removes from adjectives duplicates in adjs_adv_adj_bigram
-		for e in adjs_adv_adj_bigram:
-			if e in adjectives:
-				adjectives.remove(e)
-
-	if trigrams_filtered:
-		#gathers adjectives from trigrams
-		trigrams_adjectives = []
-		for trigram in trigrams:
-			for e in trigram:
-				etag = e.split('/')[1]
-				eword = e.split('/')[0]
-				if etag in PENN_ADJECTIVES_TAGS:
-					trigrams_adjectives.append(eword)
-
-		for adj in adjs_adv_adj_bigram:
-			if adj in trigrams_adjectives:
-				trigrams_adjectives.remove(adj)
-
-		#removes from adjectives duplicates in trigrams_adjectives
-		for e in trigrams_adjectives:
-			if e in adjectives:
-				adjectives.remove(e)
+		for adj_bigram in adjs_adv_adj_bigram:
+			for adj in adjectives:
+				if adj_bigram['raw'] == adj['raw']:
+					adjectives.remove(adj)
+					break
 
 	return adjectives
 
-def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'], use_trigrams=True, filtered=True):
+def get_doc_ngrams(ndoc,bigrams_types=['ADV/ADJ'], filtered=True):
 
 	unigrams = get_doc_adjectives(ndoc,filtered)
 	bigrams = []
-	trigrams = []
-
-	one_trigram_list = []
-	if use_trigrams:
-		one_trigram_list = ndoc['adv_xxx_adj_trigrams']
-
 	for p in bigrams_types:
 		one_bigram_list_name = 'adv_adj_bigrams'
 		if p == 'ADV/VERB':
 			one_bigram_list_name = 'adv_verb_bigrams'
 
 		one_bigram_list = ndoc[one_bigram_list_name]
-		if filtered:
-			for b in one_bigram_list:
-				to_add = True
-				for t in one_trigram_list:
-					if b[0] == t[0] and b[1] == t[1]:
-						to_add = False
-					elif b[0] == t[1] and b[1] == t[2]:
-						to_add = False
-				if to_add:
-					bigrams.append((b[0],b[1]))
-		else:
-			for b in one_bigram_list:
-				bigrams.append((b[0],b[1]))
+		for b in one_bigram_list:
+			bigrams.append(b)
 
-	for t in one_trigram_list:
-		trigrams.append((t[0],t[1],t[2]))
-
-	return unigrams + bigrams + trigrams
+	return unigrams + bigrams
 
 def average(list_of_numbers):
 	return sum(list_of_numbers) * 1.0 / len(list_of_numbers)
