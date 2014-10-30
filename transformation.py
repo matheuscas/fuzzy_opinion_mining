@@ -17,13 +17,13 @@ INTENSIFIERS_ADVERBS = INTENSIFIERS_ADVERBS + open('groups_of_adverbs/weak_inten
 
 NON_GRADING_ADVERBS = open('groups_of_adverbs/non_grading_adv.txt','r').readlines()
 
-def word_polarity(word, pos_tag=None, prior_polarity_score=False):
+def word_polarity(word, pos_tag=None, prior_polarity_score=False, linear_scoring=None):
 	"""returns a (polarity, subjectivity)-tuple for the given word from SENTIWORDNET.
 	If there is no synsets for the given word, None will be returned
 	The word can be NOUN, VERB, ADJECTIVE, ADVERB"""
 
 	if prior_polarity_score:
-		return __word_prior_polarity(word, pos_tag)
+		return __word_prior_polarity(word, pos_tag, linear_scoring)
 
 	pos_tag = "NOUN" if pos_tag in util.PENN_NOUNS_TAGS else pos_tag
 	pos_tag = "VERB" if pos_tag in util.PENN_VERBS_TAGS else pos_tag
@@ -33,13 +33,16 @@ def word_polarity(word, pos_tag=None, prior_polarity_score=False):
 	TAGS = {"NOUN":NOUN, "VERB":VERB, "ADJECTIVE":ADJECTIVE, "ADVERB":ADVERB}
 	TAG = TAGS[pos_tag] if pos_tag else ADJECTIVE
 
-	synsets = wordnet.synsets(word, TAG)
+	synsets = wordnet.synsets(word['raw'], TAG)
 	if len(synsets) > 0:
-		return synsets[0].weight
+		polarity = synsets[0].weight
+		if linear_scoring:
+			polarity[0] = polarity[0] * (word['index'] / linear_scoring['doc_size']) * linear_scoring['linear_scoring_constant']
+		return polarity
 	else:
 		return None
 
-def __word_prior_polarity(word, pos_tag=None):
+def __word_prior_polarity(word, pos_tag=None, linear_scoring=None):
 
 	pos_tag = "n" if pos_tag in util.PENN_NOUNS_TAGS else pos_tag
 	pos_tag = "v" if pos_tag in util.PENN_VERBS_TAGS else pos_tag
@@ -49,9 +52,11 @@ def __word_prior_polarity(word, pos_tag=None):
 	if pos_tag is None:
 		pos_tag = 'a'
 
-	prior_polarity_score = __sentiwords.get_entry_by_name_and_pos(word,pos_tag)
+	prior_polarity_score = __sentiwords.get_entry_by_name_and_pos(word['raw'],pos_tag)
 	if prior_polarity_score is None:
 		return None
+	if linear_scoring:
+		prior_polarity_score['prior_polarity_score'] = prior_polarity_score['prior_polarity_score'] * (float(word['index']) / float(linear_scoring['doc_size'])) * linear_scoring['linear_scoring_constant']
 	return (prior_polarity_score['prior_polarity_score'], 0)	
 
 def is_negation(bigram_first_word):
@@ -122,33 +127,34 @@ def apply_adverb_factor(adverb, polarity, negation=None):
 		return polarity
 
 
-def default_adv_xxx_bigram_polarity(bigram, negation=None, prior_polarity_score=False):
+def default_adv_xxx_bigram_polarity(bigram, negation=None, prior_polarity_score=False, linear_scoring=None):
 	"""Calculates the bigram polarity based on a empirical factor from each adverb group
 		and SENTIWORDNET word polarity
 	"""
 
-	adverb = bigram[0].split('/')[0]
-	adverb_tag = bigram[0].split('/')[1]
-
-	ngram_2 = bigram[1].split('/')[0]
-	ngram_2_tag = bigram[1].split('/')[1]
-
-	ngram_2_polarity = word_polarity(ngram_2, ngram_2_tag, prior_polarity_score=prior_polarity_score)
+	second_word_polarity = word_polarity(bigram['second_word'], 
+								bigram['second_word']['tag'], 
+								prior_polarity_score = prior_polarity_score,
+								linear_scoring = linear_scoring)
 
 	# If is a verb, tries again in lemmatized form
-	if ngram_2_tag in util.PENN_VERBS_TAGS and \
-		(ngram_2_polarity == None or ngram_2_polarity[0] == 0):
-			w = Word(ngram_2)
-			ngram_2_polarity = word_polarity(w.lemmatize("v"), prior_polarity_score=prior_polarity_score)
+	if bigram['second_word']['tag'] in util.PENN_VERBS_TAGS and \
+		(second_word_polarity == None or second_word_polarity[0] == 0):
+			w = Word(bigram['second_word']['raw'])
+			bigram['second_word']['lemma'] = w.lemmatize("v")
+			second_word_polarity = word_polarity(bigram['second_word'],
+											bigram['second_word']['tag'], 
+											prior_polarity_score = prior_polarity_score,
+											linear_scoring = linear_scoring)
 
 	#if the ngram_2 does not have polarity, so stops the method
-	if ngram_2_polarity == None:
+	if second_word_polarity == None:
 		return None
 
-	return apply_adverb_factor(adverb,ngram_2_polarity[0], negation)
+	return apply_adverb_factor(bigram['first_word']['raw'],second_word_polarity[0], negation)
 
 
-def adjectives_polarities(list_of_adjectives, prior_polarity_score=False):
+def adjectives_polarities(list_of_adjectives, prior_polarity_score=False, linear_scoring=None):
 	"""This method calculates all adjectives polarities based on the following arguments
 
 	Keyword arguments:
@@ -157,26 +163,31 @@ def adjectives_polarities(list_of_adjectives, prior_polarity_score=False):
 
 	adjectives_polarities = []
 	for adjective in list_of_adjectives:
-		polarity = word_polarity(adjective, prior_polarity_score=prior_polarity_score)
+		polarity = word_polarity(adjective, 
+							prior_polarity_score = prior_polarity_score,
+							linear_scoring = linear_scoring)
 		if polarity and polarity[0] != 0.0:
 			adjectives_polarities.append(polarity[0])
 
 	return adjectives_polarities
 
-def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams, negation=None, prior_polarity_score=False):
+def adv_adj_bigrams_polarities(list_of_adv_adj_bigrams, negation=None, prior_polarity_score=False, linear_scoring=None):
 	"""This method calculates all bigrams polarities based on the following arguments
 
 	Keyword arguments:
 	list_of_adv_adj_bigrams -- list of bigrams in the following format: ADVERB / ADJECTIVE
 	"""
 
-	adv_adj_bigrams_polarities = []
+	bigrams_polarities = []
 	for bigram in list_of_adv_adj_bigrams:
-		bigram_polarity = default_adv_xxx_bigram_polarity(bigram, negation, prior_polarity_score=prior_polarity_score)
+		bigram_polarity = default_adv_xxx_bigram_polarity(bigram, 
+														negation, 
+														prior_polarity_score=prior_polarity_score,
+														linear_scoring=linear_scoring)
 		if bigram_polarity:
-			adv_adj_bigrams_polarities.append(bigram_polarity)
+			bigrams_polarities.append(bigram_polarity)
 
-	return adv_adj_bigrams_polarities
+	return bigrams_polarities
 
 def trigram_polarity(trigram, negation=None, prior_polarity_score=False):
 	first_word = trigram[0]
@@ -200,21 +211,9 @@ def trigram_polarity(trigram, negation=None, prior_polarity_score=False):
 		if parcial_result != None and abs(parcial_result) != 0:
 			results.append(parcial_result)
 		return results
-	#adv/verb/adj or #adv/adj/adj trigram
-	# elif middle_word_tag in util.PENN_ADJECTIVES_TAGS or \
-	# 		middle_word_tag in util.PENN_VERBS_TAGS:
-	# 		parcial_result = default_adv_xxx_bigram_polarity((first_word,middle_word), negation)
-	# 		if parcial_result != None and abs(parcial_result) != 0:
-	# 			results.append(parcial_result)
-
-	# 		parcial_result_2 = word_polarity(third_word.split('/')[0])
-	# 		if parcial_result_2 != None and abs(parcial_result_2[0]) != 0:
-	# 			results.append(parcial_result_2[0])
-	# 		return results
-
 	return results
 
-def ngrams_polarities(ngrams_list, negation=None, prior_polarity_score=False):
+def ngrams_polarities(ngrams_list, negation=None, prior_polarity_score=False, linear_scoring=None):
 	"""
 		Given a list of ngrams (such as "good, bad, (very,good),awesome"), returns a list of corresponding polarities
 	"""
@@ -222,15 +221,16 @@ def ngrams_polarities(ngrams_list, negation=None, prior_polarity_score=False):
 	polarities = []
 	for ngram in ngrams_list:
 		pol = 0
-
-		if type(ngram) is tuple and len(ngram) == 2: #bigrams - adverbs and adjectives
-			pol = default_adv_xxx_bigram_polarity(ngram, negation, prior_polarity_score=prior_polarity_score)
-		elif type(ngram) is tuple and len(ngram) == 3: #trigrams - adverbs xxx adjectives
-			pols = trigram_polarity(ngram, negation, prior_polarity_score=prior_polarity_score)
-			if pols != None:
-				polarities = polarities + pols
+		if len(ngram) == 2: #bigrams - adverbs and adjectives
+			pol = default_adv_xxx_bigram_polarity(ngram, 
+												negation, 
+												prior_polarity_score = prior_polarity_score,
+												linear_scoring = linear_scoring)
 		else: #unigrams - adjectives
-			pol = word_polarity(ngram, prior_polarity_score=prior_polarity_score)
+			pol = word_polarity(ngram, 
+							prior_polarity_score=prior_polarity_score,
+							linear_scoring = linear_scoring)
+
 		if pol != None and type(pol) is tuple and pol[0] != 0:
 			polarities.append(pol[0])
 		elif pol != None and (type(pol) is int or type(pol) is float) and pol != 0:
@@ -238,11 +238,14 @@ def ngrams_polarities(ngrams_list, negation=None, prior_polarity_score=False):
 
 	return polarities
 
-def ngrams_matrix_polarities(ngrams_matrix, negation=None, prior_polarity_score=False):
+def ngrams_matrix_polarities(ngrams_matrix, negation=None, prior_polarity_score=False, linear_scoring=None):
 	"""Given a matrix of ngrams (or a list of ngrams list), return a matrix of its corresponding polarities"""
 
 	polarities_matrix = {}
 	for _id, ngrams_list in ngrams_matrix.iteritems():
-		polarities_matrix[_id] = ngrams_polarities(ngrams_list, negation, prior_polarity_score=prior_polarity_score)
+		polarities_matrix[_id] = ngrams_polarities(ngrams_list, 
+												negation, 
+												prior_polarity_score=prior_polarity_score,
+												linear_scoring=linear_scoring)
 
 	return polarities_matrix		
