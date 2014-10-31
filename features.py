@@ -708,7 +708,9 @@ class ModelFeatures(object):
 				('ngrams_sum_pos_to_neg_ratio','REAL'),
 				('verbs_sum_pos_to_neg_ratio','REAL'),
 				('ngrams_count_pos_to_neg_ratio','REAL'),
-				('ngrams_score_pos_to_neg_ratio','REAL')
+				('ngrams_score_pos_to_neg_ratio','REAL'),
+				('negation_percentage_by_ngrams','REAL'),
+				('negation_percentage_by_doc_size','REAL')
 			]	
 		}
 		
@@ -785,7 +787,18 @@ class ModelFeatures(object):
 			verbs_sum_pos_to_neg_ratio = 0
 			if abs(verbs_negative_sum) > 0:
 				verbs_sum_pos_to_neg_ratio = verbs_positive_sum / abs(verbs_negative_sum)
-			
+
+			#negation percentage by ngrams and doc_size
+			negated_bigrams = 0
+			for bigram in doc['adv_adj_bigrams']:
+				if transformation.is_negation(bigram['first_word']['raw']):
+					negated_bigrams += 1
+
+			negation_percentage_by_ngrams = 0		
+			if ngrams_qtd > 0:
+				negation_percentage_by_ngrams = float(negated_bigrams) / float(ngrams_qtd)
+
+			negation_percentage_by_doc_size = float(negated_bigrams) / float(doc_size)
 			features = [doc_stat['_id'],
 						polarity, 
 						positive_term_count, 
@@ -801,7 +814,9 @@ class ModelFeatures(object):
 						ngrams_sum_pos_to_neg_ratio,
 						verbs_sum_pos_to_neg_ratio,
 						ngrams_count_pos_to_neg_ratio,
-						ngrams_score_pos_to_neg_ratio]
+						ngrams_score_pos_to_neg_ratio,
+						negation_percentage_by_ngrams,
+						negation_percentage_by_doc_size]
 
 			if normalize:
 				positive_term_count_by_doc_size = positive_term_count / float(doc_size)
