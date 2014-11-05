@@ -279,3 +279,31 @@ class CornellMoviesModel(BaseModel):
 		for d in docs:
 			self.documents.insert(d)
 
+class Epinions_1_Books(BaseModel):
+	"""docstring for Epinions_1_Books"""
+	def __init__(self, database_name="Epinions_1_Books"):
+		BaseModel.__init__(self, database_name)
+
+	def read_corpora_source(self):
+		DOCS_PATH = os.path.abspath(os.curdir) + '/corpora/sfu_review_corpus_raw/BOOKS'	
+		files = os.listdir(DOCS_PATH)
+		list_of_dict_units = []
+
+		for fn in files:
+			if fn.find('txt') != -1:
+				polarity = 0 if 'no' in fn else 1
+				print fn
+				fn_name = DOCS_PATH + '/' + fn
+				text = open(fn_name).read();
+				text = text.decode('Windows-1252').encode('utf-8')
+				doc = {'name': fn,
+						'text':text,
+						'polarity':polarity}
+				list_of_dict_units.append(doc)
+		return list_of_dict_units		
+
+	def create_database(self):
+		docs = self.read_corpora_source()
+		for d in docs:
+			self.documents.insert(d)	
+
