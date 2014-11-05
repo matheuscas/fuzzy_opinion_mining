@@ -39,8 +39,8 @@ class ModelFeatures(object):
 		self.binary_degree = True
 		self.plotly_login = None
 		self.plotly_password = None
-		self.linear_scoring = False
-		self.linear_scoring_constant = 1
+		self.linear_score = False
+		self.linear_score_constant = 1
 
 	def __documents_stats(self):
 
@@ -51,18 +51,18 @@ class ModelFeatures(object):
 		pt = util.get_tagger()
 		for doc in self.model.documents.find():
 			doc_stats = {}
-			linear_scoring = None
-			if self.linear_scoring:
+			linear_score = None
+			if self.linear_score:
 				doc_size = len(pt(doc['text']).words)
-				linear_scoring = {'doc_size':doc_size,'linear_scoring_constant':self.linear_scoring_constant}
-			doc_stats['linear_scoring'] = linear_scoring
+				linear_score = {'doc_size':doc_size,'linear_score_constant':self.linear_score_constant}
+			doc_stats['linear_score'] = linear_score
 			ngrams = util.get_doc_ngrams(doc)
 			positive_ngrams = []
 			negative_ngrams = []
 			for ngram in ngrams:
 				ngram_pol = transformation.ngrams_polarities([ngram], 
 															prior_polarity_score = self.prior_polarity_score,
-															linear_scoring = linear_scoring)
+															linear_score = linear_score)
 				if ngram_pol is None or len(ngram_pol) == 0:
 					ngram_pol = (0,0)
 				if ngram_pol[0] > 0:
@@ -80,7 +80,7 @@ class ModelFeatures(object):
 				verb_pol = transformation.word_polarity(verb, 
 											pos_tag="VERB", 
 											prior_polarity_score=self.prior_polarity_score,
-											linear_scoring = linear_scoring)
+											linear_score = linear_score)
 				if verb_pol is None or len(verb_pol) == 0:
 					verb_pol = (0,0)
 				if verb_pol[0] > 0:
@@ -736,18 +736,18 @@ class ModelFeatures(object):
 			#ngrams_positive_sum, ngrams_negative_sum AND ngrams_sum_pos_to_neg_ratio
 			ngrams_pos_sum = sum(transformation.ngrams_polarities(doc_stat['positive_ngrams'], 
 															prior_polarity_score=self.prior_polarity_score,
-															linear_scoring = doc_stat['linear_scoring']))
+															linear_score = doc_stat['linear_score']))
 			ngrams_neg_sum = sum(transformation.ngrams_polarities(doc_stat['negative_ngrams'], 
 															prior_polarity_score=self.prior_polarity_score,
-															linear_scoring = doc_stat['linear_scoring']))
+															linear_score = doc_stat['linear_score']))
 			ngrams_sum_pos_to_neg_ratio = 0
 			if abs(ngrams_neg_sum) > 0:
 				ngrams_sum_pos_to_neg_ratio = ngrams_pos_sum / abs(ngrams_neg_sum)
 
 			#ngrams_positive_highest_score and ngrams_negative_highest_score
-			pos_ngrams = transformation.ngrams_polarities(doc_stat['positive_ngrams'],prior_polarity_score=self.prior_polarity_score,linear_scoring=doc_stat['linear_scoring'])
+			pos_ngrams = transformation.ngrams_polarities(doc_stat['positive_ngrams'],prior_polarity_score=self.prior_polarity_score,linear_score=doc_stat['linear_score'])
 
-			neg_ngrams = transformation.ngrams_polarities(doc_stat['negative_ngrams'],prior_polarity_score=self.prior_polarity_score,linear_scoring=doc_stat['linear_scoring'])
+			neg_ngrams = transformation.ngrams_polarities(doc_stat['negative_ngrams'],prior_polarity_score=self.prior_polarity_score,linear_score=doc_stat['linear_score'])
 
 			max_pos_adj = 0 if len(pos_ngrams) == 0 else util.max_abs(pos_ngrams)
 			max_neg_adj = 0 if len(neg_ngrams) == 0 else util.max_abs(neg_ngrams)
@@ -763,7 +763,7 @@ class ModelFeatures(object):
 				vpp = transformation.word_polarity(vp, 
 												pos_tag="VERB", 
 												prior_polarity_score=self.prior_polarity_score,
-												linear_scoring = doc_stat['linear_scoring'])
+												linear_score = doc_stat['linear_score'])
 				if vpp is not None and vpp[0] != 0:
 					verbs_positive_sum.append(vpp[0])
 
@@ -776,7 +776,7 @@ class ModelFeatures(object):
 				vnp = transformation.word_polarity(vn, 
 												pos_tag="VERB", 
 												prior_polarity_score=self.prior_polarity_score,
-												linear_scoring = doc_stat['linear_scoring'])
+												linear_score = doc_stat['linear_score'])
 				if vnp is not None and vnp[0] != 0:
 					verbs_negative_sum.append(vnp[0])
 
@@ -888,7 +888,7 @@ class ModelFeatures(object):
 
 		file_name = 'arff_files/' + self.model.database.name
 		if normalize:
-			file_name = file_name + '_normalize'
+			file_name = file_name + '_NORM'
 			dataset_features['attributes'] = dataset_features['attributes'] + \
 											[('positive_term_count_by_doc_size','REAL'),
 											('negative_term_count_by_doc_size','REAL'),
@@ -910,6 +910,16 @@ class ModelFeatures(object):
 											('verbs_sum_by_ngrams_ratio','REAL')]
 
 
+		if self.prior_polarity_score:
+			file_name += '_PPS'
+		else:
+			file_name += '_MFS'
+
+		if self.linear_score:
+			file_name += '_LS'
+		else:
+			file_name += '_NLS'
+					
 		file_name = file_name  + '.arff'
 		dataset_features['data'] = data	
 		arff_str = arff.dumps(dataset_features)
