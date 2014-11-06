@@ -286,7 +286,7 @@ class Epinions_1(BaseModel):
 		self.dataset_name = dataset_name;
 		BaseModel.__init__(self, database_name="Epinions_1_"+dataset_name)
 
-	def read_corpora_source(self):
+	def read_corpora_source(self):	
 		DOCS_PATH = os.path.abspath(os.curdir) + '/corpora/sfu_review_corpus_raw/'+self.dataset_name	
 		files = os.listdir(DOCS_PATH)
 		list_of_dict_units = []
@@ -308,3 +308,32 @@ class Epinions_1(BaseModel):
 		for d in docs:
 			self.documents.insert(d)			
 
+class Amazon(BaseModel):
+	"""docstring for Amazon datasets for MP3, USB, GPS, Wifi and camera products"""
+
+	def __init__(self, database_name='Amazon_Train_MP3_USB_GPS_WIFI_CAMERA'):
+		BaseModel.__init__(self, database_name)
+
+	def read_corpora_source(self):	
+		file = os.path.abspath(os.curdir) + '/corpora/amazon_corpus/train+validation-reviews_MP3-USB-GPS-802.11-Camera-Phone.txt'
+		file = open(file,'r')
+		list_of_dict_units = []
+
+		for line in file.readlines():
+			line_parts = line.split()
+			name = line_parts[0]
+			text = string.join(line_parts[1:len(line_parts)-2])
+			star = int(line_parts[len(line_parts) - 1])
+			if star < 3 or star > 3:
+				polarity = 0 if star < 3 else 1
+				doc = {'name': name,
+						'text':text,
+						'polarity':polarity}
+				list_of_dict_units.append(doc)
+
+		return list_of_dict_units		
+
+	def create_database(self):
+		docs = self.read_corpora_source()
+		for d in docs:
+			self.documents.insert(d)
