@@ -279,13 +279,15 @@ class CornellMoviesModel(BaseModel):
 		for d in docs:
 			self.documents.insert(d)
 
-class Epinions_1_Books(BaseModel):
-	"""docstring for Epinions_1_Books"""
-	def __init__(self, database_name="Epinions_1_Books"):
-		BaseModel.__init__(self, database_name)
+class Epinions_1(BaseModel):
+	"""docstring for Epinions datasets"""
+
+	def __init__(self, dataset_name):
+		self.dataset_name = dataset_name;
+		BaseModel.__init__(self, database_name="Epinions_1_"+dataset_name)
 
 	def read_corpora_source(self):
-		DOCS_PATH = os.path.abspath(os.curdir) + '/corpora/sfu_review_corpus_raw/BOOKS'	
+		DOCS_PATH = os.path.abspath(os.curdir) + '/corpora/sfu_review_corpus_raw/'+self.dataset_name	
 		files = os.listdir(DOCS_PATH)
 		list_of_dict_units = []
 
@@ -304,58 +306,5 @@ class Epinions_1_Books(BaseModel):
 	def create_database(self):
 		docs = self.read_corpora_source()
 		for d in docs:
-			self.documents.insert(d)
+			self.documents.insert(d)			
 
-class Epinions_1_Cars(BaseModel):
-	"""docstring for Epinions_1_Cars"""
-	def __init__(self, database_name="Epinions_1_Cars"):
-		BaseModel.__init__(self, database_name)
-
-	def read_corpora_source(self):
-		DOCS_PATH = os.path.abspath(os.curdir) + '/corpora/sfu_review_corpus_raw/CARS'	
-		files = os.listdir(DOCS_PATH)
-		list_of_dict_units = []
-
-		for fn in files:
-			if fn.find('txt') != -1:
-				polarity = 0 if 'no' in fn else 1
-				fn_name = DOCS_PATH + '/' + fn
-				text = open(fn_name).read();
-				text = text.decode('Windows-1252').encode('utf-8')
-				doc = {'name': fn,
-						'text':text,
-						'polarity':polarity}
-				list_of_dict_units.append(doc)
-		return list_of_dict_units		
-
-	def create_database(self):
-		docs = self.read_corpora_source()
-		for d in docs:
-			self.documents.insert(d)
-
-class Epinions_1_Computers(BaseModel):
-	"""docstring for Epinions_1_Computers"""
-	def __init__(self, database_name="Epinions_1_Computers"):
-		BaseModel.__init__(self, database_name)
-
-	def read_corpora_source(self):
-		DOCS_PATH = os.path.abspath(os.curdir) + '/corpora/sfu_review_corpus_raw/COMPUTERS'	
-		files = os.listdir(DOCS_PATH)
-		list_of_dict_units = []
-
-		for fn in files:
-			if fn.find('txt') != -1:
-				polarity = 0 if 'no' in fn else 1
-				fn_name = DOCS_PATH + '/' + fn
-				text = open(fn_name).read();
-				text = text.decode('Windows-1252').encode('utf-8')
-				doc = {'name': fn,
-						'text':text,
-						'polarity':polarity}
-				list_of_dict_units.append(doc)
-		return list_of_dict_units		
-
-	def create_database(self):
-		docs = self.read_corpora_source()
-		for d in docs:
-			self.documents.insert(d)
