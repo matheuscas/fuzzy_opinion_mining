@@ -1,0 +1,34 @@
+On the paper this machine has everything to please a customer: power, big screen, universal DVD+ or DVD- writer.  
+The first big surprise is the weight. Wow! You won't take it with you if you're a frequent flyer! The machine itself is heavy, but add the heavy battery to it and the incredibly heavy and bulky AC power and then you're done with your daily fitness.  
+ 
+Incompatibility issues are also a concern. I have two USB devices that just don't work on this laptop. They work on IBM, HP and even crappy clones like Acer or Dell. No way to have them work. Sony is famous to be "almost compatible" with everything but here you have to insure this to the customer. USB is supposed to be UNIVERSAL!  
+ 
+Support is almost inexistent. Besides the "it's not our fault it's the other ones" you can't count on anything.  
+They told me that my Sony laptop will work only and only if "I don't change anything in the configuration, don't add extra 3rd party software". In one word use it as-is from the factory but don't you dare install, say, a word processor! You would break the equilibrium! Is this serious?  
+ 
+Some drivers are available on the last restore CD. Not all.  
+Don't look on the web to find an ftp site where you can get them, they don't provide them! Nothing! Even amateurs have their drivers over the Internet! This is just nonsense!  
+ 
+Fan noise: well, if you like to live next to an airport, you'll love the GRV616S! The fan is so noisy it covers the entire house ambient noise. It's simple, that's the only thing you hear. Even in quite mode (at lower speed) you still hear it. It makes much more noise than any desktop PC I've ever owned.  
+ 
+My former laptop was an HP Omnibook 6000. As a developer, I pushed it to the limits by compiling long projects in C++ (sometimes compiling for 6 hours). I used to hear its fan something like 3 minutes total.  
+Here, even if you don't do anything, well, it's covering any other noises! It drives everybody crazy.  
+So don't even think about using it in a library. You won't be allowed!  
+ 
+Performance? Well it's a P4 2.6Ghz and is 2% faster than my PIII 600Mhz Omnibook. Same configuration!  
+ 
+DVD burner. Nice idea to have a universal one. But why does it need to take between 45 to 90 seconds each time you insert a disk in it before giving the CPU back to Windows?  
+ 
+It burned DVD+RW like breeze, without problems and was surprisingly fast.  
+It failed and destroyed in all my DVD-RW.  
+ 
+The keyboard is noisy and flaky. The mousepad ways too sensitive. Type in a text for 3 minutes and the mouse cursor will start jumping around the screen just because of the heat of your thumbs over it.  
+ 
+No PS/2 connector. So unless you buy the well designed docking station (which I bought), you won't use an external keyboard or mouse. On the port replicator there is only 1 PS/2 connector that doesn't support spliters. So it's either an external mouse or a keyboard. Not both.  
+ 
+ 
+Now I'm returning the machine since I consider it "non compatible". I can't use my acquisition devices and cannot process my data. I lost one full month of productivity with their incompetent tech support (here in Europe) and they don't want to hear about a return. Fortunately, advertising the machine as PC Compatible when it is not, is "misleading advertisement" and is aimed at ending in a court.  
+ 
+I knew that Sony's worst problem was tech support. But I was ready to deal with that. I like Sony TVs, DVD players. So I thought that their laptops, this laptop, was good. I was wrong.  
+ 
+A friend of mine has the same one. She doesn't like it either.  

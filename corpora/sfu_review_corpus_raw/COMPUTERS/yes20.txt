@@ -1,0 +1,49 @@
+Let me just start off with a little background about me before I get into the review.  
+ 
+I've been involved in PC's for about 10 years now in various capacities, from PC tech to Network Administrator. So, I've seen many different PC's come across my desk. I also do consulting/PC sales and Repair on the side and prefer to build my own PC's whenever possible (you get the best value that way).  
+ 
+Now, on to the review:  
+ 
+Back in 99 we got a digital camcorder as a wedding and Christmas present and I was so excited - we could edit our home movies on our computer and do all sorts of neat titles and such! Well, after $150 for the FireWire card and 2 PC's later, I was never able to get it to work well. The software was buggy, the card manufacuturer claimed my PC's chipsets were bad as I was never able to get the finished product back to tape, etc. I gave up in '00 on video editing.  
+ 
+Then in 2001, I picked up a new digital camera. Since photography has been one of my hobbies for years, it only seemed natural to try out a good digital camera. Along the way, it seemed as if our current PC just wasn't cutting it. with digital photos....  
+ 
+I had always heard Macs were the best for photo and video, but I never was really drawn to them - the iMacs were ugly (sorry), and the towers were EXPENSIVE. Besides, who uses a Mac anyway? Then in February I saw an ad for the new iMac. I fell in love! This was what I was looking for, a fast computer with all the bells and whistles!  
+ 
+After showing it to the wife, along with the comments about "why are you getting a Mac?" and "Are you crazy?" and "It's so UGLY!". I just knew this had to be the computer for me. We took a trip to the Tyson's Corner Apple store one Sunday to check it out and make sure it was for me.  
+ 
+Arriving there, it was an awesome experience - you could play to your hearts content and really experience the hardware. Definitely worth the trip. I was sold immediately - iPhoto was just what I needed to organize my photos, iTunes was the BEST MP3 player, iMovie was what PC editing should have been.  
+ 
+Unfortunately, I had to wait about a month for the money to come in before I could even think about the iMac again. Then, once the money was in I called up local Mac dealers - none of which had them in stock, then the Tyson's Corner store....Nothing, then the Clarendon store - they had 1 left and would only hold it for me until the end of the day...  
+ 
+So, at 5pm I left on a 2 hour journey...Got there around 7:30 and was out the door with my ner toy by 8pm, home by 10:30....I think the salesperson was in shock when he learned I was from 2 hours away to pick up the computer.  
+ 
+Out of Box Experience- Apple has, hands down the best. Opening up the box, you saw a cardboard poster with unpacking instructions. Everything was precisely placed and laid out very well.  
+ 
+Initial Setup- Again, flick the power switch and in 10 minutes you were off and running. Just answer a few simple questions and you are all setup.  
+ 
+Performance - Performance is great. OSX really needs more memory than the standard 256MB (so does WinXP), expecially since I love to multitask - I'm one of those people that have 10 things running at a time!  
+ 
+Display - THE BEST! I have a work issue IBM laptop and the iMac is the best. Big (as big as a 17" monitor), bright, and beautiful. What more can I say - everything looks gorgeous, from my Pictures to text!  
+ 
+Stability - I'm a stickler for stability. I've never managed to coax more than 10 days of uptime out of any of my Windows boxes (except my Win2k server) that are in daily use. With the Mac and OSX I regularly get 20+ days of uptime before I need to reboot. It just runs and runs and runs. No "reboot to fix this" or any stuff like that - it just chugs away.  
+ 
+Software - What can I say - this thing is truly the digital hub. I've made more movies and DVD's with it in the past 4 months than I have with my PC's in 10 years. It's so easy and just works. Recently, my wife and I completed a DVD and VHS tape for her brother's wedding and the results are better than the PROFESSIONAL we hired to do ours!  
+ 
+MP3's rock in iTunes, iPhoto is a great way to organize your photos....  
+ 
+Compatibility- All my files and hardware work with it. I made the transition to all USB devices (printer, scanner, memory card reader, etc.) a while ago and they are all Plug-and-Play with the Mac!  
+ 
+Complaints  
+ 
+These are small:  
+ 
+*/SYM Re-learning a new OS. Being a Windows guy, learning OSX has taken some time. In the first couple days I wanted to return the machine, I was so frustrated with it. But after "forgetting" my Windows stuff Mac OS was/is so intuitive.  
+ 
+*/SYM Scanning in OSX is a disaster. For some reason, few scanner manufacturers support OSX. Epson (whose scanner I love) has beta software that works well, but it could be a lot better.  
+ 
+*/SYM Printer support. Again, I use Epson. Their drivers are OK, but lack some of the features of the "Classic" versions (or even the Windows versions. I hear the new version of OSX will fix this.  
+ 
+*/SYM Networking with Windows. You can connect to file shares on a Windows network, but cannot use printers or share files from your Mac on the Windows network (without installing AppleTalk support on the PC). When you do connect, the Mac has a nasty habit of leaving weird files on the server (.DsStore and a couple others) I hear the new version of OSX will fix that as well.  
+ 
+All in all, it's the best computer that I've ever used. Fast, stable, and IT JUST WORKS!!!  

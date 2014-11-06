@@ -1,0 +1,24 @@
+Another case of If you do not look under the hood. You deserve what you invested in. I will not make this another long winded review. Look at my review of the Dimension 4550. Any Dell will fit into the same criteria.  
+If you are happy investing in a car that has a nice paint job and a 2.4 GHz sticker glued to the side of it. Great.  
+I charge $75-$100 dollars per hour repairing proprietary computers like this. And we make great money. Out of all proprietary manufacturers, I believe Dell is Number One. You will save money. And it will allow recuperation of your finances, so you can afford the repair and maintenance costs.  
+If you Look under the Hood here is what you see:  
+ 
+Case with 250 Watt power supply. Do not count on the power supply not burning up, when adding more devices. Non-proprietary systems mostly have 300 Watts minimum. and most non-proprietary mid tower cases will have room for 4 - 5.25" bays and 6-3.25" bays.  
+ 
+No concrete Motherboard Specs. Video chipset is poor quality. Low end SiS chipset. Board has poor architecture. Motherboard only has 2 memory slots and only supports 1.5 Ghz RDRam max. RDRam runs at high temp and is subject to failure. Bios is Locked down and manual tweaking is virtually impossible(i.e. bios flash). Inexpensive higher quality motherboards support up to 3GB of DDR, have higher quality video chipset(i.e. Nvidia),and do not contain a locked bios.  
+ 
+CPU is an OEM version. Not a boxed version, which holds a 3 year warranty directly from Intel. If it fails, the vendor / Distributor has 30 days from date of order for a return. Investor has to pay for shipping and return his case to Dell. If Dell will honor the warranty. After the 30 day return policy, an investor may as well roll the dice, hoping for a 7 or 11.  
+ 
+Dell memory is cheapest, lowest quality on the market. It will only function correctly in a Dell machine. For the price 512MB should be standard as most non-proprietary custom computers are quoted. RDRam memory operates at high temperatures. Dell makes their money back when you return for more memory. DDR is less expensive, less inclined to fail, from quality manufacturers(i.e. Kingston)  
+ 
+Hard drives have lots of storage space. What is the R.P.M. speed? Hard drive does not have an 8MB cache. On board HDD cache would be great to increase HDD performance of multi-tasking and web performance. Dimension 8250 does not have it for current price quote. Currently HDD is poor quality, fails easily, may only be 5400 RPM. One of the lowest speeds on the market.  
+ 
+CD-Rom is a 48X. Does Dell not have any 56X? There are most likely several million poor quality CD-Roms still on a shelf. DVD-Roms are currently 16X DVD and 56X CD-Rom. Invest in a DVD as they are usually $20-$30 more for quality brands(i.e. AOpen, MSI). Most Leading Technology companies, which Dell claims to be, are phasing out CD-Roms. Dell will still be including CD-Roms in their builds for months to come as they have with 24X CD-Roms on most of their server builds. Open your case and look at the manufacture date on your optical device. I have witnessed several up to 2 years older than the purchase date.  
+ 
+Operating System and included software are resource hogs. Operating system is a Dell imaged disk that can only be used on a Dell machine. and nothing other than a proprietary Dell machine. XP home is garbage. Not stable and nearly impossible to network. Not suited for a small business environment, especially for networking other computers. Windows 9X, Millenium, and XP home are designed from the same poor architecture. Invest in your Operating System. One of the most important items in your build. Without Dell, Gateway, HP/Compaq, or other proprietary imaging involved. Full professional version (i.e. 2000 pro, XP pro). Dell also includes 4GB-10GB of SPAM software pre-installed. Some of which can not be un-installed except by reload(i.e. AOL, Bonzi-buddy, etc.)  
+ 
+ 
+Monitors and accessories can be found for reasonable prices from quality manufacturers. Dell still achieves their mark-up. sacrificing quality with antiquity and bulk, low-grade, cheap parts.  
+ 
+Dell support in One word, Sucks. Call the support line and see how long it takes for a human voice to answer. Go to a local custom computer store. Add a little to your investment for local support. Much friendlier and more knowledge. Look and shop around, you may find someone local who is a true technology leader. And your computer will less likely fail within 6 months. You will not wonder why Dell said that XP Home is great for small businesses. Plus, you will not have to wait for weeks / months for the return of a failed computer. Local builds usually have repair turn-around of 3-5 business days. And they pick up the phone usually by the third ring.  
+ 

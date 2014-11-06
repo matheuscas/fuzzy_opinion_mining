@@ -1,0 +1,13 @@
+Canceled my order for an Inspiron 8500 for the 5150 - and have no regrets. This sweet notebook has everything I was looking for: performance, value, quality construction, and CAE capability.  
+ 
+Everything worked flawlessly out of the box - except for strange behavior of the second USB port. Updated drivers downloaded from the Dell support site later cleared that problem.  
+ 
+I took advantage of the free 512 MB upgrade offer, and added the 60 GB HDD. The 4200 RPM speed is a bit behind the curve, but use of a larger disk cache (XP or 3rd party) can compensate for this somewhat.  
+ 
+As another reviewer observed, Dell's expansion options are occasionally overpriced. Compare, pick, and choose. A trip to local computer store (Fry's) yielded lower-cost port expander, 12-volt adapter, floppy drive, and USB networking cable. PC2700 notebook RAM is available much cheaper over the WWW, when upgrade time comes around. Just order what Dell offers 'free'. I also ordered an extra battery pack from Dell. Haven't needed it yet, since a 3-hour DVD movie leaves 40% capacity to spare on a single battery.  
+ 
+The tilde key is in an awkward place; otherwise the keyboard is fine, and does not have the problems reported for the Inspiron 8500. Built-in sound quality is poor: headphones or external speakers work fine.  
+ 
+I miss the printer and serial ports, since I didn't want to replace my legacy home office equipment. The USB port expander fixed that, and works well. With that and an external USB 2.0 HDD enclosure for my old 80 GB drive (now used for backups), I was able to retire the old desktop: the 5150 is my 'main' machine on the road AND at home, with NO sacrifices.  
+ 
+These omissions are VERY minor: this is a beautiful, first-rate desktop replacement for gaming or serious engineering work. The basics are rock solid: processor, chipset, FSB/memory speed, display, graphics acceleration, performance/battery life, quiet operation, runs cool. The just-released Inspiron 8600 may be a better choice for gaming or DVD viewing, but I believe the 5150 is a better fit for CPU-intensive business and engineering use.  

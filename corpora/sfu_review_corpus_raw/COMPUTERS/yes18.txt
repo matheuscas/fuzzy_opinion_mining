@@ -1,0 +1,149 @@
+The Beginning...  
+ 
+Apple snagged me as a prospective customer in January of 2001 after a series of problems with my Gateway desktop. I was in the market for a laptop for school and decided to try the local Apple reseller in town. The technicians were knowledgeable and friendly the the price was right. However, I found that I could customize my own iBook through www.apple.com, and shipping was free. The chance to avoid the pressure of salesmen was attractive and so I quickly placed my order. A week later I received my new Keylime iBook and promptly fell in love it.  
+ 
+ 
+A year later...  
+ 
+A year had passed and my Gateway desktop was still giving me the same problems it had been giving me since I had purchased it. However, I had learned to live with the problems as it had been a gift from my parents. That was until I found out that Apple had released photos of it's upcoming Flat Panel iMac. I immediately fell in love all over again and experienced the urge to own one ASAP (part of the compulsive shopper speaking out in me, part of me knew it would make my digital lifestyle a heckuva lot easier). I once again placed a customized order through www.apple.com for the top of the line model: 800 MHZ G4 Superdrive with DVD/CD RW capabilities, 60 GB of memory, and I bumped the RAM from 256 to 512 MB. Some may argue that the DVD-RW may not be necessary, but I wanted to keep my options open just in case I purchase a digital camcorder in the future. Ground shipping, as always, was free. All together my purchase came close to $1900. You could also choose from a 700 mhz model that had a CD-RW/DVD-ROM drive (as opposed to the DVD-RW drive with the 800 mhz), or an even cheaper 700 mhz model that had just a CD-RW drive. They were around $1600 and $1400 respectively. (**NOTE: Prices since have gone up about $100 a computer since my purchase due to rising costs of quality parts. Worth it in my opinion.) I was able to finance the computer through MBNA, which provides an easy loan application through the Apple website. I placed the order in the middle of January with the promise of it being delivered in 3-5 weeks. I settled in for the long wait.  
+ 
+ 
+The Verdict...  
+ 
+Five weeks to the day later, I received an e-mail from Apple stating that it would be delayed an additional 7 days. At this point, I was so used to waiting that the message didn't phase me. However, I was surprised when I received an e-mail two days later saying it had been shipped. Five days later and it was on my doorstep. First off, Apple knows how to deliver. It was in a perfectly square box that had a picture of the iMac on one side, and an Apple logo on the other. I cut through the top of the box and was greeted by a heavy-weight poster of the new iMac in various positions. Do I dare say it looked like it was dancing? At this point I couldn't wait. I removed the poster and styrofoam that contained the keyboard, and the styrofoam that surrounded the computer. Set-up was a snap. I lifted the computer out making sure to grip the "arm" with one hand and the base with the other and placed it onto the table. I connected one end of the plug into the computer and the other into the wall. Then, I connected the keyboard and speakers. Finally, I connected the mouse. I was frustrated at the amount of USB slots that were taken up until I realized that the mouse is meant to be plugged into the keyboard (which contains two USB slots at the top). Whoops. Nevermind being frustrated, I was now impressed! Apple supplied their customers with a total of five USB slots on this beauty, along with two firewire slots. More than enough.  
+ 
+I fired up my new beauty by pushing the "power button" located on the left side of the base and was greeted by OS X. It looked absolutely amazing on the 15 inch LCD monitor. OS X was automatically programmed to get me setup as a new user and onto the internet in the fastest way possible. I already had a user account through Earthlink and I had no problems setting it up, but Apple also gave the option to set up a new account. Ten minutes later I was surfing the internet with my new iMac. Apple also supplies their users with accounts for iTools. This account gives you access to an e-mail address (mine is xxskagirlxx@mac.com) and additional access to community features online. I was able to immediately access my "mac mail" through the mail program in OS X (when connected to the internet) but I also wanted to access my Earthlink mail account. Setting up the mail program to retrieve my Earthlink mail was a piece of cake! All I needed to do was fill out my domain, username and password. I can now retrieve both mail accounts from my Apple.  
+ 
+After a bit I decided to install a game. Once again, installation was flawless and the game (The Sims, a memory hog) ran great. The computer also came with iTunes, iMovie and iDVD. I tried iTunes out right away and was impressed the the simplicity of the program. The music that was preloaded into the program sounded wonderful through the Apple Pro Speakers that came with the system. I'm looking forward to starting a new MP3 collection. I'm also looking forward to using iMovie and iDVD in conjunction with a digital camcorder, when I get around to purchasing one. I need to win the lottery first.  
+ 
+I've also gotten a lot of use out of iPhoto, Apple's digital photo editing software. I own an Olympus digital camera and I love to download my photos to edit them. However, I've always had such a tough time keeping track of the photos once they were saved to my computer. iPhoto eliminatated this problem. The program saves each set of pictures you download as a "roll" of film to be accessed later. The pictures can be left in the "rolls" or I can reorganize them as I wish. I can also organize the photos into slide shows with one click of a button. It's very simple to use.  
+ 
+Apple has a reputation for being different and making software that is easy for the average consumer to use. They easily live up to their name with this computer. Not only is the G4 Superdrive ultra fast (arguably faster than my Gateway Athlon), it's quieter than a mouse. Surprisingly, the base doesn't get hot as one would think, meaning Apple has done a superb job of designing the CPU. The screen, of course, is a genius idea. I can pull it closer when I want to read a website. I could push it back when I want to play a game. All it takes is a little push with one finger and it hovers to where I want it to go. I can also push it up or down if my neck is getting strained. The lack of space the computer takes up is definately a plus as it isn't intimidating as other, bulkier computers. And, the software is a snap to use. I haven't had any freeze-ups or hardware problem yet. I look forward to using this computer for all my digital needs for years to come.  
+ 
+ 
+I also wanted to include the technical specifications for those of you who may be pondering a purchase in the near future (courtesy of www.apple.com):  
+ 
+ 
+Technical Specifications  
+ 
+Processor and memory  
+700- or 800-MHz PowerPC G4 processor with Velocity Engine  
+ 
+256K on-chip level 2 cache at full processor speed  
+ 
+100MHz system bus  
+ 
+128MB or 256MB of SDRAM expandable to 1GB; one factory installed 168-pin DIMM and one open user-accessible SO-DIMM slot  
+ 
+ 
+Storage  
+40GB or 60GB Ultra ATA hard disk drive (1)  
+ 
+One of the following optical drives:  
+— CD-RW drive (writes CD-R discs at 24x speed, writes CD-RW discs at 10x speed, reads CDs at 32x speed)  
+ 
+— DVD-ROM/CD-RW Combo drive (reads DVDs at 8x speed, writes CD-R discs at 12x speed, writes CD-RW discs at 8x speed, reads CDs at 32x speed)  
+ 
+— SuperDrive (combination DVD-R/CD-RW drive; writes DVD-R discs at 2x speed, reads DVDs at 6x speed, writes CD-R discs at 8x speed, writes CD-RW discs at 4x speed, reads CDs at 24x speed,)  
+ 
+Support for external FireWire and USB storage devices  
+ 
+ 
+Display  
+Built-in 15-inch (viewable) TFT active-matrix liquid crystal display  
+ 
+Millions of colors at 1024-by-768-pixel resolution  
+ 
+Typical viewing angle: 120 degrees horizontal; 90 degrees vertical  
+ 
+Typical brightness: 200 candela per meter squared  
+ 
+Typical contrast ratio: 300:1  
+ 
+ 
+Graphics support  
+NVIDIA GeForce2 MX graphics processor with AGP 2X support  
+ 
+32MB of dedicated Double Data Rate (DDR) video memory  
+ 
+Three flicker-free screen resolutions: 640 by 480 pixels, 800 by 600 pixels, and 1024 by 768 pixels (optimum resolution)  
+ 
+24-bit true color at all resolutions for displaying millions of colors  
+ 
+ 
+Communications  
+Built-in 56K V.90 fax modem (RJ-11 connector)(4)  
+ 
+Built-in 10/100BASE-T Ethernet (RJ-45 connector)  
+ 
+Built-in antennas and card slot for optional 11-Mbps AirPort Card; IEEE 802.11b compliant (5)  
+ 
+ 
+Audio  
+Built-in speaker  
+Apple Pro Speakers (9 watts each) (3)  
+ 
+Internal 18-watt digital amplifier  
+ 
+Apple speaker minijack for connection to Apple Pro Speakers  
+ 
+Headphone jack  
+ 
+Built-in microphone for speech recognition and audio recording  
+ 
+Support for external USB audio devices  
+ 
+ 
+Video  
+Mini-VGA output port (requires VGA display adapter)  
+ 
+Support for video mirroring: external devices display an image identical to that shown on the built-in display  
+ 
+Output resolutions: 640 by 480 pixels at 60 Hz, 800 by 600 pixels at 75Hz, and 1024 by 768 pixels at 75Hz  
+ 
+ 
+Keyboard and mouse  
+Apple Pro Keyboard with 15 function keys, 4 arrow keys (inverted “T” arrangement), audio controls, and media-eject key; two built-in USB 1.1 ports; two-position tilt  
+ 
+Apple Pro Mouse with optical sensor for precise cursor control  
+ 
+ 
+Peripheral connections  
+Two 400-Mbps FireWire (IEEE 1394) ports (6); 8 watts shared  
+ 
+Three USB 1.1 ports (shared on two 12-Mbps controllers); two USB 1.1 ports on keyboard  
+ 
+Support for FireWire target disk mode for high-speed transfer of files between two computers  
+ 
+Electrical requirements and agency approvals  
+Line voltage: 90V to 264V AC  
+ 
+Frequency: 47 to 63 Hz, single phase  
+ 
+Maximum continuous power: 130W  
+ 
+Meets ENERGY STAR requirements  
+ 
+ 
+Environmental requirements  
+Operating temperature: 50° to 95° F (10° to 35° C)  
+ 
+Storage temperature: -40° to 185° F (-40° to 85° C)  
+ 
+Relative humidity: 5% to 95% noncondensing  
+ 
+Maximum operating altitude: 10,000 feet  
+ 
+ 
+Size and weight  
+Height: 12.95 inches (32.9 cm) minimum; 20.0 inches (50.9 cm) maximum  
+ 
+Width: 15.1 inches (38.3 cm) minimum; 16.3 inches (41.5 cm) maximum  
+ 
+Depth: 10.6 inches (27.0 cm) minimum; 16.3 inches (41.5 cm) maximum  
+ 
+Diameter of base: 10.6 inches (27.0 cm)  
+Weight: 21.3 pounds (9.7 kg) (7)  
+ 
+ 
+I would also highly recommend checking out www.apple.com. They have a lot of information concerning their newest iMac, including a Gallery that allows you to take a closer look  

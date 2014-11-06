@@ -1,0 +1,25 @@
+I have been looking to replace our aging laptop for a while. I sat down and thought about how we have been using it and realized that we really didn't do much mobile computing; I mainly used it as a home base when we traveled. Keeping this in mind steered me toward a desktop replacement type of laptop.  
+ 
+As far as desktop replacements go this one is at the top of the pack. I bought the zd7040 which is the version available at Best Buy. Most other computer stores have the zd7020, the only difference is that the 7040 has a 60Gig hard drive and the 7020 has an 80Gig. Best Buy had a great 18 month no interest deal and the extended warranty was better.  
+ 
+The screen has to be seen to be believed. It is 17” diagonally with a widescreen ratio. This could substitute for your main TV in a pinch. The contrast is very good and the images are very sharp.  
+ 
+The processor is a desktop Pentium 4 at 2.8GHz. Different models may have faster/slower versions. I think there is even one with the new hyper threading processor for bigger $$.  
+ 
+This model has the GeForce to go FX 5600 chip with 64Megs of RAM. I ran 3DMark2001 benchmarks and got over 10000! My older desktop with a GeForce 4 4200 couldn’t get that high. This thing really is a nice desktop crammed into a “portable” package.  
+ 
+Don’t mislead yourself into thinking you will be working away on a long flight. This thing probably won’t even fit on an average tray table, it is that big. It weighs about 10 pounds with the AC adapter. The battery life is also not that great. I worked in our living room for a while and got about 45 minutes when the battery read 50%, so I am guessing about 1 ½ hours with “normal” use. I think if you are playing some 3D games it will be less. Hey, at least you can play some 3D games. This graphics chip supports Direct X9. How many laptops can say that!  
+ 
+There are ports-a-plenty: (4) USB 2.0, one firewire, one S-video out, one VGA, one parallel, headphones, mic, 10/100 Ethernet, modem, IR, 5 different digital media reader (compact flash, SD, memory stick, etc.), (2) Type I PCMCIA slot or (1) Type II slot. This actually has more ports than my desktop!  
+ 
+The keyboard is full sized and there is a numeric pad on the right (the Toshiba model that also uses this screen doesn’t have the numeric pad and doesn’t look nearly as cool). The touchpad is pretty good and the software lets you do some neat stuff. One weird thing is that HP has the tap-click feature (that everyone else uses) disabled by default, but you can change it in the settings.  
+ 
+This model has a DVD +R/RW drive but I haven’t tried it out yet. It reads CD just fine and plays DVD’s great.  
+ 
+The sound is by Harmon Kardon and is OK. I have Harmon Kardon in my car and I am not overly impressed. I think Bose would do a better job. It still sounds way better than most tinny laptop speakers. For the amount of room they had to work with though, I would think they could have done even better.  
+ 
+One thing that is bothersome is the amount of power it consumes. I can’t find an auto adapter to power it. It looks like it draws about 120 watts but the new Targus 120 watt auto adapter doesn’t say it supports it. Maybe in a few months the situation will improve.  
+ 
+Overall I am very happy but this is the Hummer of laptops. For what it was built to do it does very well. Just don't think it will be something it isn't (like light).  
+ 
+Bradman  

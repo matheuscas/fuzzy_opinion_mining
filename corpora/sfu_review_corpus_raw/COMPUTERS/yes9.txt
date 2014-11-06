@@ -1,0 +1,69 @@
+At the end of July, I found it necessary to replace my trusty Dual 1GHz G4 (QuickSilver 2002). Since I've never before owned a "cutting edge" computer, always choosing to buy machines that were near their "end-of-life," I decided to take a chance on the hottest of the hot, the Dual 2GHz G5.  
+ 
+So, I ordered one. And waited. And waited. And waited some more. Apple had to re-authorize the charge on my card twice before I received a nice e-mail that included the FedEx tracking number.  
+ 
+Then I spent another week waiting, checking the FedEx tracking website for progress, and making sure someone was here to receive the package when it arrived.  
+ 
+Even the box it arrived in screams, "I'm stylish, I'm beautiful, and GOOD GRIEF I'M FAST."  
+ 
+Opening the black cardboard box reveals a sheet of cardboard over the accessories, including the keyboard and mouse, a phone cord, a USB extension cable (nice touch, Apple!) for those who'd like their keyboard to be a bit farther from the machine, and the power cable.  
+ 
+Removing the G5 from its cradle of styrofoam, I just had to stop to admire the work. The case is made of plain matte-finished aluminum with an Apple logo embossed very lightly in a different texture. Unless you have the light just right, you won't even see it. All of the seams meet perfectly, and I found no irregularities at all.  
+ 
+Setting the computer up was a snap. I set it on my desktop (fortunately for me, I don't use one of the "computer cubbies" so popular with home-office furniture - the G5 very likely wouldn't fit, being about 10% larger than my old Dual G4), plugged in the power cable, the USB cable for the keyboard and mouse, the video cable to the monitor, and the network cable to the hub. As a show of workmanship, Apple even had the end of the power cable molded to fit perfectly into the back of the computer to leave a flat surface instead of the normal "knobby" look that computers get around their power cords...  
+ 
+Turning the machine on, I heard the familiar Apple chord, and it started right up. Seeing a welcome screen in several languages, I proceeded to fill in the little forms to register the machine...  
+ 
+The last week has been a blur. The Dual G5 isn't just fast. It's *fast*. I can rip entire CDs to MP3 in approximately four minutes, and according to the CPU Monitor I'm not even maxing out the processors.  
+ 
+The Box, or "What's With the Giant Cheese Grater On Your Desk?"  
+ 
+More than one reviewer has suggested that the G5 with its front and back surfaces covered in holes looks like a giant cheese grater. I don't see that close a resemblance, myself - it looks more like a speaker grille to me. There are so many holes in the case that I understand the actual surface area to be reduced by about 35% - 65% of it is aluminum, and the front and back are 35% holes.  
+ 
+The gorgeous aluminum case for the G5 houses three available PCI-X slots, the AGP slot, dual processors, a SuperDrive (DVD-R, CD-R, etc., all in one unit) and a 160GB hard drive.  
+ 
+The back panel includes ports for USB 2.0, FireWire 400, FireWire 800, optical digital audio in and out, analog audio in and out, Gigabit Ethernet, a phone port for the modem, and two little connectors for internal Bluetooth and Airport Extreme. (Bluetooth is only available as a build-to-order option, and cannot be added internally post-purchase.) Also on the back panel is the latch to open the case - which is padlockable. A little metal tab folds out through the latch to provide a padlock hasp. Much more effective than the Kensington "security slot," I'm sure.  
+ 
+The front panel has the power switch, a headphone jack, USB 2.0 and FireWire 400 ports. No longer do I have to reach around the back of a machine or USB hub to plug in my CompactFlash card reader to download pictures from the digital camera. Nor do I have to fumble around trying to connect a FireWire cable behind the machine to capture video.  
+ 
+The Fans, or "The Sounds of Near-Silence"  
+ 
+The Power Macintosh G5 has multiple "cooling zones" inside the machine. Remember all of those holes in the front and back? They're designed so that air can move from the front of the machine to the back and out in a "laminar" flow. This means reduced turbulence inside the machine, resulting in better airflow - and quiet. Turbulence means noise, too.  
+ 
+You can remove the aluminum side panel to look inside the box while it's still running, but if you remove the clear plastic air deflector, the machine will automatically go to sleep so that it doesn't overheat. I've heard stories from other people who say that the fans will cycle up and down, and get very loud - I set the machine to "fastest," and the fans stay on all the time, and the box is still quieter than my old Dual G4 was (and it wasn't a WindTunnel/Mirrored Door Mac, either!) Even the SuperDrive spinning up to rip a CD to MP3 is louder than the fans are.  
+ 
+Music, or "I Paid $3000 For A 3" Radio Shack Speaker?!?"  
+ 
+The G5's internal speaker is, well, wimpy. That's the best I can say about it. Additionally, the G5 no longer supports the Apple Pro Speaker connector, so I can't use the Griffin ProSpeaker Cable to connect speakers to the machine.  
+ 
+On the other hand, the optical digital audio out port means I can plug the G5 directly into a Dolby 5.1 Surround Sound amplifier or receiver, and have more audio wattage than I know what to do with. The analog audio-out port is also available to plug in a regular set of powered speakers.  
+ 
+Video, or "Prepare For Warp Nine"  
+ 
+The Dual G5 comes standard with an ATI Radeon 9600, 64MB of VRAM, dual output connectors... yes, you can connect two monitors to the same video card. The two connectors are the ADC, or Apple Desktop Connector, which supports Apple monitors with built-in USB hubs, and a DVI connector for other industry-standard LCD flat panel screens. The ADC connector itself supports the power and USB signal to the monitor, while the DVI connector provides nothing but video signal.  
+ 
+Apple thoughtfully includes a DVI-to-VGA adapter in the box so one can connect a non-DVI flat panel screen (like the Samsung 171S), as well as regular HD-15 VGA monitors.  
+ 
+Expansion Slots, or "What Do I Do With My Old Keyspan SX Pro Serial Card?"  
+ 
+The PCI-X slots in the G5 only support 3.3v signaling. This means that a rather significant number of PCI cards will not even fit into the slot, let alone function. So, I need to upgrade from the old Keyspan SX Pro to a four-port USB-to-Serial adapter in order to connect my other machines' console cables.  
+ 
+There are eight memory slots in the G5, two of which are occupied when you buy it. This makes for a current limit of 8GB of RAM, assuming you remove the original RAM and replace it with eight 1GB modules (2GB modules are supposed to become available, but I haven't seen any yet). This doesn't even come close to the maximum RAM addressable by the processor. With more RAM, the machine doesn't have to swap things in and out of virtual memory (located on the hard disk) and will be even faster than it was in the first place.  
+ 
+There's one extra slot inside the machine for an additional Serial ATA hard drive. That's right - only two possible slots for hard drives. But since Serial ATA drives come in flavors up to 200GB or more, do you really need that much storage space?  
+ 
+The Goodies, or "Not ANOTHER One-Button Mouse!"  
+ 
+The G5 comes with a very nice keyboard and mouse. It is, unfortunately, yet another clear-bodied "one-button" Apple Optical Mouse. I never even unwrapped the mouse, opting to install my Kensington Turbo Pro Trackball and Nostromo SpeedPad n50 as my input devices. (Bonus: The Nostromo driver no longer kernel panics the machine!)  
+ 
+Software Compatibility, or "The Upgrade Race"  
+ 
+So far, I've been lucky. I have yet to find any of my current software rendered useless by moving to the G5. Virtual PC, on the other hand, is something that a number of my friends and acquaintances depend on for specific applications. The G5 simply won't run it - yet. Supposedly, an upgrade is on the way, but since it will require a ground-up rewrite of the application, I wouldn't hold my breath waiting for it.  
+ 
+(Knock on wood) I haven't even managed to crash this one yet. Mac OS X 10.2.8 (G5) is the most stable iteration I've seen yet.  
+ 
+Speed - Enough Said  
+ 
+Have I mentioned how fast this machine is? In the course of writing this review, I've also ripped another 13 CDs to MP3, dumping them into the iTunes library. While ripping CDs, I've also been using iChat AV to talk to a friend of mine (using the iSight FireWire camera - a slick little piece of hardware!) and writing at the same time. It's fast  
+ 
+I only wish Apple were as fast at building and shipping these speed demons!  

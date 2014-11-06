@@ -1,0 +1,38 @@
+The 5150 has proved to be a true desktop replacement...with all the pros and cons that go along with it.  
+ 
+My Model  
+3.06GHz Pentium 4  
+UXGA screen  
+XP Home  
+512 Meg RAM on 2 DIMMs  
+60GB 4200rpm drive  
+2x DVD+RW drive  
+Integrated wireless NIC  
+NVIDIA GeForce FX Go5200 64Mb  
+ 
+I am delighted with this machine's performance. The machine is extremely fast when running at full-speed, and multi-tasks well. When running at battery-conservation speeds, the machine is still very responsive, though I do notice occasional sluggishness while trying to listen to MP3's and process large files in Photoshop.  
+ 
+The screen is fantastic! It is well suited for the demands of photo editing; vastly superior than my previous laptop (IBM T22). The color range is noticeably better -- pure whites and deep blacks. The screen is also noticeably brighter than my IBM T22, and reasonably usable in outdoor shade. I would estimate that the screen is still readable at about 130-degrees, though the brightness falls-off outside of 90-degrees. I am still working to adjust to the massive 1600x1200 native resolution. Some websites just aren't intended for such a large resolution. The screen is still very usable at lower resolutions, despite some diminished quality.  
+ 
+So far, the system has had no problems sleeping or hibernating. The options are very configurable -- hard-drive, processor, screen, network, etc -- based on inactivity, or closing the screen.  
+ 
+I have un-installed most of the Dell software. All software un-installed flawlessly. I left the Dell Support Alerts, but it has proved worthless and will soon be removed. It's just a shot-gun approach to curbing customer service contacts. I am constantly being reminded of Windows updates I've already downloaded, and tips on how to burn CD's using Roxio -- things I don't need alerts for. I've set it for critical alerts only, but still receive the Roxio messages every couple of days.  
+ 
+After reading feedback from others, I was concerned that my 4200rpm hard-drive might be too slow. It hasn't been an issue for me, even though I listen to mp3's and work with large Photoshop files at the same time.  
+ 
+I was pleasantly surprised by the battery life! I can easily get 2 hours, and up to 3.5 if I'm conservative. For two hours, all I do is lower the CPU speed. I can still use the screen at full brightness and listen to mp3's.  
+ 
+The touchpad takes some getting used to. I miss the trackpoint on my IBM Thinkpad. But the touchpoint is very configurable, and includes some thoughtful capabilities. You can tap on it to double-click, and you can configure it to continue scrolling the mouse when you reach the edge of the pad. Even with the sensitivity set to high, it still takes more muscle work than either the trackpoint or a regular mouse.  
+ 
+The DVD Burner works flawlessly, and it is much faster than my old 16x CD burner. The ability to burn 4.7Gig of digital photos onto a single disk is VERY nice. Since the drive fits under the palm rest, you can feel a little bit of heat while you're burning disks. It's not hot enough to cause discomfort, but you are reminded why they call it "burning."  
+ 
+The integrated wireless card was a smart way to go. Works even better than my PCMCIA card, and there is no protruding antennae.  
+ 
+The overall build construction isn't as solid as my IBM Thinkpad. This machine is more "plasticy." When picking it up with one hand, you can feel the case flex a bit. But given this machine's weight, I won't be holding it with one hand for prolonged periods, anyway.  
+ 
+Very quiet -- compared to my desktop PC.  
+ 
+Minor gripes...  
+I wish the headphone jack didn't get in the way of the cd tray. I also wish the PCMCIA card adapter was easier to eject. The included DVD viewing software is clunky, but it works. Like all laptops, I find some of the key locations awkward. The eject button on the CD tray has a little too much "play" in it. The keys are a little flimsy, and I suspect I will catch one of them with the edge of my finger and break it, eventually. But that also happened on my Thinkpad. I don't like the sliver/blue design -- what was wrong with grey and black?  
+ 
+I am extremely happy with my purchase.  

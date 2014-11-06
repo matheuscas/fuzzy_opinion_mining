@@ -1,0 +1,82 @@
+Fortunately for me, I was in the midst of contemplating my upcoming new computer purchase when the recent Mac Expo was in session. I had just donated my slooooow Performa 6200 to my son's kindergarten classroom and somehow convinced my husband that we needed a new computer. (Note that we already have a perfectly good blue and white G3 and an iMac DV+.) It's a testament to his devotion to me that didn't question (too much) my insistence on a new computer.  
+ 
+The big struggle for me was to decide which computer to buy. I've lusted after laptops for ages and really had my sights set on an iBook or Powerbook but the truth is that you just don't get the same bang for your buck with a laptop. I also drooled over the G4 dual processors but, yikes, the cost was a bit too prohibitive for me. Of course I considered another iMac (my husband was lobbying heavily for this) but I just felt like I wanted more.  
+ 
+…and then I saw it, the brand new, ultra sleek Flat Panel G4 iMac. It was lust at first sight.  
+ 
+When I told others that I had ordered a flat panel iMac, I got a mix of reactions. Some were understandably envious and jealous. However, a small minority looked at me like I had lost my mind. "Why would you buy that freaky looking computer?" "It can't possibly hold up to everyday use." "It's going to be a bust, just like the Cube." Harrumph! I ignored their taunts, secretly hoping that they weren't right.  
+ 
+Unfortunately, I had to wait almost a month for the computer to ship so that gave me plenty of time to second guess the wisdom of my choice.  
+ 
+The Unveiling and Set Up  
+ 
+The big day finally came when my new baby arrived from Airborne Express. I impatiently elbowed my kids and husband out of the way so I could be the first one to see this masterpiece.  
+ 
+I checked my watch before I opened the box. It took me just under 9 minutes from cutting the tape on the box to having the computer up and running. That includes the time that I took to drool lovingly over each component as I removed it from the box. I can’t brag about how quickly I got on to the internet, though, since my darling husband has not yet installed the Ethernet wire I bought to connect to our new router.  
+ 
+Needless to say, the set-up was incredibly easy and took no instructions whatsoever (though clear visual diagrams are available for the less confident). The software is already pre-loaded and ready to go.  
+ 
+How does the New iMac Different Compare to the Previous Version?  
+ 
+In comparing the two computers, I will be referring to the more recent iMac models, not the original fruit colored ones with the hockey puck mouse. Also, be aware that even though I am an avid and devoted Mac fan, I'm not a techno-geek. Therefore, my comparison of these iMacs will be limited to the features that I can sort of understand. Don't sue me if I leave something out - just leave me a comment about my omissions and/or errors (preferably a kind and supportive comment).  
+ 
+Although first glance suggests that the new iMac is vastly different than its predecessor, there are a few basic similarities:  
+ 
+~~ All in one package: The beauty and simplicity of having everything you need in one integrated unit was a major selling point for the first iMacs and it continues to be a significant advantage of the new generation of iMacs.  
+ 
+~~ Mouse and keyboard: Both of these input peripherals are identical on my two iMacs - the Apple Pro Optical mouse and the full size Apple Pro keyboard. Both are significant improvements over the cheesy undersized mouse and keyboard that shipped with the original iMacs (and my G3). Actually, there is one notable difference with this iMac – both the keyboard and the optical mouse are snowy white, just like the computer itself. The white keys are an improvement over the black keys on my other iMac keyboard because they’re much easier to see in the dark.  
+ 
+~~ Minimal Expandability: There are not many options for expanding either iMac model, though the need for expansion seems less of an issue with the feature-packed new iMac. Both have one available slot for memory (which I’ve already filled on both computers) and the option of installing an Airport card.  
+ 
+Now for the differences - some striking and some more subtle:  
+ 
+~~ Size and shape: As you can see from the photo, the new iMac is a unique-looking computer. Personally, I think it's elegant but then I did buy it so I suppose I'm biased. Rather than looking like a large CRT monitor (like the old iMac), the new one looks like a soccer ball (except closer in size to a basketball) cut in half with a slender flat screen literally floating in space. The new iMac only has a 10.6 inch footprint so even with the two speakers, keyboard, and mouse, I have tons more room on my computer desk to clutter up with other gadgets.  
+ 
+~~ Monitor: Instead of the 15-inch CRT on the older iMac, the new iMac has a brilliant flat-panel 15-inch display which provides almost the same viewable area as most 17-inch CRT monitors, but with twice the sharpness, brightness, and contrast. The screen is bordered in white and then further edged with clear plastic. Therefore, there is ample space to grab a hold of the screen and move it without actually putting your fingers on the viewable screen itself.  
+ 
+~~ Speakers: This high-end iMac also ships with two 9-watt round external Apple Pro Speakers. The earlier iMacs are all limited to internal speakers that provide a much more limited audio experience. The Apple Pro Speakers look like softball-sized clear eyeballs. The sound quality is impressive, but then I haven't cranked them up to listen to any music yet.  
+ 
+~~ Hard Drive: Though hard drive size is not a huge issue for many people, I really appreciate the 60GB Ultra ATA hard disk drive on the new iMac (as opposed to 20GB on my older iMac). All it took was a little digital video-editing project to max out my old iMac's hard drive space.  
+ 
+~~ Processor: Instead of the 450-MHz G3 in my first iMac, the newer iMac comes with the 800-MHz PowerPC G4 with Velocity Engine. This allows it to process data in larger chunks (128-bit), in comparison to the smaller chunks used in earlier processors. What this means is that the newer iMac can easily handle the data-intensive processing required by digital video, music, graphics applications and 3D games. It also comes with a NVIDIA GeForce2 MX graphics processor with 32MB of dedicated Double Data rate video memory that gives a major boost to 3D graphics.  
+ 
+~~ Removable Media Drive: My old iMac was considered cutting edge (OK, well not really), because it came with a DVD player. Though the removable media drives that ship with the new iMacs differ from model to model, this one is the top of the line - the SuperDrive. The SuperDrive is a DVD burner as well as a DVD player and CD-RW. The new iMac’s drive is also a tray drive as opposed to the slot drive on my older iMac. It fits flush to the round computer base and is almost invisible. You can open and close the drive with the media eject key (far upper right on keyboard).  
+ 
+According to Apple, the SuperDrive "writes DVD-R discs at 2x speed, reads DVDs at 6x speed, writes CD-R discs at 8x speed, writes CD-RW discs at 4x speed, reads CDs at 24x speed." I haven't timed it yet so I'll have to take their word for it.  
+ 
+~~ More USB ports: The new iMacs have one extra USB port than the earlier iMacs, making a total of 5 USB ports (counting the two on the Apple Pro keyboard). I appreciate the extra port, though I suspect I'll still need a hub at some point.  
+ 
+~~ Operating System: My first iMac was one of the last machines that shipped without OS X. The new one comes with two operating systems: OS X and OS 9.2  
+ 
+~~ Digital Hub Goodies and Other Software: Both iMacs came with good software packages but the new iMac has the newer iTunes2, iMovie2, iPhoto, and iDVD2. Other software shipped on the new iMac includes the latest QuickTime, AppleWorks 6, Mail, Microsoft Internet Explorer, AOL, Quicken 2002 Deluxe, World Book Mac OS X Edition, Otto Matic, Mac OS X Chess, PCalc, Acrobat Reader and FAXstf 10.0 Preview. I haven’t checked it all out, though I have had a blast with the World Book (encyclopedia, dictionary, atlas, and more).  
+ 
+~~ Other Features (not necessarily unique to this iMac): The G4 iMac comes with 256 RAM (I added another 256 immediately), a built-in 56K V.90 fax modem, built-in 10/100BASE-T Ethernet (takes RJ-45 connector), two 400-Mbps FireWire ports, built-in antennas and a card slot for an optional 11-Mbps AirPort Card. Adding additional memory and an airport card is a simple process of unscrewing the base plate. However, I had my extra memory installed free from MacConnection so I didn't need to do this.  
+ 
+You can find out more technical details by checking out Apple's web site:  
+ 
+http://www.apple.com/imac/specs.html  
+ 
+Enough of the Dry Details, Tell Us About the Intangible iMac Experience!  
+ 
+I must admit – I love the all white look. It’s downright virginal! Don’t let appearances fool you, though. Besides looking gorgeous, sitting on my desk, this G4 iMac screams in terms of speed! The flat screen is crystal clear and sharp with all pixels live and accounted for. It's going to be hard to switch back and forth between this and my older CRT.  
+ 
+The screen moves effortlessly up and down, forward and back, while maintaining the same angle. I was a bit apprehensive about the strength of the chrome arm but after handling it a bit I can see that’s more than tough enough. In fact, you lift the computer by the arm when you want to move it.  
+ 
+The video quality in this computer is first rate. I’ve watched several DVDs on this without any problem, though I haven’t yet burned one. There is a distinct hum to the computer (probably a cooling fan), though it’s still quieter than my older iMac. The tray drive itself is rather loud opening and closing so I guess it could disturb someone sleeping in the room (a potential issue for me since the computer is in our bedroom).  
+ 
+One of my biggest concerns in getting the new computer was dealing with OSX. Though I’ve been quite curious about this new operating system, I’ve also been understandably nervous in having it on my new computer since virtually all of my applications (except the ones that came pre-installed) are not OSX compatible. Fortunately, it also ships with OS 9.2 so I assumed I would make that my default operating system – if I could figure out how. Some people I know are so paranoid about OSX that they uninstalled it completely.  
+ 
+Fortunately, I not only discovered that it’s quite simple to switch default operating systems, I also was delighted to learn that the "classic" environment (OS 9) kicked in automatically whenever I tried to us one of my earlier applications. For example, I installed my Microsoft Office 98 without switching operating systems and it works just fine – in fact I’m typing in it right now. It takes a few seconds for the classic environment to open but then everything seems to work perfectly (so far). The ease of dealing with the operating system question has definitely added to the pleasure of using this new iMac.  
+ 
+One thing that’s taking awhile to get use to is the location of the power button. It’s on the back of the computer on the left side. You can’t see it so you have to feel around for it. It’s actually not hard to reach since the computer itself is so petite but it sure confuses people who are unfamiliar with the G4 iMac ("How do you turn this thing on?"). I still miss the power button on the keyboard (on my Blue and White G3).  
+ 
+Practical Considerations with the G4 iMac  
+ 
+Though I'm thrilled with my new purchase, I do have some doubts about the practicality of this model in certain situations. For example, I don't think this iMac will ever take off as a computer of choice in the public schools (a haven for the original iMac). The flat screen is just too delicate for the kind of handling that curious and impulsive kids provide.  
+ 
+In fact, I have my concerns about my own kids and the flat screen. Originally, I envisioned this computer serving as the "family computer" where I could write Epinions, my husband could surf the net, and our young children could play games. For now, I've banned my kids from even coming within 5 feet of this baby, though I know I won't be able to enforce the "no kid zone" for long. My six-year-old is already talking about what games he wants to load on to "Mama’s new computer."  
+ 
+Dr_Steph's Recommendation  
+ 
+The 800MHz Flat Screen G4 iMac is everything I want in a computer - fast, reliable, powerful, compact, beautiful, and downright fun. It has the features to delight the experienced computer whiz, yet is simple enough for the novice to enjoy. In case you couldn't tell yet, I love my new computer. You can laugh all you want - I know you're just jealous.  
+ 

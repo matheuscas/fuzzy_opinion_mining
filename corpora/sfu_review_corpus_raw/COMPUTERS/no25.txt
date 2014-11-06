@@ -1,0 +1,45 @@
+This mac laptop uses 2 very different and very confusing systems:  
+ 
+- "classic mac os"  
+ 
+and  
+ 
+- "mac os x"  
+ 
+Apple co-founder Steve Wozniak recently declared that mac os x is "not ready for primetime." For example, displaying and navigating through multiple open windows on "mac os x" is very slow even on this $3,500 laptop's 500 MHz G4 chip.  
+ 
+By comparison, Windows 2000 is extremely fast on Intel Pentium 3/4 and AMD Athlon chips, which now exceed 1000 MHz = 1 GigaHerz = 1 GHz, with IBM and Dell offering 1 GHz Pentium 3 laptops.  
+ 
+Most mac software, including major software such as Adobe Photoshop and Microsoft Office, work only on "classic mac os", which does not have:  
+ 
+- preemptive multitasking  
+ 
+- protected memory  
+ 
+As of this writing, even apple's own DVD player software does not work on "mac os x."  
+ 
+But wait. There's more: here's a partial list of Windows-only software:  
+ 
+www.att.net  
+ 
+"AT&T WorldNet® Service System Requirements [for AT&T i495 and 7/70 offers]: A PC with a Pentium 90 processor or faster; Windows 95, Windows 98, Windows Me, Windows NT 4.0 with Service Pack 3 (or higher), or Windows 2000;"  
+ 
+www.yahoo.com  
+help.yahoo.com/help/us/mesg/use/mvoice/mvoice-07.html  
+ 
+"Can I voice chat on my Macintosh? Yahoo! Messenger for Macintosh does not include the Voice Chat feature. We are aware there is strong interest among our Macintosh users, but there is currently no schedule for releasing this feature."  
+ 
+messenger.yahoo.com/messenger/webcams.html  
+ 
+"Setup Your Own Webcam If you'd like to setup a webcam of yourself, all you need is a Windows 95/NT/98 computer that is equipped with a webcam camera."  
+ 
+"Yahoo! Drive - Its your hard drive on the internet. Windows 95/98/ME only."  
+ 
+www.dialpad.com  
+dialpad.com/support/clinic.html  
+ 
+"Minimum Requirements: Windows 95 Optimal Performance: Windows 98"  
+ 
+mac users claim that macs are easier to use than Windows. Nonsense. An overwhelming majority of the world uses Windows just fine whilst only 5% use macs.  
+ 
+So if you still think Windows is too difficult to use, and/or if you don't believe that "it's votes that count," then "You are the weakest link. Goodbye."  

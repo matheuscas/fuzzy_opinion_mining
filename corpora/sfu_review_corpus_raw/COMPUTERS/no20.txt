@@ -1,0 +1,236 @@
+Synopsis :  
+ 
+Hardware : Above Average.  
+Software and setup : Substandard  
+Customer Service: Horrifying, atrocious, ghastly, hideous, horrific, dreadful, horrendous, and appalling.  
+ 
+Please read the following for specific details.  
+ 
+Hardware:  
+The system is integrated well, and everything was functional when delivered. The components are name brand, and seem to be of above average quality. System configuration, as ordered:  
+ 
+1 221-2537 Dimension 4600 Series, Intel Pentium 4 Processor at 2.4GHz  
+1 462-1656 512MB DDR SDRAM at 333MHz  
+1 310-4164 Wireless Keyboard and Mouse Desktop Solution  
+1 320-4600 17IN(16.0IN VIS)E773c Monitor,Midnight Grey,Dimension  
+1 320-0735 128MB DDR NVidia GeForce FX 5200 graphics card  
+1 462-1743 J740 Inkjet Printer Driver  
+1 462-3281 80GB 7200 RPM Ultra ATA Hard Drive  
+1 340-8860 3.5in Floppy Drive  
+1 313-7222 Dell Application Back-up CD, Factory Install  
+1 420-1921 Microsoft Windows XP Home Edition,Service Pack 1,English  
+1 412-0409 Generic Dimension Dell Support  
+1 310-1966 Mouse included in Logitech Wireless Package  
+1 430-0412 Intel Pro 100M Integrated PCI NIC Card  
+1 313-1313 56K PCI Data Fax Modem for Windows  
+1 313-0917 16X DVD-Rom Drive  
+1 430-0462 Cyberlink Software Decoding for DVD Drives with six channels  
+1 313-2758 Integrated Audio  
+1 313-2198 No Speaker Requested  
+1 412-0547 NETWORK ASSOCIATES MCAFEE.COM,OEM,ENGLISH, 90 DAY TRIAL,FACTORY INSTALLED  
+1 412-0298 MusicMatch 7.1x Basic  
+1 412-0271 Dell Picture Studio Image Expert Standard,Dimension  
+1 412-0273 Dell Picture Studio Paint ShopPro Try and Buy,Dimension  
+1 412-0441 AOL 8.0 DHS  
+1 420-3224 Broadband Icon for Inspiron  
+1 412-0380 Real Network RealOne Player Basic,Version 6,US English  
+1 412-0395 Word Perfect Productivity Pack  
+1 412-0551 Money 2004 Standard Version for Dimension  
+1 412-0555 Microsoft Enclyclopedia,2004 for Dimension  
+1 950-4430 Type 3- Third Party At Home Service, 24x7 Technical Support, Initial Year  
+1 950-3337 1 Year Limited Warranty  
+1 950-9797 No Warranty, Year 2 and 3  
+1 412-0359 Soft Contracts - Qualxserve  
+1 462-0984 Informational Only - High Speed Internet Billed Separately  
+1 460-9055 DHS Instant $100 Off  
+ 
+ 
+The MiniTower Case is relatively user friendly if you do not want to add a lot to your new PC. It provides (2) 5.25" drive bays in the front, and the integrated floppy opening. There are (2) Internal 3.5" bays, one of which is used by the Hitachi Hard drive. This permits installation of another Hard Drive if you wish.  
+ 
+The floppy drive does NOT come standard, but you may add one to your system for Twenty dollars, as my family and I did. I personally feel this is misleading, since almost every PC comes with a floppy drive, and it appears to be one way Dell is trying to keep the cost of their advertised systems under the competition's.  
+ 
+There are (2) USB 2.0 Ports in front for easy access, plus six more in the back, providing plenty of room for USB accessories.  
+ 
+There is a headphone jack in the front for easy access as well.  
+ 
+There is (1) external 9 pin serial port, and (1) 25 pin Printer port which supports ECP, EPP, and Bi-directional communication.  
+ 
+There is a PS/2 connector for a keyboard, and one for a mouse. A standard PS2 keyboard and Roller Ball mouse comes standard with all Dell PCs. If you add a wireless combo, they do not send these. For this reason, I suggest you order any different keyboard and / or mouse separately since there is no price break in "upgrading" at the time of purchase. You can always keep the standard units as backups.  
+ 
+The power supply is 250 Watts which may be a bit underpowered if you want to add a lot of accessories, but considering the limited expansion slots, this will likely never be an issue.  
+ 
+The motherboard appears to be an Intel Motherboard, consistent with most Dell configurations. These are jumperless boards, and operate well, but Gamers may not appreciate the lack of overclocking ability. Since September there have been (2) BIOS updates to resolve hardware issues with the Network Adapter and allow for the use of faster CPUs..  
+ 
+There are 4 available expansion slots in the back, one of which was utilized by the PCI WinModem, and one by my AGP display adapter upgrade. This leaves (2) PCI slots for accessories.  
+ 
+The integrated NIC is an Intel(R) PRO/100 VE Network Connection and seems to work well I suggest downloading the driver from Intel instead of using the Microsoft driver. This provides additional flexibility and options for configuring your network card, and permits 'power users' to extract additional network performance.  
+ 
+I do not use the 56K Conextant WinModem since I have Cable Access for the internet. I may remove this PCI card should I desire the PCI slot at some time in the future.  
+ 
+The Integrated Audio option I chose ended up being "SoundMax Integrated Digital Audio" and is perfectly satisfactory to me. One can always upgrade through an available PCI slot should they wish if it does not meet their needs. There are connectors for Line IN, Line Out, Microphone, surround and center/low-frequency effects (LFE) channel.  
+ 
+Inside there are two 7-pin serial-ATA connectors on the motherboard. Serial ATA hard drives provide faster performance that Enhanced IDE drives. This is a nice option to have available.  
+ 
+The motherboard was available with 400, 533, or 800 MHz front side bus, which improves performance with each higher step. Because my budget was not unlimited, I settled for the 533 FSB, and performance seems adequate. The processor can be upgraded through 3 Gigahertz should I find that performance ever seems lacking. With future BIOS upgrades, it is possible that this speed will be increased.  
+ 
+There are (4) Memory slots for DDR memory, two of which are filled with 256 Meg memory modules. Memory can be upgraded to a whopping 4 GIGS or RAM! This should satisfy the most memory hungry users and / or applications at this time. The memory supported is up to 400 MHz Non-ECC DDR SDRAM.  
+ 
+The Intel Chipset used is the 865PE, and I am satisfied with its performance. It does not appear to be as buggy as some previous Intel Chipsets, but is also not noted for extreme performance and overclocking capabilities. None of this concerns me, personally.  
+ 
+The AGP slot supports 1x, 2x, 4x, and 8x AGP. I chose the 128MB DDR NVidia GeForce FX 5200 graphics card and am quite happy with the performance. I probably could have gotten the same card for less money elsewhere if I wanted to shop around, but did not find the upgrade prohibitive in cost.  
+ 
+The Dell Wireless Keyboard / Mouse combination is manufactured by HI-TEK CORPORATION, a company that manufactures OEM products for Manufacturers, and is not particularly noted for high quality products. It is USB only, even though the web site listed a PS/2 adapter with it. When connected to the USB port it detected well, but no matter where I placed the receiver it did not communicate with the keyboard and mouse well. I finally decided to return it, but this is another story, found below.  
+ 
+The DVD-ROM could have been either a Lite-On or a Samsung. I ended up with the Samsung. It reads CDs as well as DVDs. Performance is acceptable, since I installed my own 52 X 24 X 52 CD-RW for my primary CD-ROM.  
+ 
+The hard disk is a Hitachi. They may not be the best on the market, but they are better than many, such as Fujitsu. Performance seems adequate, although certainly not as good as the Western Digital drives with 8 Meg Buffers. Since I have a new 180 Gig Western Digital, I will likely replace the Hitachi 80 Gig drive with the western Digital, and use the Hitachi as a backup for important data, only connecting it when I wish to update my backup.  
+ 
+At first, I found the computer to be very slow, and I was greatly disappointed. My old Pentium III 550 seemed much faster. Once I checked to see what programs were running, I realized that this was caused by numerous Dell software running and wasting memory and CPU cycles. I spent a week trying to remove and disable these utilities, and the end result was a much faster computer. There are still some problems where the system appears to lock up, and I am preparing to save all of my data and reload the operating system and the programs I want. I would encourage new buyers to do this themselves, before putting any data onto the drive. I will discuss the method to do so further down this review.  
+ 
+ 
+Software:  
+Dell installs many "system utilities" which degrade system performance and waste hard disk space. The typical end user will not have the technical expertise to disable all of the unnecessary services, disable or remove all of the Dell Spyware and Dell related Software that deteriorates System performance significantly, and the Shareware that become non-functional after 30 days from the date of first use. Because of this, I highly recommend removing hard drive partitions (erasing all software) and then re-installing the software from the provided CD-ROMs. I do NOT suggest using the Dell "Restore CD" which will reinstall all of the aforementioned software.  
+ 
+Dell provides a System Restore CD which removes the drive partition and re-images the drive with a standard Dell setup / configuration, much as the Symantec software Ghost can do. This reloads all of the Dell Spyware and utilities that slow the computer down.  
+ 
+Dell also includes the Operating System CD, in my case, Windows XP home. You may setup your system from scratch by placing this CD in the CD-ROM drive and restarting your system.  
+ 
+This allows one to setup XP, and you should remove the drive partition(s) before proceeding with setup.  
+Here is a link to a page from Microsoft detailing the process: http://support.microsoft.com/default.aspx?scid=kb;en-us;315341  
+View "Method 2" and select "Install Now."  
+When you complete the installation, be certain to install all Updates and patches by visiting http://windowsupdate.microsoft.com  
+ 
+NOTE! This is not for the faint of heart or non-technically inclined! While I find this very simple, I have been working with computers since 1976. You may be better off having a knowledgeable friend perform the installation, or paying a local shop to do so. If you choose to do so yourself, be aware that you may render your computer inoperative if you do not perform this properly. I suggest that if you are in doubt, you seek assistance.  
+ 
+After completing your operating system reinstallation, you will want to install the drivers and programs that came with the computer. Do not install anything you will not be using. You can always choose to install it at a later date. Loading fewer programs will give you more available disk space, and can improve system performance.  
+ 
+There is a driver disk for the Modem drivers. When the Operating System prompts you for the modem drivers, put this CD in the CD-Rom drive to load the drivers.  
+ 
+I do NOT suggest loading the Dell Diagnostics and utilities. Many of these run in your system tray, wasting your CPU cycles and memory. In short, they are bad for the system performance.  
+ 
+WordPerfect came with the PC. I own MS Office XP, so I would choose not to install this software. If you do not own an alternative, you will want to install this.  
+ 
+The Dell Provided Antivirus software(you have to pay for it after 30 days!), support software, multimedia software, and internet software are all on one CD. I suggest NOT loading this. Instead, download this Free, and highly effective Antivirus software from Grisoft: http://www.grisoft.com/us/us_dwnl_free.php  
+ 
+ 
+Virus definitions are updated regularly, and it has protected my family for years. I highly recommend this.  
+ 
+RealPlayer was on the CD, but you may download a version that does not send your data to Dell by going to http://www.real.com and downloading the free RealOne player.  
+ 
+MusicMatch software is also included, but if you want that, you may download it by visiting that website at http://www.musicmatch.com You may read the details concerning registration before you decide it is right for you.  
+ 
+Other programs that are “Try and Buy” are also available from their respective web sites without Dell's injected spyware, or you can find exactly what you want, either in Freeware, Shareware, or Commercial software.  
+ 
+Microsoft Encarta 2004 and Microsoft Money 2004 were included. If you want to use these, load them. If you do not, don't. Again, you can load them later.  
+ 
+Following these suggestions will provide you with a computer that runs the way it was meant to. It will be faster, and more stable that the way it was shipped to you.  
+ 
+ 
+System Setup:  
+Besides the problems listed under Software, above, all three of our systems had a Thirty Seven Megabyte FAT partition installed in addition to the Windows XP NTFS Partition. Perhaps this is installed to allow for System Hibernation with Power Savings. I recommend deleting this partition and using One (or two, depending on your technical abilities and preferences) partitions formatted with NTFS. I do not recommend the use of System Hibernation. Turning your computer off is more energy effective, and you do not have any problems that might be associated with system Hibernation.  
+ 
+Customer Service:  
+This is the major Problem with Purchasing from Dell.  
+It is truly unfortunate that Dell Inc. has permitted their "Customer Care" to degrade as far as it has. The Dell Customer Care forums reflect the deterioration of their support, and are filled with customer accounts of Dell Staff not responding, delaying resolution, or providing inadequate resolution to customer problems.  
+In my family, there were problems with two of the three orders we made at the same time.  
+ 
+My wife completed the rebate form for both her computer and her Mom's computer, and mailed them at the same time at the same post office.  
+ 
+System Order #1.) - My Mother-in-law:  
+My Mother-in Law's order was fine, and she has not needed to contact Dell for assistance. She received her rebate check after a month.  
+ 
+System Order #2.) My Wife:  
+My Wife ordered the EXACT same thing as my mother in law. The order was fine, but she STILL has not gotten her rebate, and when she checked the Rebate Status page, there is nothing even shown about her rebate. She is attempting to resolve this matter at this time.  
+ 
+System Order #3.) My Order:  
+1) I ordered a system and upgraded the standard keyboard and mouse to the Dell Wireless Combo for $65.00. The description for this product showed a PS/2 Adapter, which I need to use my KVM (Keyboard / Mouse / Video switch.)  
+ 
+2) When I opened the box, there was no adapter, and no reference to an adapter in the documents.  
+ 
+3) I contacted Dell Technical support who immediately advised me that this unit is not compatible with PS/2 and cannot be adapted. They told me to contact customer care to send it back for a refund.  
+ 
+4) On October 9, I contacted Dell Customer Care to arrange to send back the Wireless Combo for a refund. They agreed to send me a call tag for the unit and promised that they would issue full credit when they received it. I provided the correct shipping address to my home, since the system was sent to my Mother-in-Law's house in a different state.  
+ 
+5) I had to call Dell Customer Care back and request the Standard Keyboard and Mouse that I was entitled to with my system purchase. Customer care had not offered to send it to me, and after explaining the matter, Keeve DTC39418 told me he would have them shipped to me.  
+ 
+6) The Dell Customer Care site showed that Order# 497367046 for "Keyboard,104,6P,United States,Multi-Media,NMB" shipped on October 10, but to the wrong address. When I contacted Dell Customer care, they said they could not change the address since it was already shipped.  
+ 
+7) On October 12, I got a call from my mother-in -Law telling me she had refused delivery of a Fed-Ex Package from Dell addressed to me.  
+ 
+8) Immediately following this, I communicated with Pierre (Dell Customer Care Chat) who told me he had corrected the shipping address and would send the standard PS/2 Keyboard and Mouse to me at the newly corrected address. He told me that because of all the problems I had been experiencing, I did not have to return the wireless combo, but that I would receive credit for it. Ho told me that he had issued a credit for $55.28 "which is what I had paid for it." I explained that I had paid $65, and that the amount he referred to was the "October Special" price, but he disagreed.  
+ 
+9) I contacted Dell for a month, no less than 20 times via e-mail, online chat, and Telephone, attempting to have the shipping address corrected and get the Keyboard and mouse sent to me at the correct address and to issue me the remaining $9.62 credit for the Wireless combo.  
+ 
+10) On October 11, order# 530622076 showed as having shipped. To this day, it remains "In Transit."  
+ 
+11) On October 12, I received credit for $55.27 for the $65 wireless combo purchased with the PC ordered in September.  
+ 
+12) I continued to contact Dell Customer Care via e-mail, Customer Care Chat, and telephone on nearly a daily basis. (I have saved all inbound and outbound e-mails and chats.) Dell repeatedly apologized for the problems I experience, but nobody seemed to be able to resolve the matter.  
+ 
+13) In early November, Raymond DTC28723 promised me that he would ship the standard Keyboard and Mouse to my home address. He requested, and I provided the correct shipping information. No shipment ever appeared, and no shipment ever occurred.  
+ 
+14) On November 21, Raymond DTC28723 promised me that he would ship the standard Keyboard and Mouse to my home address. He requested, and I provided the correct shipping information.  
+ 
+15) On November 21, I found Order# 542456257 was entered, showing the "ship date" as December 2. It was, unfortunately, not for "Keyboard,104,6P,United States,Multi-Media,NMB" (standard PS/2 Keyboard and Mouse) but rather, for another Dell Wireless Combo. I e-mailed Raymond DTC28723 several times, but did not get a reply.  
+ 
+16) On November 22, the Shipping status of Order# 542456257 changed to "Processing, where it has remained to this day.  
+ 
+17) On December 2, the "Ship Date" of order 542456257 changed to a blank. When I contacted Dell Customer Care, Raymond DTC28723 replied stating that Dell Financial Services had to approve this as a free shipment.  
+ 
+18) On December 2, I posted over 15 separate contact names and addresses that I had been dealing with upon the Dell Customer Care Forum as the "Dell Wall of Shame" and filed a Consumer Complaint with  
+ 
+The Commonwealth of Pennsylvania  
+Office of Attorney General Mike Fischer  
+Harrisburg, PA 17120  
+ 
+ 
+Here is the list of contacts that were unable to resolve this simple matter after many dozens of contacts:  
+ 
+1. Debbie (us_bcsd@dell.com)  
+2. Josie_Garza@dell.com (Salesperson I dealt with)  
+3. Dell Inc. E-Business Sales Division SMB_OnlineOrder_Resolution@dell.com)  
+4. Jersey DTF229365  
+5. Raymond DTC~28723 (repeatedly, and who made at least 2 promises to ship items he never did)  
+6. Sydney DTC39425  
+7. Arnold ~DTC47364  
+8. carla_geronimo AGENT_ID 2819 (who may be the same person as number 9)  
+9. Carla DTC69143  
+10. Dominic DTC66961  
+11. Sandy ~DTC65916  
+12. Ronald ~DTC29559  
+13. Keeve ~DTC39418  
+14. Pierre (Dell Customer Care Chat)  
+15. Robin (Dell Customer Care Chat)  
+16. postmaster@Dell.com  
+17. uscemcsd@dell.com  
+ 
+19) After filing the complaint and notifying Customer Care and Dell Inc. E-Business Sales Division, I received an e-mail from each apologizing again, and promising prompt resolution. This is simply more of the same, and I am certain that only after judgment has been made against Dell that the matter will be resolved.  
+ 
+It is quite frustrating to have to deal with so many individuals who are unable to resolve such a trivial matter. I have requested, repeatedly, that the matter be escalated to a supervisor, but this has never happened.  
+ 
+In light of my experience, and the similar experiences of many others, I strongly urge any prospective Dell customers to make their purchases from a different company.  
+ 
+Addendum:  
+Here is an e-mail I sent in response to an offline conversation with on of the reviewers. They felt I should add this to my review, that it will help others. Here it is:  
+ 
+ 
+If you do decide to buy a dell, make 100% certain that you order the standard setup. Then, go back and order any accessories as a separate order. This SHOULD prevent the problems I experienced. You can purchase upgrades by searching at www.techbargains.com, and get better upgrades for less money. While you are under warranty, Dell Tech Support is obligated to help you with technical queations such as "How do I install this" and "what are the specifications for memory for my computer so I may buy it at my local Office store", etc. The one time I dealt with technical support they were prompt, accurate, and helpful.  
+ 
+Be advised that Tech Support and Customer Care are different.  
+ 
+It is my opinion (also based upon a conversation with a technical support manager) that the customer care system is limited because of it's design.  
+ 
+Dell is unable to CHANGE anything in an order. If something is defective, it is easy for dell to ship an exact replacement. This is not where the trouble lies.  
+ 
+BUT, if you decide to CHANGE anything in the order, the system is so inflexible that they are unable to make a change.  
+ 
+The Tech Support manager ALSO said that during the 1st 30 days, you may return the system for no charge (other than what it costs you to ship it back) so during that 1st 30 days, the salesperson with be very accommodating in order to protect their commission. It is after that 30 day period where you are likely to encounter problems since their commission is then secure.  
+ 
+Also, you may wish to look into purchasing the PC of your choice with NO SOFTWARE. You can then go to your local staples, office max, office depot, etc and buy what you want, and load it yourself for a better performing system. You also get exactly what you want.  
+ 
+The final option is to buy from a local business. Even a super-store will offer the advantage of face to face service with a representative if you have problems.  
+ 
+The bottom line? The Dell hardware / software package is very cost effective. Do not buy with the expectations that you will get any support if you have problems. If you go into it with that attitude, you will not be disappointed.  
+ 
+As a computer tech for decades, I am happy to offer assistance to any who ask. I may be unable to help with specific issues, and I may not be able to respond immediately, but I will do whatever I can to help. Also, there are forums like Expert-exchange (do a Google search) where I am also active. This is a collection of people trying to help one another. There are professionals who offer help, as well as home users. Take advice with a grain of salt if you have questions.  
+ 

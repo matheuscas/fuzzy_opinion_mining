@@ -1,0 +1,80 @@
+HP has come out with their own 17 inch widescreen notebook labeled the zd7000 which is the customizabe version of the zd70XX series. so if you see other notebooks with zd70XX, everything would apply except for certain things like the processor speed, amount of ram and video ram, size of the harddrive, and if the wireless option is installed. and now that you know the difference, lets get on with the review.  
+ 
+my specs are:  
+ 
+3.2 ghz processor  
+512 MB ram  
+128 mb nvidia geforce graphics  
+80 GB 4200 hard drive  
+dvd+r dvd writer  
+ 
+i wish now that i actually opted in for the wireless, but when i had ordered my machine, i was under the impression that the wireless card was just a pcmci card which i already had, this was because on the HP website, they showed a pcmci card next to the laptop, but then later updated the image to show a mini pci card which is correct. this would work better since embedded behind the laptop screen, there are antennaes which greatly increase the effectiveness of the wireless. but i was mislead and now i suffer for it. and dont think that you can use another mini pci card because there have been other people that have had problems doing this because the bios checks for a particular brand of mini pci card, adn they have not been able to change the bios or anything to make it work. so might as well be safe and get it preinstalled.  
+ 
+other than that, I am extremely happy with this laptop. its not quite as nice as my apple g4 17 but then what is?  
+ 
+so here's the run down:  
+ 
+screen  
+ 
+the screeen is HUGE! 17 inches with a resolution of 1440x900. thats really impressive, i definitely have more work space, and the colors are crisp, although it will seem a bit dull under flourescent lighting, but this is due to them not installing a protective shield like the toshiba p25-s607 which also uses this screen, but seems crisper. but their screens dont look great outdoors. so its a trade off.  
+ 
+the screen is bright and beautiful, especially when watching dvds. it just blows my mind how great it looks.  
+ 
+one thing that would seem weird is that the screen is narrower than what you may be used to with other laptops or monitors, but this is a wide screen, and therefore you get more sideways real estate but also lose the top-to-bottom real estate.  
+ 
+all in all, the screen is fantastic. I have been able to work with 2 full windows of word or excel (that doesnt mean maximized) and its just great expecially when editing documents.  
+ 
+keyboard and touchpad  
+ 
+the keyboard is also cool because it features the numeric keypad which i havent seen on other laptops. but don;t let that alone be the reason to buy this. the keys are a bit stiff and springy which is great for the tactile typers, but if you have carpal tunnel, like i do, it does tend to aggravate it somewhat, which is why i use an external keyboard that has softer keys.  
+ 
+the keyboard is a full size keyboard, which is great with no real odd key placements like some laptop vendors do. you also get a full size backspace key too which comes in handy a lot.  
+ 
+as for the touchpad, one annoying design issue is that they decided to make the touchpad wide, so when i do type through the keyboard and i tend to rest my palms on the laptop, my hands tend to somehow glide onto the touchpad which puts the cursor somewhere. this movement is annoyingh especially when editing documents because i would accidentally move the cursor somewhere so that when i do look at the screen to see what else i would need, i would find the text in odd places. This is definitely annoying, but I havent heard of any other complaints. even decreasing the sensitivity doesnt completely fix the solution.  
+ 
+also, near the top of the touchpad, it does tend to get a bit warn.  
+ 
+all in all the touchpad is responsive and sometimes the cursors can jump around when using it, so I would recommend using an external mouse, like the logitech mx700.  
+ 
+sound  
+ 
+the speakers on this laptop are harmon kardon speakers, and they are fanastic. i haven't heard sound this great on a laptop ever. i had a bunch of mp3 from my last computer that I played on this laptop and at first, I thought the speakers weren't any good because of the tinny sound, but then I realized that it was because of the bit rate encoding, it was encoded at 96 bits instead of 128 or 196 for cd quality. once i popped in a cd, the sounds came alive. I was pleasantly surprised by this, and it does get loud, unlike some laptops where even if you put the sound at the highest setting, you still can barely hear it. Not with these speakers. I actually only have the volume at 2 or 3 bars because its so loud. One this missing though is a subwoofer, but thats a small price to pay.  
+ 
+battery life...battery life...battery life...  
+ 
+it wont last longer than 2 hrs, but you can do some power saving things such as reduce the brightness of the screen, dont use the dvd drive, etc, but then whats the fun? this is definitely meant as a desktop replacement. for you just want to take it with you, but only if there is a deskt and an outlet available. otherwise you should purchase extra batteries or one of those solar panels that can power it up.  
+ 
+along the lines of battery power, is the actual power converter or brick. man, this thing is heavy. its slightly larger than other converters too. and its also a 3 prong plug going into the brick, so if you plan on using a mini power surge protector, belkin has a nice one, i dont think targus makes one, or at least they didnt have one at best buy.  
+ 
+ 
+over all impressions  
+ 
+my overall impression of the laptop is two thumbs up. the blue lighting is very mesmerizing, and the dvd drive is very responsive. i havent tried burning a dvd yet, i have to find some tiem to buy dvd r blanks, i wish it were a multi drive, but can't have everything. also, the dvd drive is a 4x drive, the included roxio software lists it as a 2.4x but when I installed nero 6, it read it as a 4x drive.  
+ 
+the media slots are also a plus. they let you use your smart digital, memory stick, and 3 others which i dont know off hand, but those are the ones i use, and it works great. no more carrying around the adapter for these.  
+ 
+the case definitely seems sturdy, there is no flex in the keyboard, at least none that i can tell (i dont want to break this) and also this laptop is heavy. its about 10 pounds with the battery and the adapter.  
+ 
+there are 4 usb 2.0 connections and a firewire conenction, the small one, parallel port and vga out. there is also s-video out which i havent tried, but will do soon.  
+ 
+downsides  
+ 
+some of the design problems i have with this are that the ac plug goes into the back left of the laptop instead of at the back. this is ok, but annoying.  
+ 
+the placement of the volume buttons being on the top of the keybaord, near the quick launch buttons, who thought of this? i guess ive been spoiled with volume buttons being on the sides.  
+ 
+the only firewire connection is on the left side which is also weird, b/c I tend to just leave my firewire external hdd plugged in, so i usually have this plug protruding from the left side. thats somewhat annyoing.  
+ 
+the size of the beast also makes it difficult to purchase bags. since it just hit the market, most bags that are able to carry it are bulky and ugly. and the ones that fit the G4 wont fit this. which blows because now i have to find another bag. i was hoping the timbuk2 bag which just came out for the g4 would fit, but to no avail. it was made to tightly fit the apple.  
+ 
+another thing is when typing with this on yer laptop, which i dont recommend since you will be covering the fan inlets, the positioning the keybaord will make it weird to type. that definitely takes some getting used to, and the heat makes it not feel so good. it doesnt get as hot as the apple, but it gets uncomfortably warm.  
+ 
+one other thing is that this laptop doesnt have themedia controls that many other laptops have, that allow you to play your cds without turning on the computer.  
+ 
+conclusion  
+ 
+this machine is great. its definitely an investment to be happy with. i especially liked the fact that i could customize it to my liking, and when yer buying a laptop, especially a wintel machine, you want to think about the future and what you'll be able to do.  
+ 
+the HT or hyperthreading on this is great an all, but there arent that many applications that can take advantage of that just yet, other than some of those intensive graphics apps and database apps. but its cool to have!  
+ 
+also the 128MB of video ram also allows me to play future games as well as todays latest. i havent had a chance to load up some graphics heavy games, but from what i saw on my friends with only 64 mb on his toshiba p25, i am sure mine will blow his away!  

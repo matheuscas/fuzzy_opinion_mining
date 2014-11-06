@@ -1,0 +1,15 @@
+My father works in the Marketing and Advertising business, and bought one of these monsters. He uses it during the day, and I use it during the night. After a year of working with this thing, I have come to a conclusion.  
+ 
+Stop buying Apples.  
+ 
+First of all, my dad bought this thing EXACTLY 4 days before the dual processor macs come onto the market at the same price. I called up Apple and demanded they take it back and give us the higher end model. They politely said they could not do a thing about it and hung up. Poor poor customer service. Had Apple given a damn about the small market of consumers they have, I would've been transferred to someone with authority, and a solution would have been reached. But no. The system we had was obselete the moment we got it up and running.  
+ 
+If that wasn't bad enough, the computer sucks too.  
+ 
+Apple has this problem with making good computer components I find. From the lack of ADB ports to the weeks of buying and returning external SCSI cards because they were incompatible and/or problematic (these weren't your no-name's either. LaCie, Adaptec, and Iomega were just a few of the brand names we tried) with the computer. Some of the devices still don't work with it. The CD-ROM is very buggy as CDs randomly unmount, and you can't eject them unless you restart your computer (a very frequent problem on our end). Perhaps one of my biggest complaints is the lack of performance. All that bull about this being a supercomputer...forget it. I ran a test between a G3 400 and the G4 500 in photoshop, and the G4 was only about 5% faster. This is because programs must be designed specifically to run faster on the G4 system before you can get any noticeable speed improvements.  
+ 
+Of course the computer is bundled with OS 9, the most bug filled of all the Mac OS versions (even with 9.0.4). While this review isn't about the OS, I must say that protected memory would have made this OS bearable, but when one program crashes, they all go, mon ami. OS X will be out mid summer (provided they don't delay it for another year), and OS X compatible programs will probably be popular around 2002.  
+ 
+In other words, this computer isn't worth your time or money. Even if you're a graphic designer (or a hardcore gamer), avoid G4s alltogether. A G3 400 should satisfy just about anyone who MUST have an Apple. I have worked with Apples since the Macintosh Plus (around 1986), but I have to put my foot down here. Apple is no longer the wonderful system that does exactly what it's told. Combined with the substandard hardware (with nifty cases) and an obselete OS, it runs like Windows 95, but without the multi-tasking and protected memory.  
+ 
+Oh, one more thing. If you want tech support, Apple has a unique way of helping you - a way not unlike a Dilbert comic I once read: The more problems your computer has, the more you have to pay them. Apple uses a "pay per incident" program, meaning if their product F***s up, you get to pay them MORE money so they can tell you to go have it fixed. Thanks Apple.  

@@ -1,0 +1,93 @@
+The PowerMac G5 is a computer designed for two types of person: The power-mad user of CPU-sapping programs like Final Cut Pro and After Effects, and the person who just wants to look like one.  
+ 
+For the latter type, Apple has an entirely new case design, one that is beautifully made, but looks formal, stiff, a little stand-offish. It is not warm and fuzzy; my friend Amber will not hug it, as she did my PowerMac G4 at work; she would probably slide a finger or two over it, admiring the smooth, brushed-aluminum surface.  
+ 
+In short, it looks impressive, much more impressive, a formidable piece of engineering. But those who like to hug computers might want to find one of the last old G4 models.  
+ 
+The G5 is taller and somewhat thinner than the old model. It's lighter, being made of aluminum instead of steel.  
+ 
+Setup and Installation  
+ 
+Setup and installation are, as usual, done with the same meticulous good taste and sleekness of all Apple products. You turn it on, plug in the keyboard, mouse and monitor and while it's setting itself up, it treats you to a somehow dazzling but tasteful and understated "Welcome" in ten different languages.  
+ 
+Subtle and pleasant new age music joins you as you start typing in your registration details. And the process continues, smooth, pleasant and tasteful until it is all done and you have a set up internet connection and all is well.  
+ 
+I thought there was a big problem at this point, since the networking didn't work, but due inspection showed that I had simply forgotten to plug in my Ethernet cable.  
+ 
+Don't do that.  
+ 
+After that, it started to work flawlessly.  
+ 
+I don't buy computers to look at their case design! How's it perform?  
+ 
+All routine operations are blisteringly fast. Applications open fast, web pages load fast, even the rather resource-heavy Apple mail runs fast. And all of this happens with a tiny fraction of CPU use.  
+ 
+Encouraged by this, I decided on a stress test no computer I'd ever owned could pass. I decided to try capturing video and then using my machine for other stuff.  
+ 
+Video capture is one of the most difficult things you can ask a computer to do, because it all has to be done in real time. If it drops as little as one frame out of the 30 coming at it per second, the capture is useless. Because of this, video capture is usually a mind-numbingly boring procedure where you sit at your computer, stare at your footage and (since you can't edit it at this point) become bored to tears.  
+ 
+Not so on the PowerMac G5!  
+ 
+My first attempt at this didn't work because I was installing LiveType at the same time. It turns out that you can't install something from a CD while capturing video.  
+ 
+But you can do pretty much anything else you want. I was playing music with iTunes, checking my mail every minute, writing a message on my web browser, cruising the web and switching between mail and web constantly. The system handled this all perfectly.  
+ 
+This is a big deal. On all my older computers (PowerBook G4, PowerMac G4/450 dual), I could not do ANYTHING else while capturing video. I had to close all my other programs to prevent dropped frames. On this computer, with the standard 512mb RAM, everything just worked.  
+ 
+I'm still getting used to the computer, and I have a lot to learn about optimizing its performance. But so far, I'm very pleased; it seems much faster than the benchmarks imply.  
+ 
+If there's more interest in real-world performance, I'll add to this epinion later on when I have more results.  
+ 
+The 9 Fans  
+ 
+I am having problems with my home air conditioning, and as a result my house has been a bit hot. It is a bit of a trip to see - well, hear - how my new computer reacts to its difficult environment. The computer will be silent for a while, and then when I ask it to work hard it begins howling like a banshee. When I start working on it after a period of inactivity, the fans will run loud for a few seconds and then restore themselves to silence.  
+ 
+Based on other reviews, I don't think this will be a problem for a typical household environment. When my air conditioning gets fixed, I'll post an addendum about the change in fan behaviour, if any.  
+ 
+I suspect it would be almost inaudible if I placed it under my desk instead of on top of it, but then I couldn't admire it's good looks, could I?  
+ 
+The bottom line, then, is that if you have a hot room, prepare for a suprisingly noisy computer as it protects itself from the hostile environment outside.  
+ 
+I recommend a comparably loud speaker system when in a loud environment, and remember, you can play music through iTunes even when your computer is capturing video.  
+ 
+I should emphasize, however, that a comparably powerful PC would have a whole bunch of fans that would be on constantly. Compared to the kind of PC that's often used for video editing applications and the like, the PowerMac is quiet enough. It's just that most people aren't going to put that kind of computer in a room where noise is an issue.  
+ 
+Buying Tips  
+ 
+I do not advise the purchase of any hot Apple product from the online Apple Store. In most cases, you will actually get your product faster if you purchase it from the retail Apple Stores on the day it becomes available there.  
+ 
+At the time I bought my machine at the Apple Store in the Grove shopping center in LA, there were people stacked up in the mail order queue who had ordered months before I did.  
+ 
+Since the savings for buying via mail order are literally non-existant (with sales tax and full retail prices still charged), there is literally no reason in the world not to buy retail.  
+ 
+Well, there is one. Certain build to order options, such as getting a 250gb drive instead of the stock 160, can only be obtained online. For me, with projects to do and stuff to accomplish, it wasn't worth waiting three weeks to get a bigger drive.  
+ 
+You should always buy your memory upgrades from a third party, not Apple. Apple memory upgrade prices are absurd to the point of comic relief. For example, upgrading my system from 512mb to 2-1gb sticks (total of 2gb) would cost over $1,000 when purchased from Apple. Two third-party 1gb memory sticks would cost me around $620, and I would still have the original 512mb (thus a total of 2.5gb instead of 2.0gb).  
+ 
+Other Considerations  
+ 
+The old G4s could accomodate 4 hard drives in the case. The new G5, despite its larger case, can only accomodate 2. Fortunately, support for the new FireWire 800 standard makes this less important than it used to be, but it's still annoying and feels like a step backwards. Hard drives have gotten much larger than in the G4 days, but hard drive usage, driven by DV video, has accelerated even faster.  
+ 
+Every component of the G5 has undergone a makeover. Faster video, faster memory, faster disk interfaces, everything's faster. What this means is that you shouldn't even try upgrading your machine to a G5 if and when upgrades come out. You won't get the performance you need.  
+ 
+Surprisingly, the keyboard on the G5 is a significant improvement from the G4's. With the G4s, the mushy keys often didn't register my keystrokes, especially when trying to type capital letters. With the G5, the keyboard is still mushier than I'd like, but it's at least reliable; when I hit the shift key, I always get capital letters. So if you've relied on third-party keyboards in the past, give the G5's a shot.  
+ 
+Sound on the built-in speaker is poor, but since most people will buy third-party stereo speakers for a system of this class, that didn't wind up being significant.  
+ 
+MacOS X  
+ 
+MacOS X really started coming into its own when I bought my PowerBook 1ghz system late last year. Menus snapped into place, everything scrolled quickly, and so on.  
+ 
+The dual G5 makes the PowerBook G4 look and feel downright sluggish. It's probably not more than things taking .1 second instead of .5 second, but it feels even more responsive than the old system.  
+ 
+The operating system is every bit as much of a brilliantly designed art object as the computer itself. If you want a good reason to switch from Windows, the tasteful elegance of MacOS X is an excellent one.  
+ 
+And, of course, the performance.  
+ 
+Conclusion  
+ 
+I'd say a healthy percentage of those who have deserted the Mac platform during its sluggish days are going to return to it through this speedy, brilliantly designed machine.  
+ 
+This is an expensive product, but unlike 99% of computers made today, it has the fit, finish, look and feel of something polished to gleaming perfection.  
+ 
+If you have the money, you won't regret getting this computer for a second.  

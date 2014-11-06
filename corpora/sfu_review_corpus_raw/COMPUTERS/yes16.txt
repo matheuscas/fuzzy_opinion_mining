@@ -1,0 +1,48 @@
+The name Apple Computer is synonymous with quality hardware and happy users. Many will be happy to find that the latest high-end system from Apple doesn't break the mold.  
+ 
+Hardware Overview  
+ 
+The specs are listed for this computer by Epinions so I won't waste space with those. However, I'll point out some interesting things that are new and/or noteable on this system.  
+ 
+The 1.42 ghz system has a better looking hardware package than its 1.25 ghz sibling. This computer's enhancements include:  
+ 
+166 megahertz speed increase  
+ 
+120 gigabyte hard drive (40 gb more than the 1.25 system)  
+ 
+512 megabytes of RAM (256 mb more than the 1.25 system)  
+ 
+2 mb L3 cache *see: http://www.apple.com/powermac/architecture.html* (1 mb more than the 1.25 system)  
+ 
+The following are improvements over the previous generation of Powermacs and are included in all current Powermacs:  
+ 
+An optional DVD/CD reader and burner (Superdrive).  
+ 
+Firewire 800 technology (an advanced form of the origional firewire interface allows for external devices to be connected to the computer at up to two times the speed of the origional firewire.)  
+ 
+Airport Extreme (the next generation of wireless networking capabilities. Uses the "g" technology of wireless interfacing to allow for up to 54 mbps, which is improved from the former 11 mpps.)  
+ 
+ 
+Experience  
+ 
+Truly a joy to use. I've loved this system from the day I opened it up. It comes boxed and packed precisely and carefully. After I got it up and running, I put my old backed up data onto this system and was running immediately.  
+ 
+I realize that many are unfamiliar with the Apple world, however. For you, I can say that this system works just like the other Apple systems, just much faster. There aren't any additional hurdles to learning the operating system or specialized hardware. This computer is very quick and accessible to anybody.  
+ 
+The operating system is called "OSX". The X is for 10. Look for reviews for "OS 10.2: Jaguar" if you want to read about experiences with the Apple OS.  
+ 
+So far, I've had my computer for about two and a half months. I've had no hardware problems. I've upgraded the RAM and added an Airport Extreme card into the computer. The total time spent on these tasks would be less than 2 minutes. I've been impressed with how intuitive everything is.  
+ 
+Performance  
+This is a great computer. The reason it won't recieve a full score is that it doesn't have the speed of the current PC systems. Motorola, Apple's G4 chip makers, has not put the money into R&D necessary to keep up with Intel and AMD. This is not to say that the Apple system is a pushover. It will finish many tests with a slightly slower score than a PC with over double the megahertz (3 ghz Intel systems are now commonplace). In some cases, the 1.42 ghz Apple system will outperform the competition. I make these points to illustrate that the gap is not devastating.  
+ 
+I burn CDs at 32x and have the cutting edge wireless technology in Airport Extreme, mentioned earlier. Productivity in all areas is perfectly acceptable.  
+ 
+The real draw for this computer is the operating system. OSX is revolutionary and addictive. If it would run on any other system, I'm sure Apple wouldn't sell many 1.42 ghz systems because people would buy the best hardware and the best software. That not being possible, I'd rather take the best software and mid-line hardware. I absolutely love the OS so slightly slower test scores could not dissuade me from purchasing this computer.  
+ 
+Conclusion  
+ 
+My recommendation to everybody is to try out Apple's OSX. If you like it, then this computer is more than worth your money. If you don't, then I don't see any reason to get this system. It's a bit slower than the competition, after all. Either way, I and many other Apple users will be having a great time with our computers.  
+ 
+Final Note  
+Those interested should wait until June 27th to find out if Apple releases their newest systems then. Keep an eye out at Apple's website (Apple.com) or other sites to know when your dollars will be best spent.  
