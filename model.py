@@ -39,7 +39,7 @@ class BaseModel(object):
 		pass
 
 	@abc.abstractmethod
-	def create_database(self):
+	def create_database(self, qtd=None):
 		"""Creates the mongodb database and its documents"""
 
 		pass
@@ -226,12 +226,26 @@ class TripAdvisorModel(BaseModel):
 
 		return list_of_dict_units
 
-	def create_database(self):
+	def create_database(self, qtd=None):
 
 		docs = self.read_corpora_source()
-		#inserts documents into collection
+		inserted = 0
+		pos_count, neg_count = (qtd / 2, qtd / 2) if qtd else (0,0)
 		for d in docs:
-			self.documents.insert(d)
+			if qtd:
+				if pos_count > 0 and int(d['degree']) > 3:
+					self.documents.insert(d)
+					pos_count = pos_count - 1
+
+				if neg_count > 0 and int(d['degree']) < 3:
+					self.documents.insert(d)
+					neg_count = neg_count - 1
+				
+				if pos_count == 0 and neg_count == 0:
+					break	
+			else:
+				self.documents.insert(d)
+			
 
 		#search for documents with NULL information and attaches the doc id to turn the name unique
 		for ndoc in self.documents.find():
